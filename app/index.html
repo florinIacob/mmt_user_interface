@@ -22,8 +22,8 @@
 
     <!-- Add your site or application content here -->
     <div class="header">
-      <div class="navbar navbar-default" role="navigation">
-        <div class="container">
+      <div class="navbar navbar-inverse" role="navigation">
+        <div class="container container-nav">
           <div class="navbar-header">
 
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
@@ -33,28 +33,49 @@
               <span class="icon-bar"></span>
             </button>
 
-            <a class="navbar-brand" href="#/">mmtUi</a>
+            <a class="navbar-brand" href="#/"><span><img class="menu_logo_img" src="images/logo.svg">My Money Tracker</span></a>
           </div>
 
           <div class="collapse navbar-collapse" id="js-navbar-collapse">
 
             <ul class="nav navbar-nav">
               <li class="active"><a href="#/">Home</a></li>
-              <li><a ng-href="#/about">About</a></li>
-              <li><a ng-href="#/">Contact</a></li>
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="">Income<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#/add_income">Add income</a></li>
+                  <li><a href="#/incomes_history">Incomes history</a></li>
+                  <li><a href="#/incomes_chart">Incomes chart</a></li>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="">Expense<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#/add_income">Add expense</a></li>
+                  <li><a href="#/incomes_history">Expenses history</a></li>
+                  <li><a href="#/incomes_chart">Expenses chart</a></li>
+                </ul>
+              </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#/sign_up"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+              <li><a href="#/about"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
             </ul>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="container">
+    <div class="container mid-container">
     <div ng-view=""></div>
     </div>
 
     <div class="footer">
       <div class="container">
-        <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
+        <p>
+          <span><img src="images/logo.svg" height="23" width="23"> My Money Tracker</span>
+          <span style="float:right;">Copyright © 2016 Florin & Tudor - All rights reserved</span>
+        </p>
       </div>
     </div>
 
@@ -88,6 +109,7 @@
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/about.js"></script>
+        <script src="scripts/controllers/sign_up.js"></script>
         <!-- endbuild -->
 </body>
 </html>

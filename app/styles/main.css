@@ -62,7 +62,7 @@ body {
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   .container {
-    max-width: 730px;
+    max-width: 830px;
   }
 
   /* Remove the padding we set earlier */
@@ -79,5 +79,33 @@ body {
   /* Remove the bottom border on the jumbotron for visual effect */
   .jumbotron {
     border-bottom: 0;
+  }
+
+  .menu_logo_img {
+    height: 30px;
+    width: 30px;
+    margin-right: 8px;
+  }
+
+  .navbar-brand {
+    line-height: 35px;
+    font-size: 18px;
+  }
+  .navbar-nav li a {
+      line-height: 35px;
+      font-size: 17px;
+  }
+
+  .mid-container {
+    min-height:630px;
+  }
+
+  .sign-up-container {
+    background-color:#eaeae1;
+    border-radius: 22px;
+  }
+
+  .submit-btn {
+    width:125px;
   }
 }
