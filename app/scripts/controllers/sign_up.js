@@ -8,22 +8,33 @@
  * Controller of the mmtUiApp
  */
 angular.module('mmtUiApp')
-  .controller('SignUpCtrl', function ($scope, $http) {
+  .controller('SignUpCtrl', function ($scope, $http, $location) {
 
-  $scope.postMessage = "DEFAULT";
+  $scope.postMessage = null;
+  $scope.retyped_password = null;
 
   $scope.user = {
      id: 0,
-     //email: "",
-     //password: ""
+     email: "",
+     username: "",
+     password: "",
      firstName: "",
      surname: "",
-     birthdate: 1450044000000
+     birthdate: "",
+     activated: ""
   }
-
 
   // submit button - save the user
   $scope.submit = function() {
+      var submited_user = $scope.user;
+      var valid_attempt = true;
+      if (submited_user.password !== $scope.retyped_password) {
+          $scope.postMessage = "Please retype the same password!";
+          $scope.retyped_password = null;
+          $scope.user.password = null;
+          return;
+      }
+
       // prepare post request
       var req = {
          method: 'POST',
@@ -36,10 +47,11 @@ angular.module('mmtUiApp')
       // make server request
       $http(req).then(
         function(){
-          $scope.postMessage = "SUCCESS";
+          // SUCCESS: change the path
+          $location.path('/home')
         },
-        function(){
-          $scope.postMessage = "ERROR";
+        function(response){
+          $scope.postMessage = response.data || "Request failed!";
        });
   }
 });
