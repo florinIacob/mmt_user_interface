@@ -1,0 +1,49 @@
+<div class="container sign-up-container">
+  <h2 style="text-align:center;"><img src="images/add_expense.png"> ADD EXPENSE</h2>
+  <form class="form-horizontal" role="form" ng-submit="submit()">
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="name">Name:</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="name" placeholder="Expense name" ng-model="expense.name" required >
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="date">Category:</label>
+      <div class="col-sm-5">
+        <select type="date" class="form-control" id="category" placeholder="Category" ng-model="expense.category" required>
+          <option ng-repeat="category in categories" value="{{category}}">{{category}}</option>
+        </select>
+      </div>
+      <div class="col-sm-3">
+        <input type="text" class="form-control" placeholder="New category" ng-model="newCategory">
+      </div>
+      <div class="col-sm-2">
+        <input type="button" class="form-control" placeholder="Add new category" value="Add" ng-click="addCategory()">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="description">Description:</label>
+      <div class="col-sm-10">
+        <textarea type="text" rows="5"  class="form-control" id="description" placeholder="Description ..." ng-model="expense.description"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="amount">Amount:</label>
+      <div class="col-sm-10">
+        <input type="number" class="form-control" id="amount" placeholder="Expense amount" ng-model="expense.amount" required >
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="date">Creation date:</label>
+      <div class="col-sm-10">
+        <input type="date" class="form-control" id="date" placeholder="date" ng-model="expense.creationDate" required >
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-default submit-btn">Add expense</button>
+      </div>
+    </div>
+  </form>
+  <p style="color:red;">{{postMessage}}</p>
+</div>

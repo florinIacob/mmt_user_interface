@@ -2,9 +2,9 @@
 
 /**
  * @ngdoc function
- * @name mmtUiApp.controller:AboutCtrl
+ * @name mmtUiApp.controller:SignUpCtrl
  * @description
- * # AboutCtrl
+ * # SignUpCtrl
  * Controller of the mmtUiApp
  */
 angular.module('mmtUiApp')
@@ -42,7 +42,7 @@ angular.module('mmtUiApp')
          headers: {
            'Content-Type': "application/json"
          },
-         data: JSON.stringify($scope.user)
+         data: JSON.stringify(submited_user)
       }
       // make server request
       $http(req).then(
