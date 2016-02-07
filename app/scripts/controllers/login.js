@@ -2,43 +2,30 @@
 
 /**
  * @ngdoc function
- * @name mmtUiApp.controller:SignUpCtrl
+ * @name mmtUiApp.controller:LoginCtrl
  * @description
- * # SignUpCtrl
+ * # LoginCtrl
  * Controller of the mmtUiApp
  */
 angular.module('mmtUiApp')
-  .controller('SignUpCtrl', function ($scope, $http, $location) {
+  .controller('LoginCtrl', function ($scope, $http, $location) {
 
   $scope.postMessage = null;
-  $scope.retyped_password = null;
 
   $scope.user = {
-     id: 0,
      email: "",
      username: "",
-     password: "",
-     firstName: "",
-     surname: "",
-     birthdate: "",
-     activated: ""
+     password: ""
   }
 
-  // submit button - save the user
-  $scope.submit = function() {
+  // login button
+  $scope.submit_login = function() {
       var submitted_user = $scope.user;
-      var valid_attempt = true;
-      if (submitted_user.password !== $scope.retyped_password) {
-          $scope.postMessage = "Please retype the same password!";
-          $scope.retyped_password = null;
-          $scope.user.password = null;
-          return;
-      }
-
+      $scope.postMessage = "LOGIN";
       // prepare post request
       var req = {
          method: 'POST',
-         url: 'http://localhost:8080/user/add',
+         url: 'http://localhost:8080/user/login/',
          headers: {
            'Content-Type': "application/json"
          },
@@ -46,7 +33,7 @@ angular.module('mmtUiApp')
       }
       // make server request
       $http(req).then(
-        function(){
+        function(response){
           // SUCCESS: change the path
           $location.path('/home')
         },

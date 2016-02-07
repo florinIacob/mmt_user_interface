@@ -33,6 +33,11 @@ var app = angular.module('mmtUiApp', [
 				controller: 'SignUpCtrl',
 				controllerAs: 'sign_up'
 			})
+			.when('/login', {
+        templateUrl: 'views/login.html',
+        controller: 'LoginCtrl',
+        controllerAs: 'login'
+      	})
 			.when('/add_expense', {
 				templateUrl: 'views/add_expense.html',
 				controller: 'AddExpenseCtrl',
