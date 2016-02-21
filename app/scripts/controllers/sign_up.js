@@ -8,7 +8,7 @@
  * Controller of the mmtUiApp
  */
 angular.module('mmtUiApp')
-  .controller('SignUpCtrl', function ($scope, $http, $location) {
+  .controller('SignUpCtrl', function ($scope, $http, $location, host_name) {
 
   $scope.postMessage = null;
   $scope.retyped_password = null;
@@ -38,9 +38,10 @@ angular.module('mmtUiApp')
       // prepare post request
       var req = {
          method: 'POST',
-         url: 'http://localhost:8080/user/add',
+         url: host_name + '/user/add',
          headers: {
-           'Content-Type': "application/json"
+           'Content-Type': "application/json",
+           'Access-Control-Allow-Origin' : '*'
          },
          data: JSON.stringify(submitted_user)
       }

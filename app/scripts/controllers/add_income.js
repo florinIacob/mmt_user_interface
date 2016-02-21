@@ -8,7 +8,7 @@
  * Controller of the mmtUiApp
  */
 angular.module('mmtUiApp')
-  .controller('AddIncomeCtrl', function ($scope, $http, $location, categoryService) {
+  .controller('AddIncomeCtrl', function ($scope, $http, $location, categoryService, host_name) {
 
     $scope.postMessage = null;
     $scope.newCategory = null;
@@ -32,7 +32,7 @@ angular.module('mmtUiApp')
       // prepare post request
       var req = {
          method: 'POST',
-         url: 'http://localhost:8080/income/add',
+         url: host_name +'/income/add',
          headers: {
            'Content-Type': "application/json"
          },

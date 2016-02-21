@@ -8,9 +8,9 @@
  * Controller of the mmtUiApp
  */
 angular.module('mmtUiApp')
-  .controller('LoginCtrl', function ($scope, $http, $location) {
+  .controller('LoginCtrl', function ($scope, $http, $location, $cookies, host_name) {
 
-  $scope.postMessage = null;
+  $scope.postMessage = "";
 
   $scope.user = {
      email: "",
@@ -21,13 +21,14 @@ angular.module('mmtUiApp')
   // login button
   $scope.submit_login = function() {
       var submitted_user = $scope.user;
-      $scope.postMessage = "LOGIN";
+
       // prepare post request
       var req = {
          method: 'POST',
-         url: 'http://localhost:8080/user/login/',
+         url: host_name + '/user/login',
          headers: {
-           'Content-Type': "application/json"
+           'Content-Type': "application/json",
+           'Access-Control-Allow-Origin' : '*'
          },
          data: JSON.stringify(submitted_user)
       }
@@ -35,10 +36,12 @@ angular.module('mmtUiApp')
       $http(req).then(
         function(response){
           // SUCCESS: change the path
-          $location.path('/home')
+          $cookies.put('mmtlt-cookie', response.headers('mmtlt'));
+          $scope.postMessage = $cookies.get('mmtlt-cookie');
+          //$location.path('/home')
         },
         function(response){
-          $scope.postMessage = response.data || "Request failed!";
+          $scope.postMessage = "Request failed!";
        });
   }
 });

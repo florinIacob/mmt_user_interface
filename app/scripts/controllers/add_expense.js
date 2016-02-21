@@ -8,9 +8,9 @@
  * Controller of the mmtUiApp
  */
 angular.module('mmtUiApp')
-  .controller('AddExpenseCtrl', function ($scope, $http, $location, categoryService) {
+  .controller('AddExpenseCtrl', function ($scope, $http, $location, $cookies, categoryService, host_name) {
 
-  $scope.postMessage = null;
+  $scope.postMessage = $cookies.get('mmtlt-cookie');
   $scope.newCategory = null;
 
   $scope.categories = [];
@@ -21,26 +21,33 @@ angular.module('mmtUiApp')
      name: "",
      category: "",
      description: "",
-     amount: undefined,
+     amount: null,
      creationDate: ""
   }
 
   // submit button - save the expense
   $scope.submit = function() {
-      var submited_expense = $scope.expense;
+      var submitted_expense = {
+        a: "Ana",
+        b: "ss"
+      }
+      //var submitted_expense = $scope.expense;
 
       // prepare post request
       var req = {
          method: 'POST',
-         url: 'http://localhost:8080/expense/add',
+         url: host_name + '/expense/add',
          headers: {
-           'Content-Type': "application/json"
+           'Content-Type': "application/json",
+           'Access-Control-Allow-Origin' : '*',
+           'Access-Control-Expose-Headers': 'mmtlt',
+           'mmtlt': $cookies.get('mmtlt-cookie')
          },
-         data: JSON.stringify(submited_expense)
+         data: JSON.stringify(submitted_expense)
       }
       // make server request
       $http(req).then(
-        function(){
+        function(response){
           // SUCCESS: change the path
           $location.path('/home')
         },
