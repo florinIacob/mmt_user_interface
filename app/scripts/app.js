@@ -16,7 +16,10 @@ var app = angular.module('mmtUiApp', [
 		'ngSanitize',
 		'ngTouch'
 	])
-	.config(function ($routeProvider) {
+	.run(function($rootScope, $cookieStore) {
+      $rootScope.authenticated = $cookieStore.get('mmtlt') !== undefined;
+  })
+	.config(function ($routeProvider, $httpProvider) {
 		$routeProvider
 			.when('/', {
 				templateUrl: 'views/main.html',
@@ -36,7 +39,7 @@ var app = angular.module('mmtUiApp', [
 			.when('/login', {
         templateUrl: 'views/login.html',
         controller: 'LoginCtrl',
-        controllerAs: 'login'
+        controllerAs: 'controller'
       	})
 			.when('/add_expense', {
 				templateUrl: 'views/add_expense.html',
@@ -51,4 +54,6 @@ var app = angular.module('mmtUiApp', [
 			.otherwise({
 				redirectTo: '/'
 			});
+
+			$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 	});

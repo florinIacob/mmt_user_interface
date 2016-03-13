@@ -10,6 +10,10 @@
 angular.module('mmtUiApp')
   .controller('AddIncomeCtrl', function ($scope, $http, $location, categoryService, host_name) {
 
+    if (!$rootScope.authenticated) {
+        $location.path('/login');
+    }
+
     $scope.postMessage = null;
     $scope.newCategory = null;
 

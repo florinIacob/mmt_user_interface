@@ -1,16 +1,22 @@
+<div class="alert alert-danger" ng-show="error">
+  There was a problem logging in. Please try again.
+</div>
 <div class="container sign-up-container">
+  <div class="alert alert-danger" ng-show="error">
+    There was a problem logging in. Please try again.
+  </div>
   <h2 style="text-align:center;"><img src="images/sign-up.png"> LOGIN FORM</h2>
-  <form class="form-horizontal" role="form" ng-submit="submit_login()">
+  <form class="form-horizontal" role="form" ng-submit="controller.login()">
     <div class="form-group">
       <label class="control-label col-sm-2" for="login_username">Username:</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" id="login_username" placeholder="Enter username or email" ng-model="user.username" required >
+        <input type="text" class="form-control" id="login_username" placeholder="Enter username or email" ng-model="controller.credentials.username" required >
       </div>
     </div>
     <div class="form-group">
       <label class="control-label col-sm-2" for="_login_pwd">Password:</label>
       <div class="col-sm-10">
-        <input type="password" class="form-control" id="_login_pwd" placeholder="Enter password" ng-model="user.password" required >
+        <input type="password" class="form-control" id="_login_pwd" placeholder="Enter password" ng-model="controller.credentials.password" required >
       </div>
     </div>
     <div class="form-group">
@@ -19,5 +25,4 @@
       </div>
     </div>
   </form>
-  <p style="color:red;">{{postMessage}}</p>
 </div>

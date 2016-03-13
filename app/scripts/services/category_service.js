@@ -1,4 +1,4 @@
-app.factory('categoryService', function($http) {
+app.factory('categoryService', function($http, $cookieStore, host_name) {
   var service = {};
 
   // GET CATEGORIES
@@ -6,7 +6,10 @@ app.factory('categoryService', function($http) {
     var categories = [];
     $http({
     		method: 'GET',
-    		url: 'http://localhost:8080/category/find_all'
+    		url: host_name + '/category/find_all',
+    		headers: {
+          'Authorization': $cookieStore.get('mmtlt')
+        },
     	}).then(function successCallback(response) {
     		extractNames(response.data, categories);
     	}, function errorCallback(response) {
@@ -17,6 +20,7 @@ app.factory('categoryService', function($http) {
 
   // ADD A CATEGORY
   service.addCategory = function(categoryName, categoriesArray) {
+
     categoriesArray.push(categoryName);
     var category_object = {
       id: 0,
@@ -25,9 +29,10 @@ app.factory('categoryService', function($http) {
     }
     var req = {
       method: 'POST',
-      url: 'http://localhost:8080/category/add',
+      url: host_name + '/category/add',
       headers: {
-        'Content-Type': "application/json"
+        'Content-Type': "application/json",
+        'Authorization': $cookieStore.get('mmtlt')
       },
       data: JSON.stringify(category_object)
     }
