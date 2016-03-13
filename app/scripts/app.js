@@ -40,7 +40,12 @@ var app = angular.module('mmtUiApp', [
         templateUrl: 'views/login.html',
         controller: 'LoginCtrl',
         controllerAs: 'controller'
-      	})
+      })
+      .when('/logout', {
+        templateUrl: 'views/logout.html',
+        controller: 'LogoutCtrl',
+        controllerAs: 'controller'
+      })
 			.when('/add_expense', {
 				templateUrl: 'views/add_expense.html',
 				controller: 'AddExpenseCtrl',
