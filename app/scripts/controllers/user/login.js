@@ -20,6 +20,7 @@ angular.module('mmtUiApp')
 				}).success(function(data, status, headers) {
 					if (data.username) {
 						$rootScope.authenticated = true;
+						$cookieStore.put('username', data.username);
 						$cookieStore.put('mmtlt', "Basic " + btoa(credentials.username + ":" + credentials.password));
 					} else {
 						$rootScope.authenticated = false;
@@ -51,12 +52,4 @@ angular.module('mmtUiApp')
 					}
 				})
 			};
-
-			self.logout = function() {
-				$http.post('logout', {}).finally(function() {
-					$rootScope.authenticated = false;
-					$location.path("/");
-				});
-			}
-
 		});

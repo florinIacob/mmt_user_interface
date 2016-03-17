@@ -8,11 +8,7 @@
  * Controller of the mmtUiApp
  */
 angular.module('mmtUiApp')
-  .controller('MainCtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma',
-	  'Florin'
-    ];
+  .controller('MainCtrl', function ($rootScope, $scope, $cookieStore) {
+    $scope.username = $cookieStore.get('username');
+    $rootScope.username = $cookieStore.get('username');
   });

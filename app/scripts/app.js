@@ -32,27 +32,32 @@ var app = angular.module('mmtUiApp', [
 				controllerAs: 'about'
 			})
 			.when('/sign_up', {
-				templateUrl: 'views/sign_up.html',
+				templateUrl: 'views/user/sign_up.html',
 				controller: 'SignUpCtrl',
 				controllerAs: 'sign_up'
 			})
 			.when('/login', {
-        templateUrl: 'views/login.html',
+        templateUrl: 'views/user/login.html',
         controller: 'LoginCtrl',
         controllerAs: 'controller'
       })
       .when('/logout', {
-        templateUrl: 'views/logout.html',
+        templateUrl: 'views/user/logout.html',
         controller: 'LogoutCtrl',
         controllerAs: 'controller'
       })
 			.when('/add_expense', {
-				templateUrl: 'views/add_expense.html',
+				templateUrl: 'views/expense/add_expense.html',
 				controller: 'AddExpenseCtrl',
 				controllerAs: 'add_expense'
 			})
+			.when('/expenses_history', {
+        templateUrl: 'views/expense/expenses_history.html',
+        controller: 'ExpensesHistoryCtrl',
+        controllerAs: 'expenses_history'
+      })
 			.when('/add_income', {
-        templateUrl: 'views/add_income.html',
+        templateUrl: 'views/income/add_income.html',
         controller: 'AddIncomeCtrl',
         controllerAs: 'add_income'
       })

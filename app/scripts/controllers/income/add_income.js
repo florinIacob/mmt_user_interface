@@ -8,7 +8,7 @@
  * Controller of the mmtUiApp
  */
 angular.module('mmtUiApp')
-  .controller('AddIncomeCtrl', function ($scope, $http, $location, categoryService, host_name) {
+  .controller('AddIncomeCtrl', function ($scope,$rootScope, $http, $location, categoryService, host_name) {
 
     if (!$rootScope.authenticated) {
         $location.path('/login');

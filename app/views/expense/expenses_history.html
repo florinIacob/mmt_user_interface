@@ -1,0 +1,25 @@
+<div class="container sign-up-container">
+  <h2 style="text-align:center;"><img src="images/expenses_history.svg"> EXPENSES HISTORY</h2>
+  <br>
+</div>
+<br><br>
+<div>
+  <table class="table table-bordered table-hover">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Amount</th>
+      <th>Category</th>
+      <th>Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="expense in expenses">
+      <td>{{ expense.name }}</td>
+      <td>{{ expense.amount }}</td>
+      <td>{{ expense.category.name }}</td>
+      <td>{{ expense.creationDate | date:'medium' }}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

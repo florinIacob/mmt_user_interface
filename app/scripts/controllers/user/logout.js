@@ -24,9 +24,10 @@ angular.module('mmtUiApp')
         // SUCCESS: change the path
         $rootScope.authenticated = false;
         $cookieStore.remove('mmtlt');
-        $location.path('/login');
+        $cookieStore.remove('username');
+        $location.path('/');
       },
       function(response){
-        $location.path('/');
+        $location.path('/login');
      });
 });
