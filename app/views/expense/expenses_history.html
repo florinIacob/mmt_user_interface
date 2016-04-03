@@ -11,6 +11,7 @@
       <th>Amount</th>
       <th>Category</th>
       <th>Date</th>
+      <th></th>
     </tr>
     </thead>
     <tbody>
@@ -19,6 +20,12 @@
       <td>{{ expense.amount }}</td>
       <td>{{ expense.category.name }}</td>
       <td>{{ expense.creationDate | date:'medium' }}</td>
+      <td><span class="glyphicon glyphicon-pencil" bs-tooltip title="Edit expense!" ng-click="editExpense($index)"></span>
+        <span class="glyphicon glyphicon-trash" style="float:right;" bs-tooltip title="Delete expense!"
+              ng-click="deleteExpense($index)"></span></td>
+    </tr>
+    <tr ng-show="expenses.length == 0">
+      <td style="font-style:italic;" colspan="5">No expense have been found!</td>
     </tr>
     </tbody>
   </table>

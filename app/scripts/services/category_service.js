@@ -44,6 +44,11 @@ app.factory('categoryService', function($http, $cookieStore, host_name) {
       });
   }
 
+  // DELETE A CATEGORY
+  service.deleteCategory = function(categoryName, categoriesArray) {
+    //TODO: to be implemented
+  }
+
   var extractNames = function(categoriesArray, categoryNames) {
     var i;
     for (i = 0; i < categoriesArray.length; i++) {

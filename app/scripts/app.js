@@ -14,7 +14,8 @@ var app = angular.module('mmtUiApp', [
 		'ngResource',
 		'ngRoute',
 		'ngSanitize',
-		'ngTouch'
+		'ngTouch',
+		'ui.bootstrap'
 	])
 	.run(function($rootScope, $cookieStore) {
       $rootScope.authenticated = $cookieStore.get('mmtlt') !== undefined;

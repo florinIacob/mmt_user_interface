@@ -8,7 +8,8 @@
  * Controller of the mmtUiApp
  */
 angular.module('mmtUiApp')
-  .controller('ExpensesHistoryCtrl', function ($scope, $rootScope, $http, $location, $cookieStore, categoryService, host_name) {
+  .controller('ExpensesHistoryCtrl', function ($scope, $rootScope, $http, $location, $cookieStore, $uibModal,
+        categoryService, modalTemplateService, host_name) {
 
   $scope.request_result = 'DEFAULT';
 
@@ -17,7 +18,7 @@ angular.module('mmtUiApp')
   }
   $scope.expenses = [];
 
-   // prepare post request
+  // prepare post request
   var req = {
     method: 'GET',
     url: host_name + '/expense/find_all',
@@ -30,12 +31,57 @@ angular.module('mmtUiApp')
   $http(req).then(
     function(response){
       // SUCCESS: change the path
-      $scope.request_result = 'SUCCESS';
       $scope.expenses = angular.fromJson(response.data);
-      //$location.path('/');
     },
     function(response){
-       $scope.request_result = 'ERROR';
-       //$location.path('/login');
+      //TODO: open error popup
    });
+
+  // EDIT EXPENSE FUNCTIONALITY
+  $scope.editExpense = function(index) {
+    //TODO: implement edit expense function
+  }
+
+  // DELETE EXPENSE FUNCTIONALITY
+  $scope.deleteExpense = function(index) {
+
+      $uibModal.open({
+        animation: false,
+        template: modalTemplateService.getWarningTemplate(),
+        controller: 'WarningPopupController',
+        resolve: {
+          items: function() {
+            return {
+              title: 'Warning!',
+              message: 'Are you sure do you want to delete expense [' + $scope.expenses[index].name + '] ?',
+              onYesCallback: function() {
+                alert('Yes function called! : ' + $scope.expenses[index].name);
+              }
+            };
+          },
+        }
+      });
+
+      var expense_id = $scope.expenses[index].id;
+      $scope.expenses.splice(index, 1);
+
+      // prepare delete request
+      var req = {
+        method: 'DELETE',
+        url: host_name + '/expense/deletesas/' + expense_id,
+         headers: {
+           'Content-Type': "application/json",
+           'Authorization': $cookieStore.get('mmtlt')
+         }
+       }
+      // make server request
+      $http(req).then(
+        function(response){
+          //$dialog.dialog({}).open('add_expense.html');
+        },
+        function(response){
+          //TODO: open error popup
+          //$dialog.dialog({}).open('add_expense.html');
+       });
+   }
 });
