@@ -1,5 +1,6 @@
 angular.module('mmtUiApp')
-  .controller('LoginCtrl', function($rootScope, $http, $location, $route, $cookieStore, host_name, $cookies) {
+  .controller('LoginCtrl', function($rootScope, $http, $location, $route, $cookieStore, $cookies,
+      $uibModal, ModalTemplateService, host_name) {
 
 			var self = this;
 
@@ -45,7 +46,23 @@ angular.module('mmtUiApp')
 						self.error = false;
 						$rootScope.authenticated = true;
 					} else {
-						console.log("Login failed")
+
+            $uibModal.open({
+              animation: true,
+              template: ModalTemplateService.getInfoTemplate(),
+              controller: 'WarningPopupController',
+              resolve: {
+                items: function() {
+                  return {
+                    title: 'Information!',
+                    message: 'Invalid username or password!\n'
+                              + 'Please activate your account before logging in!',
+                    onYesCallback: null
+                  };
+                },
+              }
+            });
+
 						$location.path("/login");
 						self.error = true;
 						$rootScope.authenticated = false;

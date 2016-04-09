@@ -1,4 +1,4 @@
-app.factory('categoryService', function($http, $cookieStore, host_name) {
+app.factory('CategoryService', function($http, $cookieStore, host_name) {
   var service = {};
 
   // GET CATEGORIES

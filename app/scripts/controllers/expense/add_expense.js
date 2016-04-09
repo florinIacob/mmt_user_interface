@@ -8,16 +8,19 @@
  * Controller of the mmtUiApp
  */
 angular.module('mmtUiApp')
-  .controller('AddExpenseCtrl', function ($scope, $rootScope, $http, $location, $cookieStore, categoryService, host_name) {
+  .controller('AddExpenseCtrl', function ($scope, $rootScope, $http, $location, $cookieStore, CategoryService, DateTimeService,
+       $uibModal, ModalTemplateService, host_name) {
 
   if (!$rootScope.authenticated) {
     $location.path('/login');
   }
 
   $scope.newCategory = null;
-
   $scope.categories = [];
-  $scope.categories = categoryService.getCategories();
+  $scope.categories = CategoryService.getCategories();
+
+  $scope.current_date_value = DateTimeService.createCurrentDateTimeString();
+  console.log($scope.current_date_value);
 
   $scope.expense = {
      id: 0,
@@ -27,14 +30,16 @@ angular.module('mmtUiApp')
      },
      description: "",
      amount: null,
-     creationDate: "",
+     creationDate: null,
      currency: "USD"
   }
 
   // submit button - save the expense
   $scope.submit = function() {
       var submitted_expense = $scope.expense;
-      //var submitted_expense = $scope.expense;
+      if (submitted_expense.creationDate == null) {
+        submitted_expense.creationDate = new Date();
+      }
 
       // prepare post request
       var req = {
@@ -50,15 +55,28 @@ angular.module('mmtUiApp')
       $http(req).then(
         function(response){
           // SUCCESS: change the path
-          $location.path('/home')
+          $location.path('/expenses_history')
         },
         function(response){
-          $scope.postMessage = response.data || "Request failed!";
+          $uibModal.open({
+            animation: true,
+            template: ModalTemplateService.getInfoTemplate(),
+            controller: 'WarningPopupController',
+            resolve: {
+              items: function() {
+                return {
+                  title: 'Information!',
+                  message: 'Expense not created! Please choose a category \nor use another expense name!',
+                  onYesCallback: null
+                };
+              },
+            }
+          });
        });
   }
 
   $scope.addCategory = function() {
-    categoryService.addCategory($scope.newCategory, $scope.categories);
+    CategoryService.addCategory($scope.newCategory, $scope.categories);
     $scope.expense.category.name = $scope.newCategory;
     $scope.newCategory = null;
   }

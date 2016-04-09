@@ -1,0 +1,32 @@
+<div class="container sign-up-container">
+  <h2 style="text-align:center;"><img src="images/expenses_history.svg"> INCOMES HISTORY</h2>
+  <br>
+</div>
+<br>
+<button type="button" class="btn btn-primary btn-block" ng-click="addIncomeAttempt()">Add new income</button>
+<br>
+<div>
+  <table class="table table-bordered table-hover">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Amount</th>
+      <th>Date</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="income in incomes" bs-tooltip title="{{income.description}}" >
+      <td>{{ income.name }}</td>
+      <td>{{ income.amount }}</td>
+      <td>{{ income.creationDate | date:'medium' }}</td>
+      <td><span class="glyphicon glyphicon-pencil" bs-tooltip title="Edit income!" ng-click="editIncome($index)"></span>
+        <span class="glyphicon glyphicon-trash" style="float:right;" bs-tooltip title="Delete income!"
+              ng-click="deleteIncome($index)"></span></td>
+    </tr>
+    <tr ng-show="incomes.length == 0">
+      <td style="font-style:italic;" colspan="5">No income have been found!</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

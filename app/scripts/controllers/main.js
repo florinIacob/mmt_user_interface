@@ -9,9 +9,5 @@
  */
 angular.module('mmtUiApp')
   .controller('MainCtrl', function ($rootScope, $scope, $cookieStore) {
-    $scope.username = $cookieStore.get('username');
-    $rootScope.username = $cookieStore.get('username');
-    if ($rootScope.username) {
-      $rootScope.hello_username = ', ' + $cookieStore.get('username');
-    }
+
   });

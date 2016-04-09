@@ -2,7 +2,9 @@
   <h2 style="text-align:center;"><img src="images/expenses_history.svg"> EXPENSES HISTORY</h2>
   <br>
 </div>
-<br><br>
+<br>
+<button type="button" class="btn btn-primary btn-block" ng-click="addExpenseAttempt()">Add new expense</button>
+<br>
 <div>
   <table class="table table-bordered table-hover">
     <thead>
@@ -15,7 +17,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="expense in expenses">
+    <tr ng-repeat="expense in expenses" bs-tooltip title="{{expense.description}}" >
       <td>{{ expense.name }}</td>
       <td>{{ expense.amount }}</td>
       <td>{{ expense.category.name }}</td>

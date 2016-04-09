@@ -8,9 +8,8 @@
  * Controller of the mmtUiApp
  */
 angular.module('mmtUiApp')
-  .controller('SignUpCtrl', function ($scope, $http, $location, host_name, $cookieStore) {
+  .controller('SignUpCtrl', function ($scope, $http, $location, $cookieStore, $uibModal, ModalTemplateService, host_name) {
 
-  $scope.postMessage = null;
   $scope.retyped_password = null;
 
   $scope.user = {
@@ -28,8 +27,22 @@ angular.module('mmtUiApp')
   $scope.submit = function() {
       var submitted_user = $scope.user;
       var valid_attempt = true;
+
       if (submitted_user.password !== $scope.retyped_password) {
-          $scope.postMessage = "Please retype the same password!";
+          $uibModal.open({
+            animation: true,
+            template: ModalTemplateService.getInfoTemplate(),
+            controller: 'WarningPopupController',
+            resolve: {
+              items: function() {
+                return {
+                  title: 'Information!',
+                  message: "Please retype the same password!",
+                  onYesCallback: null
+                };
+              },
+            }
+          });
           $scope.retyped_password = null;
           $scope.user.password = null;
           return;
@@ -46,12 +59,50 @@ angular.module('mmtUiApp')
       }
       // make server request
       $http(req).then(
-        function(){
-          // SUCCESS: change the path
+        //success callback
+        function(response){
+
+          $uibModal.open({
+            animation: true,
+            template: ModalTemplateService.getInfoTemplate(),
+            controller: 'WarningPopupController',
+            resolve: {
+              items: function() {
+                return {
+                  title: 'Information!',
+                  message: 'Your account was created!'
+                          + '\nPlease check your mail to activate your account!'
+                          + '\nAfter the activation, you can login to your account!',
+                  onYesCallback: null
+                };
+              },
+            }
+          });
           $location.path('/home')
         },
+        // error callback
         function(response){
-          $scope.postMessage = response.data || "Request failed!";
+
+          if (response.data.errors) {
+            var error_message = response.data.errors[0].defaultMessage;
+          } else {
+            var error_message = response.data.message;
+          }
+
+          $uibModal.open({
+            animation: true,
+            template: ModalTemplateService.getInfoTemplate(),
+            controller: 'WarningPopupController',
+            resolve: {
+              items: function() {
+                return {
+                  title: 'Information!',
+                  message: 'Your account was not created! \n' + error_message,
+                  onYesCallback: null
+                };
+              },
+            }
+          });
        });
   }
 });

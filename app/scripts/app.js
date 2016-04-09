@@ -19,6 +19,7 @@ var app = angular.module('mmtUiApp', [
 	])
 	.run(function($rootScope, $cookieStore) {
       $rootScope.authenticated = $cookieStore.get('mmtlt') !== undefined;
+      $rootScope.username = $cookieStore.get('username');
   })
 	.config(function ($routeProvider, $httpProvider) {
 		$routeProvider
@@ -61,6 +62,11 @@ var app = angular.module('mmtUiApp', [
         templateUrl: 'views/income/add_income.html',
         controller: 'AddIncomeCtrl',
         controllerAs: 'add_income'
+      })
+      .when('/incomes_history', {
+        templateUrl: 'views/income/incomes_history.html',
+        controller: 'IncomesHistoryCtrl',
+        controllerAs: 'incomes_history'
       })
 			.otherwise({
 				redirectTo: '/'

@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name mmtUiApp.controller:WarningPopupController
+ * @name mmtUiApp.controller:EditExpensePopupController
  * @description
- * # WarningPopupController
+ * # EditExpensePopupController
  * Controller of the mmtUiApp
  */
 angular.module('mmtUiApp')
-  .controller('WarningPopupController', ['$scope', '$uibModalInstance', 'items',
+  .controller('EditExpensePopupController', ['$scope', '$uibModalInstance', 'items',
         function ($scope, $uibModalInstance, items) {
 
    $scope.items = items;
