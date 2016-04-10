@@ -1,5 +1,5 @@
 <div class="container sign-up-container">
-  <h2 style="text-align:center;"><img src="images/expenses_history.svg"> INCOMES HISTORY</h2>
+  <h2 style="text-align:center;"><img src="images/incomes_history.svg"> INCOMES HISTORY</h2>
   <br>
 </div>
 <br>
@@ -16,7 +16,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="income in incomes" bs-tooltip title="{{income.description}}" >
+    <tr ng-repeat="income in incomes | orderBy:'creationDate':true" bs-tooltip title="{{income.description}}" >
       <td>{{ income.name }}</td>
       <td>{{ income.amount }}</td>
       <td>{{ income.creationDate | date:'medium' }}</td>

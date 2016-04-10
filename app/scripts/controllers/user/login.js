@@ -43,8 +43,8 @@ angular.module('mmtUiApp')
 					if (authenticated) {
 						console.log("Login succeeded")
 						$location.path("/");
-						self.error = false;
 						$rootScope.authenticated = true;
+						$rootScope.username = $cookieStore.get('username');
 					} else {
 
             $uibModal.open({

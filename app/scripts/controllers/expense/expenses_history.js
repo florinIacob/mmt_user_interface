@@ -8,7 +8,7 @@
  * Controller of the mmtUiApp
  */
 angular.module('mmtUiApp')
-  .controller('ExpensesHistoryCtrl', function ($scope, $rootScope, $http, $location, $cookieStore,
+  .controller('ExpensesHistoryCtrl', function ($scope, $rootScope, $http, $location, $route, $cookieStore,
         CategoryService, $uibModal, ModalTemplateService, host_name) {
 
   if (!$rootScope.authenticated) {
@@ -50,19 +50,23 @@ angular.module('mmtUiApp')
    });
 
   // EDIT EXPENSE FUNCTIONALITY
-  $scope.editExpense = function(index) {
-    //TODO: implement edit expense function
+  $scope.editExpense = function(expense) {
+
+    var refreshValues = function() {
+       $route.reload();
+    }
+
     $uibModal.open({
       animation: true,
       template: ModalTemplateService.getEditExpenseTemplate(),
       controller: 'EditExpensePopupController',
+      backdrop: 'static',
       size: 'lg',
       resolve: {
         items: function() {
           return {
-            title: 'Information!',
-            message: 'Expense successfully deleted!',
-            onYesCallback: null
+            expense: expense,
+            afterEditCallback: refreshValues
           };
         },
       }

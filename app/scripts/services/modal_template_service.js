@@ -88,8 +88,11 @@ app.factory('ModalTemplateService', function() {
             </div>
           </div>
           <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-              <button type="submit" class="btn btn-default submit-btn">Add expense</button>
+            <div class="col-sm-offset-2 col-sm-2">
+              <button type="submit" class="btn btn-default submit-btn">Save</button>
+            </div>
+            <div class="col-sm-7">
+              <button type="button" ng-click="cancel()" class="btn btn-default submit-btn">Cancel</button>
             </div>
           </div>
         </form>

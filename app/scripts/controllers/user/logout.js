@@ -23,6 +23,7 @@ angular.module('mmtUiApp')
       function(response){
         // SUCCESS: change the path
         $rootScope.authenticated = false;
+        $rootScope.username = undefined;
         $cookieStore.remove('mmtlt');
         $cookieStore.remove('username');
         $location.path('/');
