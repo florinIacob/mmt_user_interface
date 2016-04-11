@@ -8,7 +8,7 @@
  * Controller of the mmtUiApp
  */
 angular.module('mmtUiApp')
-  .controller('IncomesHistoryCtrl', function ($scope, $rootScope, $http, $location, $cookieStore,
+  .controller('IncomesHistoryCtrl', function ($scope, $rootScope, $http, $location, $route, $cookieStore,
         $uibModal, ModalTemplateService, host_name) {
 
   if (!$rootScope.authenticated) {
@@ -50,8 +50,27 @@ angular.module('mmtUiApp')
    });
 
   // EDIT INCOME FUNCTIONALITY
-  $scope.editIncome = function(index) {
-    //TODO: implement edit income function
+  $scope.editIncome = function(income) {
+
+    var refreshValues = function() {
+       $route.reload();
+    }
+
+    $uibModal.open({
+      animation: true,
+      template: ModalTemplateService.getEditIncomeTemplate(),
+      controller: 'EditIncomePopupController',
+      backdrop: 'static',
+      size: 'lg',
+      resolve: {
+        items: function() {
+          return {
+            income: income,
+            afterEditCallback: refreshValues
+          };
+        },
+      }
+    });
   }
 
   // DELETE INCOME FUNCTIONALITY

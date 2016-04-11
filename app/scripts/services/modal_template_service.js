@@ -101,5 +101,50 @@ app.factory('ModalTemplateService', function() {
     return editExpenseTemplate;
   }
 
+    // EDIT INCOME POPUP TEMPLATE
+    service.getEditIncomeTemplate = function() {
+    const editIncomeTemplate = `
+      <div class="source-list-modal" style="height:100%;background-color:#eaeae1;">
+        <h2 style="text-align:center;"><img src="images/add_income.png"> EDIT INCOME</h2>
+        <form class="form-horizontal" role="form" ng-submit="submit()">
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="name">Name:</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="name" placeholder="Income name" ng-model="income.name" required >
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="description">Description:</label>
+            <div class="col-sm-9">
+              <textarea type="text" rows="5"  class="form-control" id="description" placeholder="Description ..." ng-model="income.description"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="amount">Amount:</label>
+            <div class="col-sm-9">
+              <input type="number" step="any" class="form-control" id="amount" placeholder="Income amount" ng-model="income.amount" required >
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="date">Creation date:</label>
+            <div class="col-sm-9">
+              <input type="datetime-local" value="{{current_date_value}}" class="form-control" id="date" placeholder="date"
+                     ng-model="income.creationDate" required >
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-2">
+              <button type="submit" class="btn btn-default submit-btn">Save</button>
+            </div>
+            <div class="col-sm-7">
+              <button type="button" ng-click="cancel()" class="btn btn-default submit-btn">Cancel</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    `;
+    return editIncomeTemplate;
+  }
+
   return service;
 });

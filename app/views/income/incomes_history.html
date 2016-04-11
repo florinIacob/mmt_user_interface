@@ -20,7 +20,7 @@
       <td>{{ income.name }}</td>
       <td>{{ income.amount }}</td>
       <td>{{ income.creationDate | date:'medium' }}</td>
-      <td><span class="glyphicon glyphicon-pencil" bs-tooltip title="Edit income!" ng-click="editIncome($index)"></span>
+      <td><span class="glyphicon glyphicon-pencil" bs-tooltip title="Edit income!" ng-click="editIncome(income)"></span>
         <span class="glyphicon glyphicon-trash" style="float:right;" bs-tooltip title="Delete income!"
               ng-click="deleteIncome($index)"></span></td>
     </tr>

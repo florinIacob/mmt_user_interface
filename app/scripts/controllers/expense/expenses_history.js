@@ -74,12 +74,16 @@ angular.module('mmtUiApp')
   }
 
   // DELETE EXPENSE FUNCTIONALITY
-  $scope.deleteExpense = function(index) {
+  $scope.deleteExpense = function(expense) {
+
+      var refreshValues = function() {
+         $route.reload();
+      }
 
       // Function to be executed if the user press Yes on modal window
       var deleteHTTPRequest = function() {
         // prepare delete request
-        var expense_id = $scope.expenses[index].id;
+        var expense_id = expense.id;
         var req = {
           method: 'DELETE',
           url: host_name + '/expense/delete/' + expense_id,
@@ -92,7 +96,6 @@ angular.module('mmtUiApp')
         $http(req).then(
           function(response){
 
-            $scope.expenses.splice(index, 1);
             $uibModal.open({
               animation: true,
               template: ModalTemplateService.getInfoTemplate(),
@@ -102,7 +105,7 @@ angular.module('mmtUiApp')
                   return {
                     title: 'Information!',
                     message: 'Expense successfully deleted!',
-                    onYesCallback: null
+                    onYesCallback: refreshValues
                   };
                 },
               }
@@ -136,7 +139,7 @@ angular.module('mmtUiApp')
           items: function() {
             return {
               title: 'Warning!',
-              message: 'Are you sure do you want to delete expense [' + $scope.expenses[index].name + '] ?',
+              message: 'Are you sure do you want to delete expense [' + expense.name + '] ?',
               onYesCallback: deleteHTTPRequest
             };
           },
