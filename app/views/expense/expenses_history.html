@@ -9,18 +9,27 @@
   <table class="table table-bordered table-hover">
     <thead>
     <tr>
-      <th>Name</th>
-      <th>Amount</th>
-      <th>Category</th>
-      <th>Date</th>
+      <th>Name
+        <span class="glyphicon glyphicon-sort" bs-tooltip title="Sort by name" ng-click="changeSortingCriteria('name')"></span>
+      </th>
+      <th>Amount
+        <span class="glyphicon glyphicon-sort" bs-tooltip title="Sort by amount" ng-click="changeSortingCriteria('amount')"></span>
+      </th>
+      <th>Category
+        <span class="glyphicon glyphicon-filter" bs-tooltip title="Filter by category" ng-click="filterByCategory()"></span>
+        <span class="glyphicon glyphicon-sort" bs-tooltip title="Sort by category" ng-click="changeSortingCriteria('category.name')"></span>
+      </th>
+      <th>Date
+        <span class="glyphicon glyphicon-sort" bs-tooltip title="Sort by date" ng-click="changeSortingCriteria('creationDate')"></span>
+      </th>
       <th></th>
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="expense in expenses | orderBy:'creationDate':true" bs-tooltip title="{{expense.description}}" >
+    <tr ng-repeat="expense in expenses | orderBy:sortColumn:sortReverse | filter:filter_category:strict" bs-tooltip title="{{expense.description}}" >
       <td>{{ expense.name }}</td>
       <td>{{ expense.amount }}</td>
-      <td>{{ expense.category.name }}</td>
+      <td style=" background-color:{{expense.category.colour}};">{{ expense.category.name }}</td>
       <td>{{ expense.creationDate | date:'medium' }}</td>
       <td>
         <span class="glyphicon glyphicon-pencil" bs-tooltip title="Edit expense!"

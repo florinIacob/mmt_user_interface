@@ -74,12 +74,12 @@ angular.module('mmtUiApp')
   }
 
   // DELETE INCOME FUNCTIONALITY
-  $scope.deleteIncome = function(index) {
+  $scope.deleteIncome = function(income) {
 
       // Function to be executed if the user press Yes on modal window
       var deleteHTTPRequest = function() {
         // prepare delete request
-        var income_id = $scope.incomes[index].id;
+        var income_id = income.id;
         var req = {
           method: 'DELETE',
           url: host_name + '/income/delete/' + income_id,
@@ -92,7 +92,7 @@ angular.module('mmtUiApp')
         $http(req).then(
           function(response){
 
-            $scope.incomes.splice(index, 1);
+            $route.reload();
             $uibModal.open({
               animation: true,
               template: ModalTemplateService.getInfoTemplate(),
@@ -136,12 +136,21 @@ angular.module('mmtUiApp')
           items: function() {
             return {
               title: 'Warning!',
-              message: 'Are you sure do you want to delete income [' + $scope.incomes[index].name + '] ?',
+              message: 'Are you sure do you want to delete income [' + income.name + '] ?',
               onYesCallback: deleteHTTPRequest
             };
           },
         }
       });
+   }
+
+   // -------------- SORTING AREA ------------------
+   $scope.sortColumn = 'creationDate';
+   $scope.sortReverse = true;
+
+   $scope.changeSortingCriteria = function(columnName) {
+      $scope.sortColumn = columnName;
+      $scope.sortReverse = !$scope.sortReverse;
    }
 
    // REDIRECT TO ADD INCOME PAGE

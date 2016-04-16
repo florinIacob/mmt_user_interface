@@ -146,5 +146,30 @@ app.factory('ModalTemplateService', function() {
     return editIncomeTemplate;
   }
 
+  // GET CATEGORY FILTER POPUP TEMPLATE
+  service.getCategoryFilterTemplate = function() {
+    const warningTemplate = `
+      <div class="source-list-modal">
+          <div class="modal-header">
+              <h3 class="modal-title">
+                  {{items.title}}
+              </h3>
+              <hr>
+              <pre style="font-size:18px;">{{items.message}}</pre>
+              <select type="date" class="form-control" id="category" placeholder="Category" ng-model="selected_category" required>
+                <option ng-repeat="category in categories | unique"
+                  value="{{category}}">{{category}}</option>
+              </select>
+              <hr>
+              <div class="controls">
+                  <button style="left-margin:3px;" class="btn btn-primary" type="button" ng-click="filter()">Filter</button>
+                  <button class="btn btn-primary" type="button" ng-click="cancel()">Cancel</button>
+              </div>
+          </div>
+      </div>
+    `;
+    return warningTemplate;
+  }
+
   return service;
 });

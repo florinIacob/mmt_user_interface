@@ -9,20 +9,27 @@
   <table class="table table-bordered table-hover">
     <thead>
     <tr>
-      <th>Name</th>
-      <th>Amount</th>
-      <th>Date</th>
+      <th>Name
+        <span class="glyphicon glyphicon-sort" bs-tooltip title="Sort by name" ng-click="changeSortingCriteria('name')"></span>
+      </th>
+      <th>Amount
+        <span class="glyphicon glyphicon-sort" bs-tooltip title="Sort by amount" ng-click="changeSortingCriteria('amount')"></span>
+      </th>
+      <th>Date
+        <span class="glyphicon glyphicon-sort" bs-tooltip title="Sort by date" ng-click="changeSortingCriteria('creationDate')"></span>
+      </th>
       <th></th>
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="income in incomes | orderBy:'creationDate':true" bs-tooltip title="{{income.description}}" >
+    <tr ng-repeat="income in incomes | orderBy:sortColumn:sortReverse" bs-tooltip title="{{income.description}}" >
       <td>{{ income.name }}</td>
       <td>{{ income.amount }}</td>
       <td>{{ income.creationDate | date:'medium' }}</td>
-      <td><span class="glyphicon glyphicon-pencil" bs-tooltip title="Edit income!" ng-click="editIncome(income)"></span>
+      <td>
+        <span class="glyphicon glyphicon-pencil" bs-tooltip title="Edit income!" ng-click="editIncome(income)"></span>
         <span class="glyphicon glyphicon-trash" style="float:right;" bs-tooltip title="Delete income!"
-              ng-click="deleteIncome($index)"></span></td>
+              ng-click="deleteIncome(income)"></span></td>
     </tr>
     <tr ng-show="incomes.length == 0">
       <td style="font-style:italic;" colspan="5">No income have been found!</td>

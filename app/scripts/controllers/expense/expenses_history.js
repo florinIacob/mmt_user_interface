@@ -76,10 +76,6 @@ angular.module('mmtUiApp')
   // DELETE EXPENSE FUNCTIONALITY
   $scope.deleteExpense = function(expense) {
 
-      var refreshValues = function() {
-         $route.reload();
-      }
-
       // Function to be executed if the user press Yes on modal window
       var deleteHTTPRequest = function() {
         // prepare delete request
@@ -96,6 +92,7 @@ angular.module('mmtUiApp')
         $http(req).then(
           function(response){
 
+            $route.reload();
             $uibModal.open({
               animation: true,
               template: ModalTemplateService.getInfoTemplate(),
@@ -105,7 +102,7 @@ angular.module('mmtUiApp')
                   return {
                     title: 'Information!',
                     message: 'Expense successfully deleted!',
-                    onYesCallback: refreshValues
+                    onYesCallback: null
                   };
                 },
               }
@@ -150,5 +147,43 @@ angular.module('mmtUiApp')
    // REDIRECT TO ADD EXPENSE PAGE
    $scope.addExpenseAttempt = function() {
       $location.path('/add_expense');
+   }
+
+   $scope.filter_category;
+   // FILTER EXPENSES BY CATEGORY
+   $scope.filterByCategory = function() {
+
+      var filterCallback = function(selected_category) {
+        if (selected_category == '< ALL CATEGORIES >') {
+            $scope.filter_category = undefined;
+            return;
+        }
+        $scope.filter_category = selected_category;
+      }
+
+      $uibModal.open({
+        animation: true,
+        template: ModalTemplateService.getCategoryFilterTemplate(),
+        controller: 'CategoryFilterPopupController',
+        resolve: {
+          items: function() {
+            return {
+              title: 'CATEGORY FILTER!',
+              message: 'Filter expenses by category: ',
+              onFilterCallback: filterCallback,
+              expenses: $scope.expenses
+            };
+          },
+        }
+      });
+   }
+
+   // -------------- SORTING AREA ------------------
+   $scope.sortColumn = 'creationDate';
+   $scope.sortReverse = true;
+
+   $scope.changeSortingCriteria = function(columnName) {
+      $scope.sortColumn = columnName;
+      $scope.sortReverse = !$scope.sortReverse;
    }
 });
