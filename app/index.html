@@ -9,6 +9,7 @@
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/angular-chart.js/dist/angular-chart.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -108,6 +109,8 @@
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/Chart.js/Chart.js"></script>
+    <script src="bower_components/angular-chart.js/dist/angular-chart.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -115,24 +118,32 @@
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/about.js"></script>
+
         <script src="scripts/controllers/user/sign_up.js"></script>
         <script src="scripts/controllers/user/login.js"></script>
         <script src="scripts/controllers/user/logout.js"></script>
+
         <script src="scripts/controllers/expense/add_expense.js"></script>
         <script src="scripts/controllers/expense/expenses_history.js"></script>
+        <script src="scripts/controllers/expense/expenses_chart.js"></script>
         <script src="scripts/controllers/expense/expense_categories.js"></script>
+
         <script src="scripts/controllers/income/add_income.js"></script>
         <script src="scripts/controllers/income/incomes_history.js"></script>
+
         <script src="scripts/controllers/modal/warning_popup.js"></script>
         <script src="scripts/controllers/modal/edit_expense_popup.js"></script>
         <script src="scripts/controllers/modal/edit_income_popup.js"></script>
         <script src="scripts/controllers/modal/category_filter_popup.js"></script>
         <script src="scripts/controllers/modal/edit_category_popup.js"></script>
+
         <script src="scripts/services/category_service.js"></script>
         <script src="scripts/services/date_time_service.js"></script>
         <script src="scripts/services/host_name.js"></script>
         <script src="scripts/services/modal_template_service.js"></script>
+
         <script src="scripts/directives/bs_tooltip.js"></script>
+
         <script src="scripts/filters/unique.js"></script>
         <!-- endbuild -->
 </body>

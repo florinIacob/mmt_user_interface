@@ -15,13 +15,14 @@ var app = angular.module('mmtUiApp', [
 		'ngRoute',
 		'ngSanitize',
 		'ngTouch',
-		'ui.bootstrap'
+		'ui.bootstrap',
+		'chart.js'
 	])
 	.run(function($rootScope, $cookieStore) {
       $rootScope.authenticated = $cookieStore.get('mmtlt') !== undefined;
       $rootScope.username = $cookieStore.get('username');
   })
-	.config(function ($routeProvider, $httpProvider) {
+	.config(function ($routeProvider, $httpProvider, ChartJsProvider) {
 		$routeProvider
 			.when('/', {
 				templateUrl: 'views/main.html',
@@ -58,6 +59,11 @@ var app = angular.module('mmtUiApp', [
         controller: 'ExpensesHistoryCtrl',
         controllerAs: 'expenses_history'
       })
+      .when('/expenses_chart', {
+        templateUrl: 'views/expense/expenses_chart.html',
+        controller: 'ExpensesChartCtrl',
+        controllerAs: 'expenses_chart'
+      })
       .when('/expense_categories', {
         templateUrl: 'views/expense/expense_categories.html',
         controller: 'ExpenseCategoriesCtrl',
@@ -78,4 +84,6 @@ var app = angular.module('mmtUiApp', [
 			});
 
 			$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+      ChartJsProvider.setOptions({ colors : [ '#46BFBD', '#803690', '#4D5360', '#00ADF9', '#DCDCDC', '#FDB45C', '#949FB1'] });
 	});

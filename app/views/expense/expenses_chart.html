@@ -1,0 +1,38 @@
+<div class="container sign-up-container">
+  <h2 style="text-align:center;"><img src="images/expenses_chart.svg"> EXPENSES CHART</h2>
+  <br>
+  <div class="form-group">
+    <label class="control-label col-sm-3" for="date">Graphic type:</label>
+    <div class="col-sm-8">
+      <select type="date" class="form-control" id="graphic" placeholder="Category" ng-model="graphic_type" required>
+        <option ng-repeat="graphic in graphics" value="{{graphic}}" required>{{graphic}}</option>
+      </select>
+    </div>
+  </div>
+  <br>
+  <br>
+</div>
+<br>
+<br>
+
+  <canvas ng-if="graphic_type == 'LINEAR'" id="line" class="chart chart-line" chart-data="dataLinear"
+          chart-labels="labelsLinear" chart-legend="true" chart-series="seriesLinear"
+          chart-click="onClick" >
+  </canvas>
+
+  <canvas ng-if="graphic_type == 'BAR'" id="bar" class="chart chart-bar"
+          chart-data="dataBar" chart-labels="labelsBar" chart-series="seriesBar">
+  </canvas>
+
+  <canvas ng-if="graphic_type == 'DOUGHNUT'" id="doughnut" class="chart chart-doughnut"
+          chart-data="dataDoughnut" chart-labels="labelsDoughnut">
+  </canvas>
+
+  <canvas ng-if="graphic_type == 'PIE'" id="pie" class="chart chart-pie"
+          chart-data="dataPie" chart-labels="labelsPie">
+  </canvas>
+
+  <canvas ng-if="graphic_type == 'POLAR'" id="polar-area" class="chart chart-polar-area"
+          chart-data="dataPolar" chart-labels="labelsPolar">
+  </canvas>
+

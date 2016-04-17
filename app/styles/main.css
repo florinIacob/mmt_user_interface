@@ -109,3 +109,5 @@ body {
     width:125px;
   }
 }
+
+@import "bower_components/angular-chart.js/dist/angular-chart.css";
