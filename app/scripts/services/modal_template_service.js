@@ -171,5 +171,49 @@ app.factory('ModalTemplateService', function() {
     return warningTemplate;
   }
 
+  // EDIT CATEGORY POPUP TEMPLATE
+  service.getEditCategoryTemplate = function() {
+    const editCategoryTemplate = `
+      <div class="source-list-modal" style="height:100%;background-color:#eaeae1;">
+        <div class="container sign-up-container">
+          <h2 style="text-align:center;"><img src="images/expense_categories.svg"> EDIT CATEGORY</h2>
+          <form class="form-horizontal" role="form" ng-submit="submit()">
+
+          <br>
+
+            <div class="form-group">
+              <label class="control-label col-sm-1" for="date">Colour:</label>
+              <div class="col-sm-3">
+                <select class="form-control" ng-model="category.colour">
+                  <option selected style="background-color: white" class="light">light</option>
+                  <option style="background-color: cornsilk" class="stable">stable</option>
+                  <option style="background-color: DodgerBlue " class="positive">positive</option>
+                  <option style="background-color: aqua" class="calm">calm</option>
+                  <option style="background-color: YellowGreen" class="balanced">balanced</option>
+                  <option style="background-color: Gold" class="energized">energized</option>
+                  <option style="background-color: Crimson " class="assertive">assertive</option>
+                  <option style="background-color: BlueViolet " class="royal">royal</option>
+                  <option style="background-color: black" class="dark">dark</option>
+                </select>
+              </div>
+              <div class="col-sm-3">
+                <input type="text" class="form-control" placeholder="New category name" ng-model="category.name">
+              </div>
+              <div class="col-sm-2">
+                <input type="button" class="form-control" placeholder="Edit category" value="Edit" ng-click="submit()">
+              </div>
+              <div class="col-sm-2">
+                <input type="button" class="form-control" placeholder="Cancel" value="Cancel" ng-click="cancel()">
+              </div>
+            </div>
+          </label>
+          <br>
+          </form>
+        </div>
+      </div>
+    `;
+    return editCategoryTemplate;
+  }
+
   return service;
 });

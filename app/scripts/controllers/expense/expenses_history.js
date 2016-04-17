@@ -149,6 +149,7 @@ angular.module('mmtUiApp')
       $location.path('/add_expense');
    }
 
+   // ------------------- CATEGORIES AREA ----------------------
    $scope.filter_category;
    // FILTER EXPENSES BY CATEGORY
    $scope.filterByCategory = function() {
@@ -178,6 +179,11 @@ angular.module('mmtUiApp')
       });
    }
 
+   $scope.showCategoriesColors = false;
+   $scope.useColoursForCategories = function() {
+      $scope.showCategoriesColors = !$scope.showCategoriesColors;
+   }
+
    // -------------- SORTING AREA ------------------
    $scope.sortColumn = 'creationDate';
    $scope.sortReverse = true;
@@ -185,5 +191,18 @@ angular.module('mmtUiApp')
    $scope.changeSortingCriteria = function(columnName) {
       $scope.sortColumn = columnName;
       $scope.sortReverse = !$scope.sortReverse;
+   }
+
+   // COLOURS
+   $scope.colours_map = {
+       light: 'white',
+       stable: 'cornsilk',
+       positive: 'DodgerBlue',
+       calm: 'aqua',
+       balanced: 'YellowGreen',
+       energized: 'Gold',
+       assertive: 'Crimson',
+       royal: 'BlueViolet',
+       dark: 'black'
    }
 });

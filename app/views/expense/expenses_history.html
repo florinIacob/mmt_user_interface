@@ -18,6 +18,7 @@
       <th>Category
         <span class="glyphicon glyphicon-filter" bs-tooltip title="Filter by category" ng-click="filterByCategory()"></span>
         <span class="glyphicon glyphicon-sort" bs-tooltip title="Sort by category" ng-click="changeSortingCriteria('category.name')"></span>
+        <span class="glyphicon glyphicon-question-sign" bs-tooltip title="Use colours for categories" ng-click="useColoursForCategories()"></span>
       </th>
       <th>Date
         <span class="glyphicon glyphicon-sort" bs-tooltip title="Sort by date" ng-click="changeSortingCriteria('creationDate')"></span>
@@ -29,7 +30,9 @@
     <tr ng-repeat="expense in expenses | orderBy:sortColumn:sortReverse | filter:filter_category:strict" bs-tooltip title="{{expense.description}}" >
       <td>{{ expense.name }}</td>
       <td>{{ expense.amount }}</td>
-      <td style=" background-color:{{expense.category.colour}};">{{ expense.category.name }}</td>
+      <td style=" background-color:{{(showCategoriesColors == true) ? colours_map[expense.category.colour] : white}};">
+        {{ expense.category.name }}
+      </td>
       <td>{{ expense.creationDate | date:'medium' }}</td>
       <td>
         <span class="glyphicon glyphicon-pencil" bs-tooltip title="Edit expense!"

@@ -17,7 +17,7 @@ angular.module('mmtUiApp')
 
   $scope.newCategory = null;
   $scope.categories = [];
-  $scope.categories = CategoryService.getCategories();
+  $scope.categories = CategoryService.getCategoryNames();
 
   $scope.current_date_value = DateTimeService.createCurrentDateTimeString();
   console.log($scope.current_date_value);
@@ -76,7 +76,7 @@ angular.module('mmtUiApp')
   }
 
   $scope.addCategory = function() {
-    CategoryService.addCategory($scope.newCategory, $scope.categories);
+    CategoryService.addCategoryName($scope.newCategory, $scope.categories);
     $scope.expense.category.name = $scope.newCategory;
     $scope.newCategory = null;
   }

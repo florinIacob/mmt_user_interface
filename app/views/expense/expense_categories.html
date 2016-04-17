@@ -1,0 +1,60 @@
+<div class="container sign-up-container">
+  <h2 style="text-align:center;"><img src="images/expense_categories.svg"> EXPENSE CATEGORIES</h2>
+  <form class="form-horizontal" role="form" ng-submit="submit()">
+
+  <br>
+
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="date">Colour:</label>
+      <div class="col-sm-3">
+        <select class="form-control" ng-model="newCategory.colour">
+          <option selected style="background-color: white" class="light">light</option>
+          <option style="background-color: cornsilk" class="stable">stable</option>
+          <option style="background-color: DodgerBlue " class="positive">positive</option>
+          <option style="background-color: aqua" class="calm">calm</option>
+          <option style="background-color: YellowGreen" class="balanced">balanced</option>
+          <option style="background-color: Gold" class="energized">energized</option>
+          <option style="background-color: Crimson " class="assertive">assertive</option>
+          <option style="background-color: BlueViolet " class="royal">royal</option>
+          <option style="background-color: black" class="dark">dark</option>
+        </select>
+      </div>
+      <div class="col-sm-4">
+        <input type="text" class="form-control" placeholder="New category name" ng-model="newCategory.name">
+      </div>
+      <div class="col-sm-2">
+        <input type="button" class="form-control" placeholder="Add new category" value="Add category" ng-click="addCategory()">
+      </div>
+    </div>
+  </label>
+  <br>
+  </form>
+</div>
+
+<br>
+<div>
+  <table class="table table-bordered table-hover">
+    <thead>
+    <tr>
+      <th>Category Name</th>
+      <th>Colour Name</th>
+      <th>Colour</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="category in categories">
+      <td>{{ category.name }}</td>
+      <td>{{ category.colour }}</td>
+      <td><pre style="background-color:{{colours_map[category.colour]}};">      </pre></td>
+      <td>
+        <span class="glyphicon glyphicon-pencil" bs-tooltip title="Edit category!" ng-click="editCategory(category)"></span>
+        <span class="glyphicon glyphicon-trash" style="float:right;" bs-tooltip title="Delete category!"
+              ng-click="deleteCategory(category)"></span></td>
+    </tr>
+    <tr ng-show="categories.length == 0">
+      <td style="font-style:italic;" colspan="5">No category have been found!</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

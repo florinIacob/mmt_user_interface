@@ -58,6 +58,11 @@ var app = angular.module('mmtUiApp', [
         controller: 'ExpensesHistoryCtrl',
         controllerAs: 'expenses_history'
       })
+      .when('/expense_categories', {
+        templateUrl: 'views/expense/expense_categories.html',
+        controller: 'ExpenseCategoriesCtrl',
+        controllerAs: 'expense_categories'
+      })
 			.when('/add_income', {
         templateUrl: 'views/income/add_income.html',
         controller: 'AddIncomeCtrl',
