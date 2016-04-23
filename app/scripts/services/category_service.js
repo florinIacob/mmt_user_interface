@@ -1,4 +1,4 @@
-app.factory('CategoryService', function($http, $cookieStore, $route, $uibModal, ModalTemplateService, host_name) {
+app.factory('CategoryService', function($http, $q, $cookieStore, $route, $uibModal, ModalTemplateService, host_name) {
   var service = {};
 
   // GET CATEGORY NAMES
@@ -35,6 +35,24 @@ app.factory('CategoryService', function($http, $cookieStore, $route, $uibModal, 
       });
     return categories;
   }
+
+  // GET CATEGORIES AS PROMISE
+  service.getCategoriesAsPromise = function() {
+    var deferred = $q.defer();
+    $http({
+        method: 'GET',
+        url: host_name + '/category/find_all',
+        headers: {
+          'Authorization': $cookieStore.get('mmtlt')
+        },
+      }).then(function successCallback(response) {
+        deferred.resolve(angular.fromJson(response.data));
+      }, function errorCallback(response) {
+        openInfoPopup('WARNING', 'Cannot access categories!');
+      });
+    return deferred.promise;
+  }
+
 
   // ADD A CATEGORY NAME
   service.addCategoryName = function(categoryName, categoriesArray) {

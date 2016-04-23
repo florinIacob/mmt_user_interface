@@ -2,7 +2,7 @@
   <h2 style="text-align:center;"><img src="images/expenses_chart.svg"> EXPENSES CHART</h2>
   <br>
   <div class="form-group">
-    <label class="control-label col-sm-3" for="date">Graphic type:</label>
+    <label class="control-label col-sm-3">Graphic type:</label>
     <div class="col-sm-8">
       <select type="date" class="form-control" id="graphic" placeholder="Category" ng-model="graphic_type" required>
         <option ng-repeat="graphic in graphics" value="{{graphic}}" required>{{graphic}}</option>
@@ -15,24 +15,94 @@
 <br>
 <br>
 
-  <canvas ng-if="graphic_type == 'LINEAR'" id="line" class="chart chart-line" chart-data="dataLinear"
-          chart-labels="labelsLinear" chart-legend="true" chart-series="seriesLinear"
-          chart-click="onClick" >
-  </canvas>
+<div id="graphic_container">
 
-  <canvas ng-if="graphic_type == 'BAR'" id="bar" class="chart chart-bar"
-          chart-data="dataBar" chart-labels="labelsBar" chart-series="seriesBar">
-  </canvas>
+  <div id="selection_area" class="form-group">
+    <label class="control-label col-sm-2">Change year:</label>
+    <div class="col-sm-3">
+      <select type="date" class="form-control" id="year_select" placeholder="year" ng-model="selected_year"
+              ng-change="onDateSelect(true)">
+        <option ng-repeat="year in yearsArray" value="{{year}}" required>{{year}}</option>
+      </select>
+    </div>
+    <div class="col-sm-4"></div>
+    <div class="col-sm-3">
+      <input type="button" ng-if="!show_categories_legend" class="form-control" value="Show categories legend"
+             ng-click="toggleLegendShow()">
+      <input type="button" ng-if="show_categories_legend" class="form-control" value="Hide categories legend"
+             ng-click="toggleLegendShow()">
+    </div>
+  </div>
+  <div ng-show="graphic_type == 'PIE'" id="selection_area2" class="form-group">
+    <label class="control-label col-sm-2">Change month:</label>
+    <div class="col-sm-3">
+      <select type="date" class="form-control" id="month_select" placeholder="month" ng-model="selected_month"
+              ng-change="onDateSelect(false)">
+        <option ng-repeat="month in monthsArray" value="{{month}}" required>{{month}}</option>
+      </select>
+    </div>
+    <div class="col-sm-7"></div>
+  </div>
+  <div id="linear_chart" ng-if="graphic_type == 'LINEAR'" >
+    <canvas ng-if="show_categories_legend" class="chart chart-line" chart-data="dataLinear"
+            chart-labels="labelsLinear" chart-series="seriesLinear" chart-legend="true"
+            chart-click="onClick" >
+    </canvas>
+    <canvas ng-if="!show_categories_legend" class="chart chart-line" chart-data="dataLinear"
+            chart-labels="labelsLinear" chart-series="seriesLinear" chart-legend="false"
+            chart-click="onClick" >
+    </canvas>
+  </div>
 
-  <canvas ng-if="graphic_type == 'DOUGHNUT'" id="doughnut" class="chart chart-doughnut"
-          chart-data="dataDoughnut" chart-labels="labelsDoughnut">
-  </canvas>
+  <div id="bar_chart" ng-if="graphic_type == 'BAR'" >
+    <canvas ng-if="show_categories_legend" class="chart chart-bar"
+            chart-data="dataBar" chart-labels="labelsBar" chart-series="seriesBar" chart-legend="true">
+    </canvas>
+    <canvas ng-if="!show_categories_legend" class="chart chart-bar"
+            chart-data="dataBar" chart-labels="labelsBar" chart-series="seriesBar">
+    </canvas>
+  </div>
 
-  <canvas ng-if="graphic_type == 'PIE'" id="pie" class="chart chart-pie"
-          chart-data="dataPie" chart-labels="labelsPie">
-  </canvas>
+  <div id="doughnut_chart" ng-if="graphic_type == 'DOUGHNUT'" >
+    <canvas ng-if="show_categories_legend" class="chart chart-doughnut"
+            chart-data="dataDoughnut" chart-labels="labelsDoughnut" chart-legend="true">
+    </canvas>
+    <canvas ng-if="!show_categories_legend" class="chart chart-doughnut"
+             chart-data="dataDoughnut" chart-labels="labelsDoughnut">
+    </canvas>
+    <br>
+    <br>
+    <div class="form-group">
+      <label class="control-label col-sm-11" style="width:100%;text-align:center;">DOUGHNUT graphic chart displays YEARLY calculation
+        for categories. For MONTHLY calculation please change to PIE graphic.
+      </label>
+    </div>
+  </div>
+
+  <div id="pie_chart" ng-if="graphic_type == 'PIE'" >
+    <canvas ng-if="show_categories_legend" class="chart chart-pie"
+            chart-data="dataPie" chart-labels="labelsPie" chart-legend="true">
+    </canvas>
+    <canvas ng-if="!show_categories_legend" class="chart chart-pie"
+            chart-data="dataPie" chart-labels="labelsPie">
+    </canvas>
+    <br>
+    <br>
+    <div class="form-group">
+      <label class="control-label col-sm-11" style="width:100%;text-align:center;">PIE graphic chart displays MONTHLY calculation
+        for categories. For YEARLY calculation please change to DOUGHNUT graphic.
+      </label>
+    </div>
+  </div>
 
   <canvas ng-if="graphic_type == 'POLAR'" id="polar-area" class="chart chart-polar-area"
           chart-data="dataPolar" chart-labels="labelsPolar">
   </canvas>
+
+  <canvas ng-if="graphic_type == 'DYNAMIC'" id="base" class="chart-base" chart-type="typeDynamic"
+          chart-data="dataDynamic" chart-labels="labelsDynamic" chart-legend="true">
+  </canvas>
+
+  <br>
+</div>
 
