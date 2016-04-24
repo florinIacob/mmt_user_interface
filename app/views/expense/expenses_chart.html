@@ -33,7 +33,7 @@
              ng-click="toggleLegendShow()">
     </div>
   </div>
-  <div ng-show="graphic_type == 'PIE'" id="selection_area2" class="form-group">
+  <div ng-show="graphic_type == 'PIE' || graphic_type == 'DYNAMIC'" id="selection_area2" class="form-group">
     <label class="control-label col-sm-2">Change month:</label>
     <div class="col-sm-3">
       <select type="date" class="form-control" id="month_select" placeholder="month" ng-model="selected_month"
@@ -41,7 +41,11 @@
         <option ng-repeat="month in monthsArray" value="{{month}}" required>{{month}}</option>
       </select>
     </div>
-    <div class="col-sm-7"></div>
+    <div class="col-sm-4"></div>
+    <div class="col-sm-3">
+      <input  ng-show="graphic_type == 'DYNAMIC'" type="button" class="form-control" value="Toggle graphic type"
+             ng-click="toggleDynamicGraphic()">
+    </div>
   </div>
   <div id="linear_chart" ng-if="graphic_type == 'LINEAR'" >
     <canvas ng-if="show_categories_legend" class="chart chart-line" chart-data="dataLinear"
@@ -74,7 +78,7 @@
     <br>
     <div class="form-group">
       <label class="control-label col-sm-11" style="width:100%;text-align:center;">DOUGHNUT graphic chart displays YEARLY calculation
-        for categories. For MONTHLY calculation please change to PIE graphic.
+        for categories. For MONTHLY calculation please change to PIE or DYNAMIC graphic.
       </label>
     </div>
   </div>
@@ -95,13 +99,30 @@
     </div>
   </div>
 
-  <canvas ng-if="graphic_type == 'POLAR'" id="polar-area" class="chart chart-polar-area"
-          chart-data="dataPolar" chart-labels="labelsPolar">
-  </canvas>
+  <div id="polar_chart" ng-if="graphic_type == 'POLAR'" >
+    <canvas ng-if="show_categories_legend" class="chart chart-polar-area"
+            chart-data="dataPolar" chart-labels="labelsPolar" chart-legend="true">
+    </canvas>
+    <canvas ng-if="!show_categories_legend" class="chart chart-polar-area"
+            chart-data="dataPolar" chart-labels="labelsPolar">
+    </canvas>
+    <br>
+    <br>
+    <div class="form-group">
+      <label class="control-label col-sm-11" style="width:100%;text-align:center;">POLAR graphic chart displays YEARLY calculation
+        for categories. For MONTHLY calculation please change to PIE or DYNAMIC graphic.
+      </label>
+    </div>
+  </div>
 
-  <canvas ng-if="graphic_type == 'DYNAMIC'" id="base" class="chart-base" chart-type="typeDynamic"
-          chart-data="dataDynamic" chart-labels="labelsDynamic" chart-legend="true">
-  </canvas>
+  <div id="dynamic_chart" ng-if="graphic_type == 'DYNAMIC'">
+    <canvas ng-if="show_categories_legend" class="chart-base" chart-type="typeDynamic"
+            chart-data="dataDynamic" chart-labels="labelsDynamic" chart-legend="true">
+    </canvas>
+    <canvas ng-if="!show_categories_legend" class="chart-base" chart-type="typeDynamic"
+            chart-data="dataDynamic" chart-labels="labelsDynamic">
+    </canvas>
+  </div>
 
   <br>
 </div>

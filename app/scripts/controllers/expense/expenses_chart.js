@@ -63,10 +63,10 @@ angular.module('mmtUiApp')
     $scope.labelsPolar = [];
     $scope.dataPolar = [];
     // - dynamic
-    $scope.labelsDynamic = ["Download Sales", "In-Store Sales", "Mail-Order Sales", "Tele Sales", "Corporate Sales"];
-    $scope.dataDynamic = [300, 500, 100, 40, 120];
+    $scope.labelsDynamic = [];
+    $scope.dataDynamic = [];
     $scope.typeDynamic = 'PolarArea';
-    $scope.toggleDynamic = function () {
+    $scope.toggleDynamicGraphic = function () {
       $scope.typeDynamic = $scope.typeDynamic === 'PolarArea' ?
         'Pie' : 'PolarArea';
     };
@@ -134,12 +134,25 @@ angular.module('mmtUiApp')
         }
 
         // POLAR graphic
-        categ_index = $scope.labelsPolar.indexOf(expense.category.name);
-        if (categ_index > -1) {
-          $scope.dataPolar[categ_index] = expense.amount + $scope.dataPolar[categ_index];
-        } else {
-          $scope.labelsPolar.push(expense.category.name);
-          $scope.dataPolar.push(expense.amount);
+        if ($scope.selected_year == expense.year.toString()) {
+          categ_index = $scope.labelsPolar.indexOf(expense.category.name);
+          if (categ_index > -1) {
+            $scope.dataPolar[categ_index] = expense.amount + $scope.dataPolar[categ_index];
+          } else {
+            $scope.labelsPolar.push(expense.category.name);
+            $scope.dataPolar.push(expense.amount);
+          }
+        }
+
+        // DYNAMIC graphic
+        if (($scope.selected_year == expense.year.toString()) && ($scope.selected_month == expense.monthAsString)) {
+          categ_index = $scope.labelsDynamic.indexOf(expense.category.name);
+          if (categ_index > -1) {
+            $scope.dataDynamic[categ_index] = expense.amount + $scope.dataDynamic[categ_index];
+          } else {
+            $scope.labelsDynamic.push(expense.category.name);
+            $scope.dataDynamic.push(expense.amount);
+          }
         }
       })
   }
