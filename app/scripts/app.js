@@ -79,6 +79,11 @@ var app = angular.module('mmtUiApp', [
         controller: 'IncomesHistoryCtrl',
         controllerAs: 'incomes_history'
       })
+      .when('/incomes_chart', {
+        templateUrl: 'views/income/incomes_chart.html',
+        controller: 'IncomesChartCtrl',
+        controllerAs: 'incomes_chart'
+      })
 			.otherwise({
 				redirectTo: '/'
 			});

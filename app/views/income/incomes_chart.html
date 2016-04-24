@@ -1,0 +1,56 @@
+<div class="container sign-up-container">
+  <h2 style="text-align:center;"><img src="images/expenses_chart.svg"> INCOMES CHART</h2>
+  <br>
+  <div class="form-group">
+    <label class="control-label col-sm-3">Graphic type:</label>
+    <div class="col-sm-8">
+      <select type="date" class="form-control" id="graphic" placeholder="Category" ng-model="graphic_type" required>
+        <option ng-repeat="graphic in graphics" value="{{graphic}}" required>{{graphic}}</option>
+      </select>
+    </div>
+  </div>
+  <br>
+  <br>
+</div>
+<br>
+<br>
+
+<div id="graphic_container">
+
+  <div id="selection_area" class="form-group">
+    <label class="control-label col-sm-2">Change year:</label>
+    <div class="col-sm-3">
+      <select type="date" class="form-control" id="year_select" placeholder="year" ng-model="selected_year"
+              ng-change="onDateSelect(true)">
+        <option ng-repeat="year in yearsArray" value="{{year}}" required>{{year}}</option>
+      </select>
+    </div>
+    <div class="col-sm-4"></div>
+    <div class="col-sm-3">
+      <input  ng-show="graphic_type == 'DYNAMIC'" type="button" class="form-control" value="Toggle graphic type"
+              ng-click="toggleDynamicGraphic()">
+    </div>
+  </div>
+
+  <div id="linear_chart" ng-if="graphic_type == 'LINEAR'" >
+    <canvas class="chart chart-line" chart-data="dataLinear" chart-legend="true"
+            chart-labels="labelsLinear" chart-series="seriesLinear"
+            chart-click="onClick" >
+    </canvas>
+  </div>
+
+  <div id="bar_chart" ng-if="graphic_type == 'BAR'" >
+    <canvas class="chart chart-bar"
+            chart-data="dataBar" chart-labels="labelsBar" chart-series="seriesBar" chart-legend="true">
+    </canvas>
+  </div>
+
+  <div id="dynamic_chart" ng-if="graphic_type == 'DYNAMIC'">
+    <canvas class="chart-base" chart-type="typeDynamic"
+            chart-data="dataDynamic" chart-labels="labelsDynamic" chart-legend="true">
+    </canvas>
+  </div>
+
+  <br>
+</div>
+
