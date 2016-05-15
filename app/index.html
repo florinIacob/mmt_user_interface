@@ -79,7 +79,14 @@
     <div class="footer">
       <div class="container">
         <p>
-          <span><img src="images/logo.svg" height="23" width="23"> My Money Tracker</span>
+          <span><img src="images/logo.svg" height="23" width="23"> My Money Tracker | </span>
+          <span> Change language:
+            <img src="{{ 'images/flags/' + FLAG}}" height="12" width="17">
+            <select type="date" id="language" placeholder="Category" ng-model="LANGUAGE"
+                  ng-change="changeLanguage(LANGUAGE)" required>
+              <option ng-repeat="language in ['ENG', 'RO']" value="{{language}}" required>{{language}}</option>
+            </select>
+          </span>
           <span style="float:right;">Copyright © 2016 Florin - All rights reserved</span>
         </p>
       </div>

@@ -1,9 +1,9 @@
 <div class="container sign-up-container">
-  <h2 style="text-align:center;"><img src="images/user_profile.svg"> USER PROFILE</h2>
+  <h2 style="text-align:center;"><img src="images/user_profile.svg"> {{isEng() ? 'USER PROFILE':'PROFILUL UTILIZATORULUI'}}</h2>
   <br>
   <hr style="border-top: 1px solid #ccc;">
   <div class="form-group">
-    <label class="control-label col-sm-3">Default currency:</label>
+    <label class="control-label col-sm-3">{{isEng() ? 'Default Currency':'Valuta implicita'}}:</label>
     <div class="col-sm-8">
       <select type="date" class="form-control" id="currency" placeholder="Category" ng-model="default_currency"
               ng-change="onCurrencyChange(default_currency)" required>
@@ -16,26 +16,26 @@
   <br>
   <hr style="border-top: 1px solid #ccc;">
   <div style="width:100%;text-align:center;">
-    <p><span style="font-weight: bold;">MONTHLY EXPENSES</span>: {{username}}, you've spent <span style="font-weight: bold;">'{{sumOfExpensesThisMonth}} {{default_currency}}'</span> THIS MONTH</p>
-    <p><span style="font-weight: bold;">MONTHLY INCOMES</span>: {{username}}, you've received <span style="font-weight: bold;">'{{sumOfIncomesThisMonth}} {{default_currency}}'</span> THIS MONTH</p>
+    <p><span style="font-weight: bold;">{{isEng() ? 'MONTHLY EXPENSES':'CHELTUIELI LUNARE'}}</span>: {{username}}, {{isEng() ? 'you have spent':'ai cheltuit'}} <span style="font-weight: bold;">'{{sumOfExpensesThisMonth}} {{default_currency}}'</span> {{isEng() ? 'THIS MONTH':'IN ACEASTA LUNA'}}</p>
+    <p><span style="font-weight: bold;">{{isEng() ? 'MONTHLY INCOMES':'INCASARI LUNARE'}}</span>: {{username}}, {{isEng() ? 'you have received':'ai incasat'}} <span style="font-weight: bold;">'{{sumOfIncomesThisMonth}} {{default_currency}}'</span> {{isEng() ? 'THIS MONTH':'IN ACEASTA LUNA'}}</p>
   </div>
-  <pre><span style="font-size:17px;"> <span class="glyphicon glyphicon-usd"></span> Your <span style="font-weight: bold;color:BlueViolet;">MONTHLY BUDGET</span> is <span style="font-weight: bold;color:
+  <pre><span style="font-size:17px;"> <span class="glyphicon glyphicon-usd"></span> {{isEng() ? 'Your':''}} <span style="font-weight: bold;color:BlueViolet;">{{isEng() ? 'MONTHLY BUDGET':'BUGETUL TAU LUNAR'}}</span> {{isEng() ? 'is':'este'}} <span style="font-weight: bold;color:
   {{(sumOfIncomesThisMonth-sumOfExpensesThisMonth) === 0 ? 'blue' : ((sumOfIncomesThisMonth-sumOfExpensesThisMonth) < 0 ? 'red' : 'green')}};"> '{{ (sumOfIncomesThisMonth - sumOfExpensesThisMonth).toFixed(2)}} {{default_currency}}'</span></span></pre>
   <br>
   <hr style="border-top: 1px solid #ccc;">
   <div style="width:100%;text-align:center;">
-    <p><span style="font-weight: bold;">YEARLY EXPENSES</span>: {{username}}, you've spent <span style="font-weight: bold;">'{{sumOfExpensesThisYear}} {{default_currency}}'</span> THIS YEAR</p>
-    <p><span style="font-weight: bold;">YEARLY INCOMES</span>: {{username}}, you've received <span style="font-weight: bold;">'{{sumOfIncomesThisYear}} {{default_currency}}'</span> THIS YEAR</p>
+    <p><span style="font-weight: bold;">{{isEng() ? 'YEARLY EXPENSES':'CHELTUIELI ANUALE'}}</span>: {{username}}, {{isEng() ? 'you have spent':'ai cheltuit'}} <span style="font-weight: bold;">'{{sumOfExpensesThisYear}} {{default_currency}}'</span> {{isEng() ? 'THIS YEAR':'ANUL ACESTA'}}</p>
+    <p><span style="font-weight: bold;">{{isEng() ? 'YEARLY INCOMES':'INCASARI ANUALE'}}</span>: {{username}}, {{isEng() ? 'you have received':'ai incasat'}} <span style="font-weight: bold;">'{{sumOfIncomesThisYear}} {{default_currency}}'</span> {{isEng() ? 'THIS YEAR':'ANUL ACESTA'}}</p>
   </div>
-  <pre><span style="font-size:17px;"> <span class="glyphicon glyphicon-usd"></span> Your <span style="font-weight: bold;color:Gold;">YEARLY BUDGET</span> is <span style="font-weight: bold;color:
+  <pre><span style="font-size:17px;"> <span class="glyphicon glyphicon-usd"></span> {{isEng() ? 'Your':''}} <span style="font-weight: bold;color:Gold;">{{isEng() ? 'YEARLY BUDGET':'BUGETUL TAU ANUAL'}}</span> {{isEng() ? 'is':'este'}} <span style="font-weight: bold;color:
   {{(sumOfIncomesThisYear-sumOfExpensesThisYear) === 0 ? 'blue' : ((sumOfIncomesThisYear-sumOfExpensesThisYear) < 0 ? 'red' : 'green')}};"> '{{ (sumOfIncomesThisYear - sumOfExpensesThisYear).toFixed(2) }} {{default_currency}}'</span></span></pre>
   <br>
   <hr style="border-top: 1px solid #ccc;">
   <div style="width:100%;text-align:center;">
-    <p><span style="font-weight: bold;">OVERALL EXPENSES</span>: {{username}}, you've spent <span style="font-weight: bold;">'{{sumOfExpensesOverall}} {{default_currency}}'</span> OVERALL</p>
-    <p><span style="font-weight: bold;">OVERALL INCOMES</span>: {{username}}, you've received <span style="font-weight: bold;">'{{sumOfIncomesOverall}} {{default_currency}}'</span> OVERALL</p>
+    <p><span style="font-weight: bold;">{{isEng() ? 'OVERALL EXPENSES':'CHELTUIELI TOTALE'}}</span>: {{username}}, {{isEng() ? 'you have spent':'ai cheltuit'}} <span style="font-weight: bold;">'{{sumOfExpensesOverall}} {{default_currency}}'</span> {{isEng() ? 'OVERALL':'IN TOTAL'}}</p>
+    <p><span style="font-weight: bold;">{{isEng() ? 'OVERALL INCOMES':'INCASARI TOTALE'}}</span>: {{username}}, {{isEng() ? 'you have received':'ai incasat'}} <span style="font-weight: bold;">'{{sumOfIncomesOverall}} {{default_currency}}'</span> {{isEng() ? 'OVERALL':'IN TOTAL'}}</p>
   </div>
-  <pre><span style="font-size:17px;"> <span class="glyphicon glyphicon-usd"></span> Your <span style="font-weight: bold;color:DodgerBlue;">OVERALL BUDGET</span> is <span style="font-weight: bold;color:
+  <pre><span style="font-size:17px;"> <span class="glyphicon glyphicon-usd"></span> {{isEng() ? 'Your':''}} <span style="font-weight: bold;color:DodgerBlue;">{{isEng() ? 'OVERALL BUDGET':'BUGETUL TAU TOTAL'}}</span> {{isEng() ? 'is':'este'}} <span style="font-weight: bold;color:
   {{(sumOfIncomesOverall-sumOfExpensesOverall) === 0 ? 'blue' : ((sumOfIncomesOverall-sumOfExpensesOverall) < 0 ? 'red' : 'green')}};"> '{{ (sumOfIncomesOverall - sumOfExpensesOverall).toFixed(2) }} {{default_currency}}'</span></span></pre>
 
 </div>

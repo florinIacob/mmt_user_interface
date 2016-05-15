@@ -41,7 +41,7 @@ angular.module('mmtUiApp')
           items: function() {
             return {
               title: 'Information!',
-              message: 'Cannot load default currency!',
+              message: $rootScope.isEng() ? 'Cannot load default currency!' : 'Nu se poate incarca valuta curenta!',
               onYesCallback: null
             };
           },
@@ -116,7 +116,7 @@ angular.module('mmtUiApp')
               items: function() {
                 return {
                   title: 'Information!',
-                  message: 'Expenses could NOT be loaded!',
+                  message: $rootScope.isEng() ? 'Expenses could NOT be loaded!':'Cheltuielile nu pot fi incarcate!',
                   onYesCallback: null
                 };
               },
@@ -187,7 +187,7 @@ angular.module('mmtUiApp')
                 items: function() {
                   return {
                     title: 'Information!',
-                    message: 'Incomes could NOT be loaded!',
+                    message: $rootScope.isEng() ? 'Incomes could NOT be loaded!':'Incasarile nu pot fi incarcate!',
                     onYesCallback: null
                   };
                 },
@@ -231,7 +231,7 @@ angular.module('mmtUiApp')
                 items: function() {
                   return {
                     title: 'Information!',
-                    message: 'Succesfully changed default currency!',
+                    message: $rootScope.isEng() ? 'Succesfully changed default currency!' : 'Valuta curenta a fost schimbata!',
                     onYesCallback: null
                   };
                 },
@@ -247,7 +247,7 @@ angular.module('mmtUiApp')
                 items: function() {
                   return {
                     title: 'Error!',
-                    message: 'Cannot change default currency!',
+                    message: $rootScope.isEng() ? 'Cannot change default currency!':'Valuta curenta nu poate fi schimbata!',
                     onYesCallback: null
                   };
                 },
