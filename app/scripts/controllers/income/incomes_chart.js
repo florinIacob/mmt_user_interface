@@ -134,7 +134,7 @@ angular.module('mmtUiApp')
 
       $scope.onDateSelect();
     });
-  });
+});
 
 /**
   * Function used to extract the name of the month based on the received index.
