@@ -1,11 +1,11 @@
 <div class="container sign-up-container">
-  <h2 style="text-align:center;"><img src="images/expense_categories.svg"> EXPENSE CATEGORIES</h2>
+  <h2 style="text-align:center;"><img src="images/expense_categories.svg"> {{isEng() ? 'EXPENSE CATEGORIES':'CATEGORII PENTRU CHELTUIELI'}}</h2>
   <form class="form-horizontal" role="form" ng-submit="submit()">
 
   <br>
 
     <div class="form-group">
-      <label class="control-label col-sm-2" for="date">Colour:</label>
+      <label class="control-label col-sm-2" for="date">{{isEng() ? 'Colour':'Culoare'}}:</label>
       <div class="col-sm-3">
         <select class="form-control" ng-model="newCategory.colour">
           <option selected style="background-color: white" class="light">light</option>
@@ -20,10 +20,10 @@
         </select>
       </div>
       <div class="col-sm-4">
-        <input type="text" class="form-control" placeholder="New category name" ng-model="newCategory.name">
+        <input type="text" class="form-control" placeholder="{{isEng() ? 'New category name':'Numele noii categorii'}}" ng-model="newCategory.name">
       </div>
       <div class="col-sm-2">
-        <input type="button" class="form-control" placeholder="Add new category" value="Add category" ng-click="addCategory()">
+        <input type="button" class="form-control" placeholder="Add new category" value="{{isEng() ? 'Add category':'Adauga categorie'}}" ng-click="addCategory()">
       </div>
     </div>
   </label>
@@ -36,9 +36,9 @@
   <table class="table table-bordered table-hover">
     <thead>
     <tr>
-      <th>Category Name</th>
-      <th>Colour Name</th>
-      <th>Colour</th>
+      <th>{{isEng() ? 'Category Name':'Categoria'}}</th>
+      <th>{{isEng() ? 'Colour Name':'Numele culorii'}}</th>
+      <th>{{isEng() ? 'Colour':'Culoarea'}}</th>
       <th></th>
     </tr>
     </thead>
@@ -48,12 +48,12 @@
       <td>{{ category.colour }}</td>
       <td><pre style="background-color:{{colours_map[category.colour]}};">      </pre></td>
       <td>
-        <span class="glyphicon glyphicon-pencil" bs-tooltip title="Edit category!" ng-click="editCategory(category)"></span>
-        <span class="glyphicon glyphicon-trash" style="float:right;" bs-tooltip title="Delete category!"
+        <span class="glyphicon glyphicon-pencil" bs-tooltip title="{{isEng() ? 'Edit category':'Editeaza categoria'}}!" ng-click="editCategory(category)"></span>
+        <span class="glyphicon glyphicon-trash" style="float:right;" bs-tooltip title="{{isEng() ? 'Delete category':'Sterge categoria'}}!"
               ng-click="deleteCategory(category)"></span></td>
     </tr>
     <tr ng-show="categories.length == 0">
-      <td style="font-style:italic;" colspan="5">No category have been found!</td>
+      <td style="font-style:italic;" colspan="5">{{isEng() ? 'No category have been found':'Nici o categorie nu a fost gasita'}}!</td>
     </tr>
     </tbody>
   </table>

@@ -1,57 +1,57 @@
 <div class="container sign-up-container">
-  <h2 style="text-align:center;"><img src="images/sign-up.png"> SIGN UP FORM</h2>
+  <h2 style="text-align:center;"><img src="images/sign-up.png"> {{isEng() ? 'SIGN UP FORM':'FORMULAR DE INREGISTRARE'}}</h2>
   <form class="form-horizontal" role="form" ng-submit="submit()">
     <div class="form-group">
       <label class="control-label col-sm-2" for="email">Email<span style="color:#ff3333;">*</span> :</label>
       <div class="col-sm-10">
-        <input type="email" class="form-control" id="email" placeholder="Enter email" ng-model="user.email" required >
+        <input type="email" class="form-control" id="email" placeholder="{{isEng() ? 'Enter email':'Introdu email-ul'}}" ng-model="user.email" required >
       </div>
     </div>
     <div class="form-group">
-      <label class="control-label col-sm-2" for="username">Username<span style="color:#ff3333;">*</span> :</label>
+      <label class="control-label col-sm-2" for="username">{{isEng() ? 'Username':'Utilizator'}}<span style="color:#ff3333;">*</span> :</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" id="username" placeholder="Enter username" ng-model="user.username" required >
+        <input type="text" class="form-control" id="username" placeholder="{{isEng() ? 'Enter username':'Introdu numele de utlizator'}}" ng-model="user.username" required >
       </div>
     </div>
     <div class="form-group">
-      <label class="control-label col-sm-2" for="pwd">Password<span style="color:#ff3333;">*</span> :</label>
+      <label class="control-label col-sm-2" for="pwd">{{isEng() ? 'Password':'Parola'}}<span style="color:#ff3333;">*</span> :</label>
       <div class="col-sm-10">
-        <input type="password" class="form-control" id="pwd" placeholder="Enter password" ng-model="user.password" required >
+        <input type="password" class="form-control" id="pwd" placeholder="{{isEng() ? 'Enter password':'Introdu parola'}}" ng-model="user.password" required >
       </div>
     </div>
     <div class="form-group">
-      <label class="control-label col-sm-2" for="pwd">Retype<span style="color:#ff3333;">*</span> :</label>
+      <label class="control-label col-sm-2" for="pwd">{{isEng() ? 'Retype':'Retipareste'}}<span style="color:#ff3333;">*</span> :</label>
       <div class="col-sm-10">
-        <input type="password" class="form-control" id="ret_pwd" placeholder="Retype password" ng-model="retyped_password" required >
+        <input type="password" class="form-control" id="ret_pwd" placeholder="{{isEng() ? 'Retype password':'Retipareste parola'}}" ng-model="retyped_password" required >
       </div>
     </div>
     <div class="form-group">
-      <label class="control-label col-sm-2" for="firstName">First name:</label>
+      <label class="control-label col-sm-2" for="firstName">{{isEng() ? 'First name':'Prenumele'}}:</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" id="firstName" placeholder="First name" ng-model="user.firstName">
+        <input type="text" class="form-control" id="firstName" placeholder="{{isEng() ? 'First name':'Prenumele'}}" ng-model="user.firstName">
       </div>
     </div>
     <div class="form-group">
-      <label class="control-label col-sm-2" for="surname">Last name:</label>
+      <label class="control-label col-sm-2" for="surname">{{isEng() ? 'Last name':'Numele de familie'}}:</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" id="surname" placeholder="Last name" ng-model="user.surname">
+        <input type="text" class="form-control" id="surname" placeholder="{{isEng() ? 'Last name':'Numele de familie'}}" ng-model="user.surname">
       </div>
     </div>
     <div class="form-group">
-      <label class="control-label col-sm-2" for="birthdate">Birthdate:</label>
+      <label class="control-label col-sm-2" for="birthdate">{{isEng() ? 'Birthdate':'Data nasterii'}}:</label>
       <div class="col-sm-10">
-        <input type="date" class="form-control" id="birthdate" placeholder="Birthdate" ng-model="user.birthdate" >
+        <input type="date" class="form-control" id="birthdate" placeholder="{{isEng() ? 'Birthdate':'Data nasterii'}}" ng-model="user.birthdate" >
       </div>
     </div>
     <div class="form-group">
       <label class="control-label col-sm-2" for="birthdate"> </label>
       <div class="col-sm-10">
-        <span style="color:#ff3333;">* Required field</span>
+        <span style="color:#ff3333;">* {{isEng() ? 'Required field':'Camp obligatoriu'}}</span>
       </div>
     </div>
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
-        <button type="submit" class="btn btn-default submit-btn">Submit</button>
+        <button type="submit" class="btn btn-default submit-btn">{{isEng() ? 'Submit':'Trimite'}}</button>
       </div>
     </div>
   </form>

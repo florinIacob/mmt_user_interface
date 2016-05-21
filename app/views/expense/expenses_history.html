@@ -1,27 +1,27 @@
 <div class="container sign-up-container">
-  <h2 style="text-align:center;"><img src="images/expenses_history.svg"> EXPENSES HISTORY</h2>
+  <h2 style="text-align:center;"><img src="images/expenses_history.svg"> {{isEng() ? 'EXPENSES HISTORY':'ISORIC CHELTUIELI'}}</h2>
   <br>
 </div>
 <br>
-<button type="button" class="btn btn-primary btn-block" ng-click="addExpenseAttempt()">Add new expense</button>
+<button type="button" class="btn btn-primary btn-block" ng-click="addExpenseAttempt()">{{isEng() ? 'Add new expense':'Adauga cheltuiala noua'}}</button>
 <br>
 <div>
   <table class="table table-bordered table-hover">
     <thead>
     <tr>
-      <th>Name
-        <span class="glyphicon glyphicon-sort" bs-tooltip title="Sort by name" ng-click="changeSortingCriteria('name')"></span>
+      <th>{{isEng() ? 'Name':'Nume'}}
+        <span class="glyphicon glyphicon-sort" bs-tooltip title="{{isEng() ? 'Sort by name':'Sorteaza dupa nume'}}" ng-click="changeSortingCriteria('name')"></span>
       </th>
-      <th>Amount
-        <span class="glyphicon glyphicon-sort" bs-tooltip title="Sort by amount" ng-click="changeSortingCriteria('amount')"></span>
+      <th>{{isEng() ? 'Amount':'Suma'}}
+        <span class="glyphicon glyphicon-sort" bs-tooltip title="{{isEng() ? 'Sort by amount':'Sorteaza dupa suma'}}" ng-click="changeSortingCriteria('amount')"></span>
       </th>
-      <th>Category
-        <span class="glyphicon glyphicon-filter" bs-tooltip title="Filter by category" ng-click="filterByCategory()"></span>
-        <span class="glyphicon glyphicon-sort" bs-tooltip title="Sort by category" ng-click="changeSortingCriteria('category.name')"></span>
-        <span class="glyphicon glyphicon-question-sign" bs-tooltip title="Use colours for categories" ng-click="useColoursForCategories()"></span>
+      <th>{{isEng() ? 'Category':'Categoria'}}
+        <span class="glyphicon glyphicon-filter" bs-tooltip title="{{isEng() ? 'Filter by category':'Filtreaza categoriile'}}" ng-click="filterByCategory()"></span>
+        <span class="glyphicon glyphicon-sort" bs-tooltip title="{{isEng() ? 'Sort by category':'Sorteaza dupa categorie'}}" ng-click="changeSortingCriteria('category.name')"></span>
+        <span class="glyphicon glyphicon-question-sign" bs-tooltip title="{{isEng() ? 'Use colours for categories':'Utilizeaza culori pentru categorii'}}" ng-click="useColoursForCategories()"></span>
       </th>
-      <th>Date
-        <span class="glyphicon glyphicon-sort" bs-tooltip title="Sort by date" ng-click="changeSortingCriteria('creationDate')"></span>
+      <th>{{isEng() ? 'Date':'Data'}}
+        <span class="glyphicon glyphicon-sort" bs-tooltip title="{{isEng() ? 'Sort by date':'Sorteaza dupa data'}}" ng-click="changeSortingCriteria('creationDate')"></span>
       </th>
       <th></th>
     </tr>
@@ -35,14 +35,14 @@
       </td>
       <td>{{ expense.creationDate | date:'medium' }}</td>
       <td>
-        <span class="glyphicon glyphicon-pencil" bs-tooltip title="Edit expense!"
+        <span class="glyphicon glyphicon-pencil" bs-tooltip title="{{isEng() ? 'Edit expense':'Editeaza cheltuiala'}}!"
                 ng-click="editExpense(expense)"></span>
-        <span class="glyphicon glyphicon-trash" style="float:right;" bs-tooltip title="Delete expense!"
+        <span class="glyphicon glyphicon-trash" style="float:right;" bs-tooltip title="{{isEng() ? 'Delete expense':'Sterge cheltuiala'}}!"
               ng-click="deleteExpense(expense)"></span>
       </td>
     </tr>
     <tr ng-show="expenses.length == 0">
-      <td style="font-style:italic;" colspan="5">No expense have been found!</td>
+      <td style="font-style:italic;" colspan="5">{{isEng() ? 'No expense have been found':'Nici o cheltuiala nu a fost gasita'}}!</td>
     </tr>
     </tbody>
   </table>

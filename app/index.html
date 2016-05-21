@@ -43,29 +43,29 @@
               <li class="active"><a href="#/">Home</a></li>
               <li class="dropdown" ng-show="authenticated">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="">
-                  <span class="glyphicon glyphicon-piggy-bank"> Income<span class="caret"></span></a>
+                  <span class="glyphicon glyphicon-piggy-bank"> {{isEng() ? 'Income':'Incasari'}}<span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  <li><a href="#/add_income">Add income</a></li>
-                  <li><a href="#/incomes_history">Incomes history</a></li>
-                  <li><a href="#/incomes_chart">Incomes chart</a></li>
+                  <li><a href="#/add_income">{{isEng() ? 'Add income':'Adauga incasare'}}</a></li>
+                  <li><a href="#/incomes_history">{{isEng() ? 'Incomes history':'Istoric incasari'}}</a></li>
+                  <li><a href="#/incomes_chart">{{isEng() ? 'Incomes chart':'Grafic incasari'}}</a></li>
                 </ul>
               </li>
               <li class="dropdown" ng-show="authenticated">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="">
-                  <span class="glyphicon glyphicon-usd"> Expense<span class="caret"></span></a>
+                  <span class="glyphicon glyphicon-usd"> {{isEng() ? 'Expense':'Cheltuieli'}}<span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  <li><a href="#/add_expense">Add expense</a></li>
-                  <li><a href="#/expenses_history">Expenses history</a></li>
-                  <li><a href="#/expenses_chart">Expenses chart</a></li>
-                  <li><a href="#/expense_categories">Categories</a></li>
+                  <li><a href="#/add_expense">{{isEng() ? 'Add expense':'Adauga cheltuiala'}}</a></li>
+                  <li><a href="#/expenses_history">{{isEng() ? 'Expenses history':'Istoric cheltuieli'}}</a></li>
+                  <li><a href="#/expenses_chart">{{isEng() ? 'Expenses chart':'Grafic cheltuieli'}}</a></li>
+                  <li><a href="#/expense_categories">{{isEng() ? 'Categories':'Categorii'}}</a></li>
                 </ul>
               </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li ng-hide="authenticated"><a href="#/sign_up"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-              <li ng-hide="authenticated"><a href="#/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+              <li ng-hide="authenticated"><a href="#/sign_up"><span class="glyphicon glyphicon-user"></span> {{isEng() ? 'Sign Up':'Inregistreaza-te'}}</a></li>
+              <li ng-hide="authenticated"><a href="#/login"><span class="glyphicon glyphicon-log-in"></span> {{isEng() ? 'Login':'Logare'}}</a></li>
               <li ng-show="authenticated"><a href="#/profile"><span class="glyphicon glyphicon-user"></span> {{username}}</a></li>
-              <li ng-show="authenticated"><a href="#/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+              <li ng-show="authenticated"><a href="#/logout"><span class="glyphicon glyphicon-log-out"></span> {{isEng() ? 'Logout':'Delogare'}}</a></li>
             </ul>
           </div>
         </div>
@@ -80,7 +80,7 @@
       <div class="container">
         <p>
           <span><img src="images/logo.svg" height="23" width="23"> My Money Tracker | </span>
-          <span> Change language:
+          <span> {{isEng() ? 'Change language:':'Schimba limba:'}}
             <img src="{{ 'images/flags/' + FLAG}}" height="12" width="17">
             <select type="date" id="language" placeholder="Category" ng-model="LANGUAGE"
                   ng-change="changeLanguage(LANGUAGE)" required>
@@ -124,7 +124,6 @@
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/controllers/about.js"></script>
 
         <script src="scripts/controllers/user/sign_up.js"></script>
         <script src="scripts/controllers/user/login.js"></script>
