@@ -8,9 +8,9 @@
  * Controller of the mmtUiApp
  */
 angular.module('mmtUiApp')
-  .controller('EditCategoryPopupController', ['$scope', '$http','$cookieStore', 'CategoryService', 'DateTimeService',
+  .controller('EditCategoryPopupController', ['$scope', '$rootScope', '$http','$cookieStore', 'CategoryService', 'DateTimeService',
                        '$uibModal', '$uibModalInstance', 'ModalTemplateService', 'host_name', 'items',
-        function ($scope, $http, $cookieStore, CategoryService, DateTimeService, $uibModal, $uibModalInstance,
+        function ($scope, $rootScope, $http, $cookieStore, CategoryService, DateTimeService, $uibModal, $uibModalInstance,
                   ModalTemplateService, host_name, items) {
 
    $scope.category = items.category;
@@ -45,8 +45,8 @@ angular.module('mmtUiApp')
              resolve: {
                items: function() {
                  return {
-                   title: 'Information!',
-                   message: 'Category not saved!\n' + JSON.stringify(response.data),
+                   title: $rootScope.isEng() ? 'Information!':'Informatie!',
+                   message: $rootScope.isEng() ? 'Category not saved!\n':'Categoria nu a fost salvata!\n' + JSON.stringify(response.data),
                    onYesCallback: null
                  };
                },

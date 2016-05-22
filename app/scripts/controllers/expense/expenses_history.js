@@ -40,8 +40,8 @@ angular.module('mmtUiApp')
         resolve: {
           items: function() {
             return {
-              title: 'Information!',
-              message: 'Expenses could NOT be loaded!',
+              title: $rootScope.isEng() ? 'Information!':'Informatie!',
+              message: $rootScope.isEng() ? 'Expenses could NOT be loaded!':'Cheltuielile nu au putut fi ncarcate!',
               onYesCallback: null
             };
           },
@@ -100,8 +100,8 @@ angular.module('mmtUiApp')
               resolve: {
                 items: function() {
                   return {
-                    title: 'Information!',
-                    message: 'Expense successfully deleted!',
+                    title: $rootScope.isEng() ? 'Information!':'Informatie!',
+                    message: $rootScope.isEng() ? 'Expense successfully deleted!':'Cheltuiala a fost stearsa cu succes!',
                     onYesCallback: null
                   };
                 },
@@ -117,8 +117,8 @@ angular.module('mmtUiApp')
               resolve: {
                 items: function() {
                   return {
-                    title: 'Information!',
-                    message: 'Expense was NOT deleted!',
+                    title: $rootScope.isEng() ? 'Information!':'Informatie!',
+                    message: $rootScope.isEng() ? 'Expense was NOT deleted!':'Cheltuiala NU a fost stearsa!',
                     onYesCallback: null
                   };
                 },
@@ -135,8 +135,8 @@ angular.module('mmtUiApp')
         resolve: {
           items: function() {
             return {
-              title: 'Warning!',
-              message: 'Are you sure do you want to delete expense [' + expense.name + '] ?',
+              title: $rootScope.isEng() ? 'Warning!':'Atentie!',
+              message: $rootScope.isEng() ? 'Are you sure do you want to delete expense [':'Esti sigur ca vrei sa stergi chetuiala [' + expense.name + '] ?',
               onYesCallback: deleteHTTPRequest
             };
           },
@@ -169,8 +169,8 @@ angular.module('mmtUiApp')
         resolve: {
           items: function() {
             return {
-              title: 'CATEGORY FILTER!',
-              message: 'Filter expenses by category: ',
+              title: $rootScope.isEng() ? 'CATEGORY FILTER!':'FILTRU PENTRU CATEGORII!',
+              message: $rootScope.isEng() ? 'Filter expenses by category: ':'Filtreaza cheltuielile dupa categorii: ',
               onFilterCallback: filterCallback,
               expenses: $scope.expenses
             };

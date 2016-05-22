@@ -40,8 +40,8 @@ angular.module('mmtUiApp')
         resolve: {
           items: function() {
             return {
-              title: 'Information!',
-              message: 'Incomes could NOT be loaded!',
+              title: $rootScope.isEng() ? 'Information!':'Informatie!',
+              message: $rootScope.isEng() ? 'Incomes could NOT be loaded!':'Incasarile nu au putut fi incarcate!',
               onYesCallback: null
             };
           },
@@ -100,8 +100,8 @@ angular.module('mmtUiApp')
               resolve: {
                 items: function() {
                   return {
-                    title: 'Information!',
-                    message: 'Income successfully deleted!',
+                    title: $rootScope.isEng() ? 'Information!':'Informatie!',
+                    message: $rootScope.isEng() ? 'Income successfully deleted!':'Incasarea a fost stearsa cu succes!',
                     onYesCallback: null
                   };
                 },
@@ -117,8 +117,8 @@ angular.module('mmtUiApp')
               resolve: {
                 items: function() {
                   return {
-                    title: 'Information!',
-                    message: 'Income was NOT deleted!',
+                    title: $rootScope.isEng() ? 'Information!':'Informatie!',
+                    message: $rootScope.isEng() ? 'Income was NOT deleted!':'Incasarea NU a fost stearsa!',
                     onYesCallback: null
                   };
                 },
@@ -135,8 +135,8 @@ angular.module('mmtUiApp')
         resolve: {
           items: function() {
             return {
-              title: 'Warning!',
-              message: 'Are you sure do you want to delete income [' + income.name + '] ?',
+              title: $rootScope.isEng() ? 'Warning!':'Atentie!',
+              message: $rootScope.isEng() ? 'Are you sure do you want to delete income [':'Esti sigur ca vrei sa stergi incasarea [' + income.name + '] ?',
               onYesCallback: deleteHTTPRequest
             };
           },

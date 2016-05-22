@@ -59,8 +59,8 @@ angular.module('mmtUiApp')
             resolve: {
               items: function() {
                 return {
-                  title: 'Information!',
-                  message: 'Income not created! Please use another income name!',
+                  title: $rootScope.isEng() ? 'Information!':'Informatie!',
+                  message: $rootScope.isEng() ? 'Income not created! Please use another income name!':'Incasare necreata! Te rugam foloseste alt nume!',
                   onYesCallback: null
                 };
               },

@@ -8,9 +8,9 @@
  * Controller of the mmtUiApp
  */
 angular.module('mmtUiApp')
-  .controller('EditExpensePopupController', ['$scope', '$http','$cookieStore', 'CategoryService', 'DateTimeService',
+  .controller('EditExpensePopupController', ['$scope', '$rootScope','$http', '$cookieStore', 'CategoryService', 'DateTimeService',
                        '$uibModal', '$uibModalInstance', 'ModalTemplateService', 'host_name', 'items',
-        function ($scope, $http, $cookieStore, CategoryService, DateTimeService, $uibModal, $uibModalInstance,
+        function ($scope, $rootScope,$http, $cookieStore, CategoryService, DateTimeService, $uibModal, $uibModalInstance,
                   ModalTemplateService, host_name, items) {
 
    $scope.categories = CategoryService.getCategories();
@@ -53,8 +53,8 @@ angular.module('mmtUiApp')
              resolve: {
                items: function() {
                  return {
-                   title: 'Information!',
-                   message: 'Expense not saved!\n' + JSON.stringify(response.data),
+                   title: $rootScope.isEng() ? 'Information!':'Informatie!',
+                   message: $rootScope.isEng() ? 'Expense NOT saved!\n':'Cheltuiala NU a fost salvata!' + JSON.stringify(response.data),
                    onYesCallback: null
                  };
                },

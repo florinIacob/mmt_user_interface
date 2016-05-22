@@ -1,4 +1,4 @@
-app.factory('CategoryService', function($http, $q, $cookieStore, $route, $uibModal, ModalTemplateService, host_name) {
+app.factory('CategoryService', function($http, $rootScope, $q, $cookieStore, $route, $uibModal, ModalTemplateService, host_name) {
   var service = {};
 
   // GET CATEGORY NAMES
@@ -58,7 +58,7 @@ app.factory('CategoryService', function($http, $q, $cookieStore, $route, $uibMod
   service.addCategoryName = function(categoryName, categoriesArray) {
 
     if (categoryName == null || categoryName == '') {
-      openInfoPopup('WARNING', "The name of the category should not be empty!");
+      openInfoPopup('WARNING', $rootScope.isEng() ? "The name of the category should not be empty!":"Numele categoriei trebuie completat!");
       return;
     }
 
@@ -90,7 +90,7 @@ app.factory('CategoryService', function($http, $q, $cookieStore, $route, $uibMod
   service.addCategory = function(category, categoriesArray) {
 
     if (category.name == null || category.name == '') {
-      openInfoPopup('WARNING', "The name of the category should not be empty!");
+      openInfoPopup('WARNING', $rootScope.isEng() ? "The name of the category should not be empty!":"Numele categoriei trebuie completat!");
       return;
     }
 

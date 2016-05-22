@@ -8,7 +8,7 @@
  * Controller of the mmtUiApp
  */
 angular.module('mmtUiApp')
-  .controller('SignUpCtrl', function ($scope, $http, $location, $cookieStore, $uibModal, ModalTemplateService, host_name) {
+  .controller('SignUpCtrl', function ($scope, $rootScope, $http, $location, $cookieStore, $uibModal, ModalTemplateService, host_name) {
 
   $scope.retyped_password = null;
 
@@ -36,8 +36,8 @@ angular.module('mmtUiApp')
             resolve: {
               items: function() {
                 return {
-                  title: 'Information!',
-                  message: "Please retype the same password!",
+                  title: $rootScope.isEng() ? 'Information!':'Informatie!',
+                  message: $rootScope.isEng() ? "Please retype the same password!":"Te rugam retipareste aceeasi parola!",
                   onYesCallback: null
                 };
               },
@@ -69,10 +69,14 @@ angular.module('mmtUiApp')
             resolve: {
               items: function() {
                 return {
-                  title: 'Information!',
-                  message: 'Your account was created!'
+                  title: $rootScope.isEng() ? 'Information!':'Informatie!',
+                  message: $rootScope.isEng() ? 'Your account was created!'
                           + '\nPlease check your mail to activate your account!'
-                          + '\nAfter the activation, you can login to your account!',
+                          + '\nAfter the activation, you can login to your account!'
+                          :
+                          'Contul a fost creat!'
+                          + '\nTe rugam verifica email-ul pentru activarea contului!'
+                          + '\nDupa activare, vei putea sa te loghezi in aplicatie!',
                   onYesCallback: null
                 };
               },
@@ -96,8 +100,8 @@ angular.module('mmtUiApp')
             resolve: {
               items: function() {
                 return {
-                  title: 'Information!',
-                  message: 'Your account was not created! \n' + error_message,
+                  title: $rootScope.isEng() ? 'Information!':'Informatie!',
+                  message: $rootScope.isEng() ? 'Your account was not created! \n':'Contul NU a fost creat! \n' + error_message,
                   onYesCallback: null
                 };
               },

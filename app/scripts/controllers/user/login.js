@@ -54,9 +54,12 @@ angular.module('mmtUiApp')
               resolve: {
                 items: function() {
                   return {
-                    title: 'Information!',
-                    message: 'Invalid username or password!\n'
-                              + 'Please activate your account before logging in!',
+                    title: $rootScope.isEng() ? 'Information!':'Informatie!',
+                    message: $rootScope.isEng() ? 'Invalid username or password!\n'
+                              + 'Please activate your account before logging in!'
+                              :
+                              'Nume sau parola invalida!\n'
+                              + 'Te rugam sa activezi contul inainte de logare!',
                     onYesCallback: null
                   };
                 },

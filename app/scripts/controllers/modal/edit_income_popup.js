@@ -8,9 +8,9 @@
  * Controller of the mmtUiApp
  */
 angular.module('mmtUiApp')
-  .controller('EditIncomePopupController', ['$scope', '$http','$cookieStore', 'DateTimeService',
+  .controller('EditIncomePopupController', ['$scope', '$rootScope', '$http','$cookieStore', 'DateTimeService',
                        '$uibModal', '$uibModalInstance', 'ModalTemplateService', 'host_name', 'items',
-        function ($scope, $http, $cookieStore, DateTimeService, $uibModal, $uibModalInstance,
+        function ($scope, $rootScope, $http, $cookieStore, DateTimeService, $uibModal, $uibModalInstance,
                   ModalTemplateService, host_name, items) {
 
    $scope.income = items.income;
@@ -51,8 +51,8 @@ angular.module('mmtUiApp')
              resolve: {
                items: function() {
                  return {
-                   title: 'Information!',
-                   message: 'Income not saved!\n' + JSON.stringify(response.data),
+                   title: $rootScope.isEng() ? 'Information!':'Informatie!',
+                   message: $rootScope.isEng() ? 'Income not saved!\n':'Incasare nesalvata!\n' + JSON.stringify(response.data),
                    onYesCallback: null
                  };
                },

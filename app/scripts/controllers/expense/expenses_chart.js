@@ -17,8 +17,8 @@ angular.module('mmtUiApp')
 
   $scope.yearsArray = intializeYearsArray();
   $scope.selected_year = (1900 + (new Date().getYear())).toString();
-  $scope.monthsArray = extractMonthAsString(new Date().getMonth(), true);
-  $scope.selected_month = extractMonthAsString(new Date().getMonth());
+  $scope.monthsArray = extractMonthAsString(new Date().getMonth(), true, $rootScope.isEng());
+  $scope.selected_month = extractMonthAsString(new Date().getMonth(), false, $rootScope.isEng());
   $scope.show_categories_legend = true;
   $scope.toggleLegendShow = function() {
     $scope.show_categories_legend = !$scope.show_categories_legend;
@@ -33,17 +33,17 @@ angular.module('mmtUiApp')
     if (yearChanged === true) {
       if ($scope.selected_year != (1900 + new Date().getYear())) {
         month_index = 11;
-        $scope.monthsArray = extractMonthAsString(month_index, true);
-        $scope.selected_month = extractMonthAsString(month_index);
+        $scope.monthsArray = extractMonthAsString(month_index, true, $rootScope.isEng());
+        $scope.selected_month = extractMonthAsString(month_index, false, $rootScope.isEng());
       } else {
-        $scope.monthsArray = extractMonthAsString(new Date().getMonth(), true);
-        $scope.selected_month = extractMonthAsString(new Date().getMonth());
+        $scope.monthsArray = extractMonthAsString(new Date().getMonth(), true, $rootScope.isEng());
+        $scope.selected_month = extractMonthAsString(new Date().getMonth(), $rootScope.isEng());
       }
     }
 
     // graphic arrays
     // - linear
-    $scope.labelsLinear = extractMonthAsString(month_index, true);
+    $scope.labelsLinear = extractMonthAsString(month_index, true, $rootScope.isEng());
     $scope.seriesLinear = [];
     $scope.dataLinear = [];
     $scope.onClick = function (points, evt) {
@@ -75,7 +75,7 @@ angular.module('mmtUiApp')
 
         var d = new Date(expense.creationDate);
         expense.monthAsInt = d.getMonth();
-        expense.monthAsString = extractMonthAsString(d.getMonth(), false);
+        expense.monthAsString = extractMonthAsString(d.getMonth(), false, $rootScope.isEng());
         expense.year = 1900 + d.getYear();
 
         console.log('  >> EXPENSE: ' + expense.category.name);
@@ -183,8 +183,8 @@ angular.module('mmtUiApp')
             resolve: {
               items: function() {
                 return {
-                  title: 'Information!',
-                  message: 'Expenses could NOT be loaded!',
+                  title: $rootScope.isEng() ? 'Information!':'Informatie!',
+                  message: $rootScope.isEng() ? 'Expenses could NOT be loaded!':'Cheltuielile nu au putut fi incarcate!',
                   onYesCallback: null
                 };
               },
@@ -206,9 +206,13 @@ angular.module('mmtUiApp')
   * Function used to extract the name of the month based on the received index.
   * Used because date variables stores the month as an integer and the UI will display month as a string.
   */
-var extractMonthAsString = function(monthAsInt, returnSubArray) {
+var extractMonthAsString = function(monthAsInt, returnSubArray, isEnglish) {
   var monthStrings = ["January", "February", "March", "April", "May", "June", "July", "August",
                         "September", "October", "November", "December"];
+  if (!isEnglish) {
+    var monthStrings = ["Ianuarie", "Februarie", "Martie", "Aprilie", "Mai", "Iunie", "Iulie", "August",
+                            "Septembrie", "Octobrie", "Noiembrie", "Decembrie"];
+  }
   if (returnSubArray) {
     return monthStrings.splice(0, monthAsInt + 1);
   } else {

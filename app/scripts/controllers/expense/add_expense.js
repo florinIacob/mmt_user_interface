@@ -65,8 +65,10 @@ angular.module('mmtUiApp')
             resolve: {
               items: function() {
                 return {
-                  title: 'Information!',
-                  message: 'Expense not created! Please choose a category \nor use another expense name!',
+                  title: $rootScope.isEng() ? 'Information!':'Informatie!',
+                  message: $rootScope.isEng() ? 'Expense not created! Please choose a category!'
+                                                :
+                                                'Cheltuiala nu a fost creata! te rugam alege o categorie!',
                   onYesCallback: null
                 };
               },

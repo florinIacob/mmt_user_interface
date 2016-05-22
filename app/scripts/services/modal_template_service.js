@@ -13,8 +13,8 @@ app.factory('ModalTemplateService', function() {
               <pre style="font-size:18px;">{{items.message}}</pre>
               <hr>
               <div class="controls">
-                  <button style="left-margin:3px;" class="btn btn-primary" type="button" ng-click="yes()">Yes</button>
-                  <button class="btn btn-primary" type="button" ng-click="no()">No</button>
+                  <button style="left-margin:3px;" class="btn btn-primary" type="button" ng-click="yes()">{{isEng() ? 'Yes':'Da'}}</button>
+                  <button class="btn btn-primary" type="button" ng-click="no()">{{isEng() ? 'No':'Nu'}}</button>
               </div>
           </div>
       </div>
@@ -46,42 +46,42 @@ app.factory('ModalTemplateService', function() {
   service.getEditExpenseTemplate = function() {
     const editExpenseTemplate = `
       <div class="source-list-modal" style="height:100%;background-color:#eaeae1;">
-        <h2 style="text-align:center;"><img src="images/add_expense.png"> EDIT EXPENSE</h2>
+        <h2 style="text-align:center;"><img src="images/add_expense.png"> {{isEng() ? 'EDIT EXPENSE':'EDITEAZA CHELTUIALA'}}</h2>
         <form class="form-horizontal" role="form" ng-submit="submit()">
           <div class="form-group">
-            <label class="control-label col-sm-2" for="name">Name:</label>
+            <label class="control-label col-sm-2" for="name">{{isEng() ? 'Name':'Nume'}}:</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control" id="name" placeholder="Expense name" ng-model="expense.name" required >
+              <input type="text" class="form-control" id="name" placeholder="{{isEng() ? 'Expense name':'Numele cheltuielii'}}" ng-model="expense.name" required >
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-sm-2" for="date">Category:</label>
+            <label class="control-label col-sm-2" for="date">{{isEng() ? 'Category':'Categoria'}}:</label>
             <div class="col-sm-4">
               <select type="date" class="form-control" id="category" placeholder="Category" ng-model="expense.category.name" required>
-                <option ng-repeat="category in categories" value="{{category}}" required>{{category}}</option>
+                <option ng-repeat="category in categories" value="{{category.name}}" required>{{category.name}}</option>
               </select>
             </div>
             <div class="col-sm-3">
-              <input type="text" class="form-control" placeholder="New category" ng-model="newCategory">
+              <input type="text" class="form-control" placeholder="{{isEng() ? 'New category':'Categorie noua'}}" ng-model="newCategory">
             </div>
             <div class="col-sm-2">
-              <input type="button" class="form-control" placeholder="Add new category" value="Add" ng-click="addCategory()">
+              <input type="button" class="form-control" placeholder="Add new category" value="{{isEng() ? 'Add':'Adauga'}}" ng-click="addCategory()">
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-sm-2" for="description">Description:</label>
+            <label class="control-label col-sm-2" for="description">{{isEng() ? 'Description':'Descriere'}}:</label>
             <div class="col-sm-9">
-              <textarea type="text" rows="5"  class="form-control" id="description" placeholder="Description ..." ng-model="expense.description"/>
+              <textarea type="text" rows="5"  class="form-control" id="description" placeholder="{{isEng() ? 'Description':'Descriere'}} ..." ng-model="expense.description"/>
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-sm-2" for="amount">Amount:</label>
+            <label class="control-label col-sm-2" for="amount">{{isEng() ? 'Amount':'Suma'}}:</label>
             <div class="col-sm-9">
-              <input type="number" step="any" class="form-control" id="amount" placeholder="Expense amount" ng-model="expense.amount" required >
+              <input type="number" step="any" class="form-control" id="amount" placeholder="{{isEng() ? 'Expense amount':'Suma cheltuielii'}}" ng-model="expense.amount" required >
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-sm-2" for="date">Creation date:</label>
+            <label class="control-label col-sm-2" for="date">{{isEng() ? 'Creation date':'Data crearii'}}:</label>
             <div class="col-sm-9">
               <input type="datetime-local" value="{{current_date_value}}" class="form-control" id="date" placeholder="date"
                      ng-model="expense.creationDate" required >
@@ -89,10 +89,10 @@ app.factory('ModalTemplateService', function() {
           </div>
           <div class="form-group">
             <div class="col-sm-offset-2 col-sm-2">
-              <button type="submit" class="btn btn-default submit-btn">Save</button>
+              <button type="submit" class="btn btn-default submit-btn">{{isEng() ? 'Save':'Salveaza'}}</button>
             </div>
             <div class="col-sm-7">
-              <button type="button" ng-click="cancel()" class="btn btn-default submit-btn">Cancel</button>
+              <button type="button" ng-click="cancel()" class="btn btn-default submit-btn">{{isEng() ? 'Cancel':'Anuleaza'}}</button>
             </div>
           </div>
         </form>
@@ -105,28 +105,28 @@ app.factory('ModalTemplateService', function() {
     service.getEditIncomeTemplate = function() {
     const editIncomeTemplate = `
       <div class="source-list-modal" style="height:100%;background-color:#eaeae1;">
-        <h2 style="text-align:center;"><img src="images/add_income.png"> EDIT INCOME</h2>
+        <h2 style="text-align:center;"><img src="images/add_income.png"> {{isEng() ? 'EDIT INCOME':'EDITEAZA INCASAREA'}}</h2>
         <form class="form-horizontal" role="form" ng-submit="submit()">
           <div class="form-group">
-            <label class="control-label col-sm-2" for="name">Name:</label>
+            <label class="control-label col-sm-2" for="name">{{isEng() ? 'Name':'Nume'}}:</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control" id="name" placeholder="Income name" ng-model="income.name" required >
+              <input type="text" class="form-control" id="name" placeholder="{{isEng() ? 'Income name':'Numele incasarii'}}" ng-model="income.name" required >
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-sm-2" for="description">Description:</label>
+            <label class="control-label col-sm-2" for="description">{{isEng() ? 'Description':'Descriere'}}:</label>
             <div class="col-sm-9">
-              <textarea type="text" rows="5"  class="form-control" id="description" placeholder="Description ..." ng-model="income.description"/>
+              <textarea type="text" rows="5"  class="form-control" id="description" placeholder="{{isEng() ? 'Description':'Descriere'}} ..." ng-model="income.description"/>
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-sm-2" for="amount">Amount:</label>
+            <label class="control-label col-sm-2" for="amount">{{isEng() ? 'Amount':'Suma'}}:</label>
             <div class="col-sm-9">
-              <input type="number" step="any" class="form-control" id="amount" placeholder="Income amount" ng-model="income.amount" required >
+              <input type="number" step="any" class="form-control" id="amount" placeholder="{{isEng() ? 'Income amount':'Suma incasarii'}}" ng-model="income.amount" required >
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-sm-2" for="date">Creation date:</label>
+            <label class="control-label col-sm-2" for="date">{{isEng() ? 'Creation date':'Data crearii'}}:</label>
             <div class="col-sm-9">
               <input type="datetime-local" value="{{current_date_value}}" class="form-control" id="date" placeholder="date"
                      ng-model="income.creationDate" required >
@@ -134,10 +134,10 @@ app.factory('ModalTemplateService', function() {
           </div>
           <div class="form-group">
             <div class="col-sm-offset-2 col-sm-2">
-              <button type="submit" class="btn btn-default submit-btn">Save</button>
+              <button type="submit" class="btn btn-default submit-btn">{{isEng() ? 'Save':'Salveaza'}}</button>
             </div>
             <div class="col-sm-7">
-              <button type="button" ng-click="cancel()" class="btn btn-default submit-btn">Cancel</button>
+              <button type="button" ng-click="cancel()" class="btn btn-default submit-btn">{{isEng() ? 'Cancel':'Anuleaza'}}</button>
             </div>
           </div>
         </form>
@@ -162,8 +162,8 @@ app.factory('ModalTemplateService', function() {
               </select>
               <hr>
               <div class="controls">
-                  <button style="left-margin:3px;" class="btn btn-primary" type="button" ng-click="filter()">Filter</button>
-                  <button class="btn btn-primary" type="button" ng-click="cancel()">Cancel</button>
+                  <button style="left-margin:3px;" class="btn btn-primary" type="button" ng-click="filter()">{{isEng() ? 'Filter':'Filtreaza'}}</button>
+                  <button class="btn btn-primary" type="button" ng-click="cancel()">{{isEng() ? 'Cancel':'Anuleaza'}}</button>
               </div>
           </div>
       </div>
@@ -176,13 +176,13 @@ app.factory('ModalTemplateService', function() {
     const editCategoryTemplate = `
       <div class="source-list-modal" style="height:100%;background-color:#eaeae1;">
         <div class="container sign-up-container">
-          <h2 style="text-align:center;"><img src="images/expense_categories.svg"> EDIT CATEGORY</h2>
+          <h2 style="text-align:center;"><img src="images/expense_categories.svg"> {{isEng() ? 'EDIT CATEGORY':'EDITEAZA CATEGORIA'}}</h2>
           <form class="form-horizontal" role="form" ng-submit="submit()">
 
           <br>
 
             <div class="form-group">
-              <label class="control-label col-sm-1" for="date">Colour:</label>
+              <label class="control-label col-sm-1" for="date">{{isEng() ? 'Colour':'Culoarea'}}:</label>
               <div class="col-sm-3">
                 <select class="form-control" ng-model="category.colour">
                   <option selected style="background-color: white" class="light">light</option>
@@ -197,13 +197,13 @@ app.factory('ModalTemplateService', function() {
                 </select>
               </div>
               <div class="col-sm-3">
-                <input type="text" class="form-control" placeholder="New category name" ng-model="category.name">
+                <input type="text" class="form-control" placeholder="{{isEng() ? 'New category name':'Numele noii categorii'}}" ng-model="category.name">
               </div>
               <div class="col-sm-2">
-                <input type="button" class="form-control" placeholder="Edit category" value="Edit" ng-click="submit()">
+                <input type="button" class="form-control" placeholder="{{isEng() ? 'Edit category':'Salveaza'}}" value="{{isEng() ? 'Edit':'Salveaza'}}" ng-click="submit()">
               </div>
               <div class="col-sm-2">
-                <input type="button" class="form-control" placeholder="Cancel" value="Cancel" ng-click="cancel()">
+                <input type="button" class="form-control" placeholder="Cancel" value="{{isEng() ? 'Cancel':'Anuleaza'}}" ng-click="cancel()">
               </div>
             </div>
           </label>
