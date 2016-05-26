@@ -7,9 +7,13 @@
     <p ng-if="isEng()">Always a pleasure offering you the best and easy to use expense manager.</p>
     <p ng-if="!isEng()">Mereu o placere in oferirea celei mai placute si usor de folosit aplicatii de management financiar.</p>
   </p>
-  <p><a class="btn btn-lg btn-success" ng-href="#/">Control expenses!<span class="glyphicon glyphicon-ok"></span></a></p>
+  <p><a class="btn btn-lg btn-success" ng-init="shouldShowGraphicPreview = true"
+        ng-click="shouldShowGraphicPreview = !shouldShowGraphicPreview">Control expenses!<span class="glyphicon glyphicon-ok"></span></a>
+  </p>
   <br>
-  <img src="images/graphic_preview.PNG" style="width:100%" alt="I'm Yeoman"><br>
+  <img ng-if="shouldShowGraphicPreview" src="images/preview_graphics.PNG" style="width:100%" alt="I'm Yeoman">
+  <img ng-if="!shouldShowGraphicPreview" src="images/preview_statistics.PNG" style="width:100%" alt="I'm Yeoman">
+  <br>
   <br><br>
   <h3 style="font-weight: bold;">{{isEng() ? 'What':'Ce face aplicatia'}} <span style="font-style: italic;">MyMoneyTracker</span> {{isEng() ? 'does':''}} ?</h3>
   <div>

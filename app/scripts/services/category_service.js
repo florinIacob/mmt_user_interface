@@ -107,7 +107,7 @@ app.factory('CategoryService', function($http, $rootScope, $q, $cookieStore, $ro
     $http(req).then(
       function(response){
         categoriesArray.push(response.data);
-        openInfoPopup('INFO', "Category successfully added!");
+        openInfoPopup('INFO', $rootScope.isEng() ? "Category successfully added!":"Categoria a fost adaugata cu succes!");
       },
       function(response){
         openInfoPopup('WARNING', 'Cannot create category\n' + response.data.message + '!');
@@ -126,7 +126,7 @@ app.factory('CategoryService', function($http, $rootScope, $q, $cookieStore, $ro
     // make server request
     $http(req).then(
       function(){
-        openInfoPopup('INFO', "Category successfully deleted!");
+        openInfoPopup('INFO', $rootScope.isEng() ? "Category successfully deleted!":"Categoria a fost stearsa!");
         $route.reload();
       },
       function(response){

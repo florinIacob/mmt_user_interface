@@ -211,7 +211,7 @@ var extractMonthAsString = function(monthAsInt, returnSubArray, isEnglish) {
                         "September", "October", "November", "December"];
   if (!isEnglish) {
     var monthStrings = ["Ianuarie", "Februarie", "Martie", "Aprilie", "Mai", "Iunie", "Iulie", "August",
-                            "Septembrie", "Octobrie", "Noiembrie", "Decembrie"];
+                            "Septembrie", "Octombrie", "Noiembrie", "Decembrie"];
   }
   if (returnSubArray) {
     return monthStrings.splice(0, monthAsInt + 1);
