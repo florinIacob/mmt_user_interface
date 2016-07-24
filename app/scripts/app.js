@@ -21,6 +21,25 @@ var app = angular.module('mmtUiApp', [
 	.run(function($rootScope, $cookieStore) {
       $rootScope.authenticated = $cookieStore.get('mmtlt') !== undefined;
       $rootScope.username = $cookieStore.get('username');
+      $rootScope.LANGUAGE = 'ENG';
+      $rootScope.FLAG = 'UK-Flag.png';
+
+      $rootScope.isEng = function() {
+        if ($rootScope.LANGUAGE === 'ENG') {
+          return true;
+        } else {
+          return false;
+        }
+      }
+
+      $rootScope.changeLanguage = function(language) {
+        $rootScope.LANGUAGE = language;
+        if ($rootScope.LANGUAGE === 'ENG') {
+          $rootScope.FLAG = 'UK-Flag.png';
+        } else {
+          $rootScope.FLAG = 'romania-flag.gif';
+        }
+      }
   })
 	.config(function ($routeProvider, $httpProvider, ChartJsProvider) {
 		$routeProvider
