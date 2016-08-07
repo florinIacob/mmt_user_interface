@@ -15,6 +15,9 @@
       <th>Amount
         <span class="glyphicon glyphicon-sort" bs-tooltip title="Sort by amount" ng-click="changeSortingCriteria('amount')"></span>
       </th>
+      <th>Currency
+        <span class="glyphicon glyphicon-sort" bs-tooltip title="Sort by currency" ng-click="changeSortingCriteria('currency')"></span>
+      </th>
       <th>Category
         <span class="glyphicon glyphicon-filter" bs-tooltip title="Filter by category" ng-click="filterByCategory()"></span>
         <span class="glyphicon glyphicon-sort" bs-tooltip title="Sort by category" ng-click="changeSortingCriteria('category.name')"></span>
@@ -30,6 +33,7 @@
     <tr ng-repeat="expense in expenses | orderBy:sortColumn:sortReverse | filter:filter_category:strict" bs-tooltip title="{{expense.description}}" >
       <td>{{ expense.name }}</td>
       <td>{{ expense.amount }}</td>
+      <td>{{ expense.currency }}</td>
       <td style=" background-color:{{(showCategoriesColors == true) ? colours_map[expense.category.colour] : white}};">
         {{ expense.category.name }}
       </td>

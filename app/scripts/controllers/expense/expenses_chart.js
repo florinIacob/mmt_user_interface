@@ -32,7 +32,7 @@ angular.module('mmtUiApp')
     var deferred = $q.defer();
     var req = {
           method: 'GET',
-          url: host_name + '/expense/find/*/USD/' + startDate.getTime() + '/' + endDate.getTime(),
+          url: host_name + '/expense/find/*/' + startDate.getTime() + '/' + endDate.getTime(),
           headers: {
             'Content-Type': "application/json",
             'Authorization': $cookieStore.get('mmtlt')
@@ -129,63 +129,63 @@ angular.module('mmtUiApp')
                     // LINEAR graphic
                     var categ_index = $scope.seriesLinear.indexOf(expense.category.name);
                     if (categ_index > -1) {
-                      $scope.dataLinear[categ_index][expense.monthAsInt] = expense.amount
+                      $scope.dataLinear[categ_index][expense.monthAsInt] = (expense.defaultCurrencyAmount == null ? expense.amount : expense.defaultCurrencyAmount)
                           + $scope.dataLinear[categ_index][expense.monthAsInt];
                     } else {
                       $scope.seriesLinear.push(expense.category.name);
                       var currentCategoryExpensesAmountsArray = generateZeroesArray(new Date().getMonth() + 1);
-                      currentCategoryExpensesAmountsArray[expense.monthAsInt] = expense.amount;
+                      currentCategoryExpensesAmountsArray[expense.monthAsInt] = expense.defaultCurrencyAmount == null ? expense.amount : expense.defaultCurrencyAmount;
                       $scope.dataLinear.push(currentCategoryExpensesAmountsArray);
                     }
 
                     // BAR graphic
                     var categ_index = $scope.seriesBar.indexOf(expense.category.name);
                     if (categ_index > -1) {
-                      var amounts = [expense.amount + $scope.dataBar[categ_index][0]];
+                      var amounts = [(expense.defaultCurrencyAmount == null ? expense.amount : expense.defaultCurrencyAmount) + $scope.dataBar[categ_index][0]];
                       $scope.dataBar[categ_index] = amounts;
                     } else {
                       $scope.seriesBar.push(expense.category.name);
-                      var amounts = [expense.amount];
+                      var amounts = [expense.defaultCurrencyAmount == null ? (expense.defaultCurrencyAmount == null ? expense.amount : expense.defaultCurrencyAmount) : expense.defaultCurrencyAmount];
                       $scope.dataBar.push(amounts);
                     }
 
                     // DOUGHNUT graphic
                     categ_index = $scope.labelsDoughnut.indexOf(expense.category.name);
                     if (categ_index > -1) {
-                      $scope.dataDoughnut[categ_index] = expense.amount + $scope.dataDoughnut[categ_index];
+                      $scope.dataDoughnut[categ_index] = (expense.defaultCurrencyAmount == null ? expense.amount : expense.defaultCurrencyAmount) + $scope.dataDoughnut[categ_index];
                     } else {
                       $scope.labelsDoughnut.push(expense.category.name);
-                      $scope.dataDoughnut.push(expense.amount);
+                      $scope.dataDoughnut.push(expense.defaultCurrencyAmount == null ? (expense.defaultCurrencyAmount == null ? expense.amount : expense.defaultCurrencyAmount) : expense.defaultCurrencyAmount);
                     }
 
                     // PIE graphic
                     if ($scope.selected_month == expense.monthAsString) {
                       categ_index = $scope.labelsPie.indexOf(expense.category.name);
                       if (categ_index > -1) {
-                        $scope.dataPie[categ_index] = expense.amount + $scope.dataPie[categ_index];
+                        $scope.dataPie[categ_index] = (expense.defaultCurrencyAmount == null ? expense.amount : expense.defaultCurrencyAmount) + $scope.dataPie[categ_index];
                       } else {
                         $scope.labelsPie.push(expense.category.name);
-                        $scope.dataPie.push(expense.amount);
+                        $scope.dataPie.push(expense.defaultCurrencyAmount == null ? expense.amount : expense.defaultCurrencyAmount);
                       }
                     }
 
                     // POLAR graphic
                     categ_index = $scope.labelsPolar.indexOf(expense.category.name);
                     if (categ_index > -1) {
-                      $scope.dataPolar[categ_index] = expense.amount + $scope.dataPolar[categ_index];
+                      $scope.dataPolar[categ_index] = (expense.defaultCurrencyAmount == null ? expense.amount : expense.defaultCurrencyAmount) + $scope.dataPolar[categ_index];
                     } else {
                       $scope.labelsPolar.push(expense.category.name);
-                      $scope.dataPolar.push(expense.amount);
+                      $scope.dataPolar.push((expense.defaultCurrencyAmount == null ? expense.amount : expense.defaultCurrencyAmount));
                     }
 
                     // DYNAMIC graphic
                     if ($scope.selected_month == expense.monthAsString) {
                       categ_index = $scope.labelsDynamic.indexOf(expense.category.name);
                       if (categ_index > -1) {
-                        $scope.dataDynamic[categ_index] = expense.amount + $scope.dataDynamic[categ_index];
+                        $scope.dataDynamic[categ_index] = (expense.defaultCurrencyAmount == null ? expense.amount : expense.defaultCurrencyAmount) + $scope.dataDynamic[categ_index];
                       } else {
                         $scope.labelsDynamic.push(expense.category.name);
-                        $scope.dataDynamic.push(expense.amount);
+                        $scope.dataDynamic.push((expense.defaultCurrencyAmount == null ? expense.amount : expense.defaultCurrencyAmount));
                       }
                     }
                   });
@@ -194,7 +194,8 @@ angular.module('mmtUiApp')
     }
   }
 
-
+  $scope.expenses;
+  $scope.onDateSelect(true);
 });
 
 /**

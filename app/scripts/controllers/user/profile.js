@@ -9,24 +9,16 @@
  */
 angular.module('mmtUiApp')
   .controller('ProfileCtrl', function ($scope, $rootScope, $q, $http, $location, $route, $cookieStore,
-        CategoryService, $uibModal, ModalTemplateService, host_name) {
+        CategoryService, $uibModal, ModalTemplateService, host_name, CurrencyUtilFactory) {
 
   if (!$rootScope.authenticated) {
     $location.path('/login');
   }
 
+  $scope.availableCurrencies = CurrencyUtilFactory.getAvailableCurrencies();
+
   $scope.default_currency = "";
-  // prepare post request
-  var req = {
-      method: 'GET',
-      url: host_name + '/user/default_currency',
-      headers: {
-        'Content-Type': "application/json",
-        'Authorization': $cookieStore.get('mmtlt')
-     }
-   }
-  // make server request
-  $http(req).then(
+  CurrencyUtilFactory.getDefaultCurrency().then(
     function(response){
       var currency = angular.fromJson(response.data);
       $scope.default_currency = currency.value;
@@ -49,7 +41,6 @@ angular.module('mmtUiApp')
       });
    });
 
-  $scope.currencies = ["USD","EUR","GBP","RON"];
   var currentYear = 1900 + new Date().getYear();
   var currentMonth = new Date().getMonth();
 

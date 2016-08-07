@@ -7,7 +7,7 @@
     <div class="col-sm-8">
       <select type="date" class="form-control" id="currency" placeholder="Category" ng-model="default_currency"
               ng-change="onCurrencyChange(default_currency)" required>
-        <option ng-repeat="currency in currencies" value="{{currency}}" required>{{currency}}</option>
+        <option ng-repeat="currency in availableCurrencies" value="{{currency}}" required>{{currency}}</option>
       </select>
     </div>
   </div>

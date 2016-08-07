@@ -29,8 +29,14 @@
     </div>
     <div class="form-group">
       <label class="control-label col-sm-2" for="amount">Amount:</label>
-      <div class="col-sm-10">
+      <div class="col-sm-5">
         <input type="number" step="any" class="form-control" id="amount" placeholder="Expense amount" ng-model="expense.amount" required >
+      </div>
+      <label class="control-label col-sm-2" for="amount">Currency:</label>
+      <div class="col-sm-3">
+        <select type="string" class="form-control" id="currency" placeholder="Currency" ng-model="expense.currency" required>
+          <option ng-repeat="currency in availableCurrencies" value="{{currency}}" required>{{currency}}</option>
+        </select>
       </div>
     </div>
     <div class="form-group">

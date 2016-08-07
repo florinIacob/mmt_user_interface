@@ -26,7 +26,7 @@ angular.module('mmtUiApp')
     var deferred = $q.defer();
     var req = {
           method: 'GET',
-          url: host_name + '/income/findByInterval/' + startDate.getTime() + '/' + endDate.getTime() + '/USD',
+          url: host_name + '/income/findByInterval/' + startDate.getTime() + '/' + endDate.getTime(),
           headers: {
             'Content-Type': "application/json",
             'Authorization': $cookieStore.get('mmtlt')
@@ -77,7 +77,6 @@ angular.module('mmtUiApp')
       }
       retrieveIncomesByTimeInterval(new Date($scope.selected_year, 0, 1), new Date($scope.selected_year, 11, 31)).then(function(incomes) {
             $scope.incomes = incomes;
-            debugger;
 
             // graphic arrays
             // - linear
@@ -116,21 +115,21 @@ angular.module('mmtUiApp')
                 // LINEAR graphic
                 if ($scope.selected_year == income.year.toString()) {
                   var categ_index = $scope.labelsLinear.indexOf(income.monthAsString);
-                  $scope.dataLinear[0][categ_index] = income.amount
+                  $scope.dataLinear[0][categ_index] = (income.defaultCurrencyAmount == null ? income.amount : income.defaultCurrencyAmount)
                       +$scope.dataLinear[0][categ_index];
                 }
 
                 // BAR graphic
                 if ($scope.selected_year == income.year.toString()) {
                   var categ_index = $scope.seriesBar.indexOf(income.monthAsString);
-                  $scope.dataBar[categ_index][0] = income.amount
+                  $scope.dataBar[categ_index][0] = (income.defaultCurrencyAmount == null ? income.amount : income.defaultCurrencyAmount)
                                 +$scope.dataBar[categ_index][0];
                 }
 
                 // DYNAMIC graphic
                 if ($scope.selected_year == income.year.toString()) {
                   categ_index = $scope.labelsDynamic.indexOf(income.monthAsString);
-                  $scope.dataDynamic[categ_index] = income.amount + $scope.dataDynamic[categ_index];
+                  $scope.dataDynamic[categ_index] = (income.defaultCurrencyAmount == null ? income.amount : income.defaultCurrencyAmount) + $scope.dataDynamic[categ_index];
                 }
               })
           });

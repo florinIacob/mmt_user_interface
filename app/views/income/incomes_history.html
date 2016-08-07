@@ -15,6 +15,9 @@
       <th>Amount
         <span class="glyphicon glyphicon-sort" bs-tooltip title="Sort by amount" ng-click="changeSortingCriteria('amount')"></span>
       </th>
+      <th>Currency
+        <span class="glyphicon glyphicon-sort" bs-tooltip title="Sort by currency" ng-click="changeSortingCriteria('currency')"></span>
+      </th>
       <th>Date
         <span class="glyphicon glyphicon-sort" bs-tooltip title="Sort by date" ng-click="changeSortingCriteria('creationDate')"></span>
       </th>
@@ -25,6 +28,7 @@
     <tr ng-repeat="income in incomes | orderBy:sortColumn:sortReverse" bs-tooltip title="{{income.description}}" >
       <td>{{ income.name }}</td>
       <td>{{ income.amount }}</td>
+      <td>{{ income.currency }}</td>
       <td>{{ income.creationDate | date:'medium' }}</td>
       <td>
         <span class="glyphicon glyphicon-pencil" bs-tooltip title="Edit income!" ng-click="editIncome(income)"></span>

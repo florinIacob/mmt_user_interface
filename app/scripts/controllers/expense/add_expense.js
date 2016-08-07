@@ -9,7 +9,7 @@
  */
 angular.module('mmtUiApp')
   .controller('AddExpenseCtrl', function ($scope, $rootScope, $http, $location, $cookieStore, CategoryService, DateTimeService,
-       $uibModal, ModalTemplateService, host_name) {
+       $uibModal, ModalTemplateService, host_name, CurrencyUtilFactory) {
 
   if (!$rootScope.authenticated) {
     $location.path('/login');
@@ -31,8 +31,20 @@ angular.module('mmtUiApp')
      description: "",
      amount: null,
      creationDate: null,
-     currency: "USD"
+     currency: null
   }
+
+  $scope.availableCurrencies = CurrencyUtilFactory.getAvailableCurrencies();
+
+  CurrencyUtilFactory.getDefaultCurrency().then(
+    function(response){
+      var currency = angular.fromJson(response.data);
+      $scope.expense.currency = currency.value;
+    },
+    function(response){
+      // ERROR: inform the user
+      console.error("[add_income] Cannot retrieve defaul Currency for Reason: " + JSON.stringify(response));
+   });
 
   // submit button - save the expense
   $scope.submit = function() {
