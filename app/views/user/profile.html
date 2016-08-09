@@ -3,12 +3,15 @@
   <br>
   <hr style="border-top: 1px solid #ccc;">
   <div class="form-group">
-    <label class="control-label col-sm-3">Default currency:</label>
-    <div class="col-sm-8">
+    <label class="control-label col-sm-2">Default currency:</label>
+    <div class="col-sm-5">
       <select type="date" class="form-control" id="currency" placeholder="Category" ng-model="default_currency"
               ng-change="onCurrencyChange(default_currency)" required>
         <option ng-repeat="currency in availableCurrencies" value="{{currency}}" required>{{currency}}</option>
       </select>
+    </div>
+    <div class="col-sm-offset-2 col-sm-3">
+      <button class="btn btn-default submit-btn" ng-click="changePassword()" style="float:right;">Change password</button>
     </div>
   </div>
   <br>

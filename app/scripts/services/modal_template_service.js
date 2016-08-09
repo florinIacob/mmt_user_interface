@@ -42,6 +42,58 @@ app.factory('ModalTemplateService', function() {
     return warningTemplate;
   }
 
+  /**
+   * Return modal window template for change password
+   */
+  service.getChangePasswordTemplate = function() {
+    const warningTemplate = `
+      <div class="source-list-modal">
+          <div class="modal-header">
+              <h3 class="modal-title">
+                  Change current password
+              </h3>
+              <hr>
+              <form class="form-horizontal" role="form" ng-submit="submit()" style="height:100%;background-color:#eaeae1;padding:10px;">
+                <div class="form-group">
+                  <label class="control-label col-sm-4" for="name">Current password:</label>
+                  <div class="col-sm-7">
+                    <input type="password" class="form-control" id="current_pass" placeholder="Type current password ..."
+                      ng-model="currentP" required >
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-sm-4" for="name">New password:</label>
+                  <div class="col-sm-7">
+                    <input type="password" class="form-control" id="current_pass" placeholder="Type new password ..."
+                      ng-model="newP" required >
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-sm-4" for="name">Retype password:</label>
+                  <div class="col-sm-7">
+                    <input type="password" class="form-control" id="current_pass" placeholder="Retype new password ..."
+                      ng-model="retypeP" required >
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-sm-11" style='color:red;' for="name" ng-show='errMessage != null'>{{errMessage}}</label>
+                </div>
+                <br/>
+                <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-4">
+                    <button type="submit" class="btn btn-default submit-btn">Change</button>
+                  </div>
+                  <div class="col-sm-5">
+                    <button type="button" ng-click="cancel()" class="btn btn-default submit-btn">Cancel</button>
+                  </div>
+                </div>
+              </form>
+          </div>
+      </div>
+    `;
+    return warningTemplate;
+  }
+
   // EDIT EXPENSE POPUP TEMPLATE
   service.getEditExpenseTemplate = function() {
     const editExpenseTemplate = `

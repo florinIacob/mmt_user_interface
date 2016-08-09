@@ -246,6 +246,26 @@ angular.module('mmtUiApp')
             });
          });
       }
+
+      /**
+       * Open modal for changing password
+       */
+      $scope.changePassword = function() {
+        $uibModal.open({
+          animation: true,
+          template: ModalTemplateService.getChangePasswordTemplate(),
+          controller: 'ChangePasswordController',
+          resolve: {
+            items: function() {
+              return {
+                title: 'Information!',
+                message: '',
+                onYesCallback: null
+              };
+            },
+          }
+        });
+      }
 });
 
 /**
