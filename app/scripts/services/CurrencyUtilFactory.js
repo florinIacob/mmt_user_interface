@@ -1,3 +1,5 @@
+'use strict';
+
 app.factory('CurrencyUtilFactory', function($http, $cookieStore, host_name) {
   var service = {};
 

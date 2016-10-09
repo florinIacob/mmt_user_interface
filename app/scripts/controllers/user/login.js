@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('mmtUiApp')
   .controller('LoginCtrl', function($rootScope, $http, $location, $route, $cookieStore, $cookies,
       $uibModal, ModalTemplateService, host_name) {
@@ -69,4 +71,22 @@ angular.module('mmtUiApp')
 					}
 				})
 			};
+
+			self.forgotPassword = function() {
+			  $uibModal.open({
+          animation: true,
+          template: ModalTemplateService.getForgotPasswordTemplate(),
+          controller: 'ForgotPasswordPopupController',
+          resolve: {
+            items: function() {
+              return {
+                title: 'Information!',
+                message: '',
+                onYesCallback: null
+              };
+            },
+          }
+        });
+			}
+
 		});

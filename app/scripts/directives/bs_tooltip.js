@@ -1,3 +1,5 @@
+'use strict';
+
 app.directive('bsTooltip', function(){
     return {
         restrict: 'A',

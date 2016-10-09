@@ -1,3 +1,4 @@
+'use strict';
 
 app.filter('unique', function () {
   return function ( collection, keyname) {

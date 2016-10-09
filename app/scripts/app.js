@@ -108,6 +108,11 @@ var app = angular.module('mmtUiApp', [
         controller: 'IncomesChartCtrl',
         controllerAs: 'incomes_chart'
       })
+      .when('/user/renew_forgot_password/:code', {
+        templateUrl: 'views/user/renew_forgot_password.html',
+        controller: 'RenewForgotPasswordCtrl',
+        controllerAs: 'renew_forgot_password'
+      })
 			.otherwise({
 				redirectTo: '/'
 			});

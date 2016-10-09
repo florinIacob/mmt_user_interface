@@ -1,3 +1,5 @@
+'use strict';
+
 app.factory('CategoryService', function($http, $q, $cookieStore, $route, $uibModal, ModalTemplateService, host_name) {
   var service = {};
 
