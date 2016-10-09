@@ -1,4 +1,4 @@
-'use strict';
+//'use strict';
 
 app.service('DateTimeService', function($http, $cookieStore, host_name) {
 
