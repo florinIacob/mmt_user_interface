@@ -107,7 +107,7 @@ app.factory('ModalTemplateService', function() {
                   Forgot password window
               </h3>
               <hr>
-              <form class="form-horizontal" role="form" ng-submit="submit()" style="height:100%;background-color:#eaeae1;padding:10px;">
+              <form ng-show="loading == false" class="form-horizontal" role="form" ng-submit="submit()" style="height:100%;background-color:#eaeae1;padding:10px;">
                 <br/>
                 <div class="form-group">
                   <label class="col-sm-11" for="name" style="align:center;">Enter the email address used to register in application: </label>
@@ -131,6 +131,7 @@ app.factory('ModalTemplateService', function() {
                   </div>
                 </div>
               </form>
+              <loading-page width="150px" message="Processing ..." ng-show="loading == true"></loading-page>
           </div>
       </div>
     `;

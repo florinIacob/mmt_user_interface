@@ -5,6 +5,7 @@ angular.module('mmtUiApp')
         function ($scope, $uibModalInstance, $http, $uibModal, $cookieStore, host_name, ModalTemplateService) {
 
     $scope.email = null;
+    $scope.loading = false;
 
    $scope.submit = function() {
       if ($scope.newP !== $scope.retypeP) {
@@ -21,6 +22,9 @@ angular.module('mmtUiApp')
           },
           data: JSON.stringify({email: $scope.email})
        }
+
+       $scope.loading = true;
+
        // make server request
        $http(req).then(
          function success(response){
@@ -39,6 +43,7 @@ angular.module('mmtUiApp')
                },
              }
            });
+           $scope.loading = false;
            $uibModalInstance.dismiss('cancel');
          },
          function error(response){
@@ -51,6 +56,7 @@ angular.module('mmtUiApp')
            }
 
            $scope.errMessage = 'Cannot send email for renewing password for the specified email address!' + errMsg;
+           $scope.loading = false;
         });
 
    };
