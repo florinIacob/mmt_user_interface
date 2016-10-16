@@ -5,12 +5,18 @@ angular.module('mmtUiApp')
       $uibModal, ModalTemplateService, host_name) {
 
 			var self = this;
+      self.loading = false;
 
 			self.tab = function(route) {
 				return $route.current && route === $route.current.controller;
 			};
 
+      /**
+       * Authenticate User
+       */
 			var authenticate = function(credentials, callback) {
+
+        self.loading = true;
 
 				var headers = credentials ? {
 					authorization : "Basic "
@@ -30,14 +36,14 @@ angular.module('mmtUiApp')
 						$cookieStore.remove('mmtlt');
 					}
 					callback && callback($rootScope.authenticated);
+					self.loading = false;
 				}).error(function(data, status, headers) {
 					$rootScope.authenticated = false;
 					callback && callback(false);
+					self.loading = false;
 				});
 
 			}
-
-			authenticate();
 
 			self.credentials = {};
 			self.login = function() {

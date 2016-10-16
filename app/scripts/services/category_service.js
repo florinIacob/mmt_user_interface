@@ -22,20 +22,13 @@ app.factory('CategoryService', function($http, $q, $cookieStore, $route, $uibMod
 
   // GET CATEGORIES
   service.getCategories = function() {
-    var categories = [];
-    $http({
+    return $http({
         method: 'GET',
         url: host_name + '/category/find_all',
         headers: {
           'Authorization': $cookieStore.get('mmtlt')
         },
-      }).then(function successCallback(response) {
-        for(var i = 0, len = response.data.length; i < len; ++i)
-           categories[i] = response.data[i];
-      }, function errorCallback(response) {
-        openInfoPopup('WARNING', 'Cannot access categories!');
       });
-    return categories;
   }
 
   // GET CATEGORIES AS PROMISE

@@ -14,6 +14,7 @@ angular.module('mmtUiApp')
   if (!$rootScope.authenticated) {
     $location.path('/login');
   }
+  $scope.loading = true;
 
   $scope.yearsArray = intializeYearsArray();
   $scope.selected_year = (1900 + (new Date().getYear())).toString();
@@ -75,7 +76,11 @@ angular.module('mmtUiApp')
           $scope.selected_month = extractMonthAsString(new Date().getMonth());
         }
       }
-      retrieveIncomesByTimeInterval(new Date($scope.selected_year, 0, 1), new Date($scope.selected_year, 11, 31)).then(function(incomes) {
+
+      $scope.loading = true;
+      retrieveIncomesByTimeInterval(new Date($scope.selected_year, 0, 1), new Date($scope.selected_year, 11, 31))
+        .then(
+          function(incomes) {
             $scope.incomes = incomes;
 
             // graphic arrays
@@ -131,7 +136,8 @@ angular.module('mmtUiApp')
                   categ_index = $scope.labelsDynamic.indexOf(income.monthAsString);
                   $scope.dataDynamic[categ_index] = (income.defaultCurrencyAmount == null ? income.amount : income.defaultCurrencyAmount) + $scope.dataDynamic[categ_index];
                 }
-              })
+              });
+              $scope.loading = false;
           });
     }
 

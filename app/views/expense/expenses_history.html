@@ -6,7 +6,7 @@
 <button type="button" class="btn btn-primary btn-block" ng-click="addExpenseAttempt()">Add new expense</button>
 <br>
 <div>
-  <table class="table table-bordered table-hover">
+  <table class="table table-bordered table-hover" ng-show="loading == false">
     <thead>
     <tr>
       <th>Name
@@ -50,4 +50,5 @@
     </tr>
     </tbody>
   </table>
+  <loading-page width="150px" message="Processing ..." ng-show="loading == true"></loading-page>
 </div>

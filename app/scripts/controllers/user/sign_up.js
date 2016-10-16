@@ -10,6 +10,7 @@
 angular.module('mmtUiApp')
   .controller('SignUpCtrl', function ($scope, $http, $location, $cookieStore, $uibModal, ModalTemplateService, host_name) {
 
+  $scope.loading = false;
   $scope.retyped_password = null;
 
   $scope.user = {
@@ -48,6 +49,8 @@ angular.module('mmtUiApp')
           return;
       }
 
+      $scope.loading = true;
+
       // prepare post request
       var req = {
          method: 'POST',
@@ -78,7 +81,8 @@ angular.module('mmtUiApp')
               },
             }
           });
-          $location.path('/home')
+          $scope.loading = false;
+          $location.path('/home');
         },
         // error callback
         function(response){
@@ -103,6 +107,7 @@ angular.module('mmtUiApp')
               },
             }
           });
+          $scope.loading = false;
        });
   }
 });

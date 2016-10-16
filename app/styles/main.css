@@ -100,9 +100,15 @@ body {
     min-height:750px;
   }
 
+  .container {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
   .sign-up-container {
     background-color:#eaeae1;
     border-radius: 22px;
+    padding: 15px;
   }
 
   .submit-btn {

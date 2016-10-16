@@ -14,6 +14,8 @@ angular.module('mmtUiApp')
   if (!$rootScope.authenticated) {
     $location.path('/login');
   }
+  $scope.loading = true;
+
   $scope.incomes = [];
 
   // prepare post request
@@ -30,6 +32,7 @@ angular.module('mmtUiApp')
     function(response){
       // SUCCESS: change the path
       $scope.incomes = angular.fromJson(response.data);
+      $scope.loading = false;
     },
     function(response){
       // ERROR: inform the user
@@ -47,6 +50,7 @@ angular.module('mmtUiApp')
           },
         }
       });
+      $scope.loading = false;
    });
 
   // EDIT INCOME FUNCTIONALITY

@@ -14,6 +14,7 @@ angular.module('mmtUiApp')
   if (!$rootScope.authenticated) {
     $location.path('/login');
   }
+  $scope.loading = 0;
 
   $scope.availableCurrencies = CurrencyUtilFactory.getAvailableCurrencies();
 
@@ -117,11 +118,13 @@ angular.module('mmtUiApp')
        return deferred.promise;
     }
 
+    $scope.loading++;
     $scope.expenses;
     retrieveExpenses().then(function(expenses) {
       $scope.expenses = expenses;
 
       $scope.iterateExpenses();
+      $scope.loading--;
     });
 
     // ---------- INCOMES AREA -------------
@@ -188,11 +191,13 @@ angular.module('mmtUiApp')
          return deferred.promise;
       }
 
+      $scope.loading++;
       $scope.incomes;
       retrieveIncomes().then(function(incomes) {
         $scope.incomes = incomes;
 
         $scope.iterateIncomes();
+        $scope.loading--;
       });
 
       $scope.onCurrencyChange = function(new_value) {

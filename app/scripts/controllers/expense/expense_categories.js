@@ -18,8 +18,17 @@ angular.module('mmtUiApp')
       name: undefined,
       colour:'stable'
   };
+  $scope.loading = true;
   $scope.categories = [];
-  $scope.categories = CategoryService.getCategories();
+
+  $scope.categories = CategoryService.getCategories().then(
+    function successCallback(response) {
+        $scope.categories = response.data;
+        $scope.loading = false;
+     }, function errorCallback(response) {
+       openInfoPopup('WARNING', 'Cannot access categories!');
+       $scope.loading = false;
+     });
 
   $scope.addCategory = function() {
     CategoryService.addCategory($scope.newCategory, $scope.categories);

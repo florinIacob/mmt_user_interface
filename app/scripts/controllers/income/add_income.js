@@ -14,6 +14,7 @@ angular.module('mmtUiApp')
   if (!$rootScope.authenticated) {
       $location.path('/login');
   }
+  $scope.loading = false;
 
   $scope.current_date_value = DateTimeService.createCurrentDateTimeString();
   console.log($scope.current_date_value);
@@ -46,6 +47,8 @@ angular.module('mmtUiApp')
         submitted_income.creationDate = new Date();
       }
 
+      $scope.loading = true;
+
       // prepare post request
       var req = {
          method: 'POST',
@@ -60,6 +63,7 @@ angular.module('mmtUiApp')
       $http(req).then(
         function(response){
           // SUCCESS: change the path
+          $scope.loading = false;
           $location.path('/incomes_history')
         },
         function(response){
@@ -78,6 +82,7 @@ angular.module('mmtUiApp')
               },
             }
           });
+          $scope.loading = false;
        });
   }
 });

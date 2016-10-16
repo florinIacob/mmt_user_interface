@@ -15,6 +15,8 @@ angular.module('mmtUiApp')
     $location.path('/login');
   }
 
+  $scope.loading = true;
+
   $scope.yearsArray = intializeYearsArray();
   $scope.selected_year = (1900 + (new Date().getYear())).toString();
   $scope.monthsArray = extractMonthAsString(new Date().getMonth(), true);
@@ -80,8 +82,11 @@ angular.module('mmtUiApp')
         $scope.monthsArray = extractMonthAsString(new Date().getMonth(), true);
         $scope.selected_month = extractMonthAsString(new Date().getMonth());
       }
+      $scope.loading = true;
 
-      retrieveExpensesByTimeInterval(new Date($scope.selected_year, 0, 1), new Date($scope.selected_year, 11, 31)).then(function(expenses) {
+      retrieveExpensesByTimeInterval(new Date($scope.selected_year, 0, 1), new Date($scope.selected_year, 11, 31))
+          .then(
+            function successCallback(expenses) {
               $scope.expenses = expenses;
 
               // GRAPHIC ARRAYS
@@ -189,6 +194,11 @@ angular.module('mmtUiApp')
                       }
                     }
                   });
+                  $scope.loading = false;
+                },
+                function errorCallback(response) {
+                  console.error("Problems on loading graphics: " + response.data);
+                  $scope.loading = false;
                 }
       );
     }

@@ -14,6 +14,7 @@ angular.module('mmtUiApp')
   if (!$rootScope.authenticated) {
     $location.path('/login');
   }
+  $scope.loading = true;
   $scope.expenses = [];
 
   // prepare post request
@@ -25,11 +26,13 @@ angular.module('mmtUiApp')
         'Authorization': $cookieStore.get('mmtlt')
      }
    }
+
   // make server request
   $http(req).then(
     function(response){
       // SUCCESS: change the path
       $scope.expenses = angular.fromJson(response.data);
+      $scope.loading = false;
     },
     function(response){
       // ERROR: inform the user
@@ -47,6 +50,7 @@ angular.module('mmtUiApp')
           },
         }
       });
+      $scope.loading = false;
    });
 
   // EDIT EXPENSE FUNCTIONALITY

@@ -14,6 +14,7 @@ angular.module('mmtUiApp')
   if (!$rootScope.authenticated) {
     $location.path('/login');
   }
+  $scope.loading = false;
 
   $scope.newCategory = null;
   $scope.categories = [];
@@ -53,6 +54,7 @@ angular.module('mmtUiApp')
         submitted_expense.creationDate = new Date();
       }
 
+      $scope.loading = true;
       // prepare post request
       var req = {
          method: 'POST',
@@ -65,11 +67,12 @@ angular.module('mmtUiApp')
       }
       // make server request
       $http(req).then(
-        function(response){
+        function success(response){
           // SUCCESS: change the path
+          $scope.loading = false;
           $location.path('/expenses_history')
         },
-        function(response){
+        function error(response){
           $uibModal.open({
             animation: true,
             template: ModalTemplateService.getInfoTemplate(),
@@ -84,6 +87,7 @@ angular.module('mmtUiApp')
               },
             }
           });
+          $scope.loading = false;
        });
   }
 
