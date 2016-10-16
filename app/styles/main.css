@@ -114,4 +114,25 @@ body {
   .submit-btn {
     width:150px;
   }
+
+  .control-icon-red {
+    cursor: pointer;
+    cursor: hand;
+    font-size: 18px;
+    color: red;
+  }
+
+  .control-icon-green {
+    cursor: pointer;
+    cursor: hand;
+    font-size: 18px;
+    color: green;
+  }
+
+  .control-icon-blue {
+    cursor: pointer;
+    cursor: hand;
+    font-size: 18px;
+    color: #0066ff;
+  }
 }

@@ -48,8 +48,8 @@
       <td>{{ category.colour }}</td>
       <td><pre style="background-color:{{colours_map[category.colour]}};">      </pre></td>
       <td>
-        <span class="glyphicon glyphicon-pencil" bs-tooltip title="Edit category!" ng-click="editCategory(category)"></span>
-        <span class="glyphicon glyphicon-trash" style="float:right;" bs-tooltip title="Delete category!"
+        <span class="glyphicon glyphicon-pencil control-icon-green" bs-tooltip title="Edit category!" ng-click="editCategory(category)"></span>
+        <span class="glyphicon glyphicon-trash control-icon-red" style="float:right;" bs-tooltip title="Delete category!"
               ng-click="deleteCategory(category)"></span></td>
     </tr>
     <tr ng-show="categories.length == 0">

@@ -10,18 +10,18 @@
     <thead>
     <tr>
       <th>Name
-        <span class="glyphicon glyphicon-sort" bs-tooltip title="Sort by name" ng-click="changeSortingCriteria('name')"></span>
+        <span class="glyphicon glyphicon-sort control-icon-blue" bs-tooltip title="Sort by name" ng-click="changeSortingCriteria('name')"></span>
       </th>
       <th>Amount
-        <span class="glyphicon glyphicon-sort" bs-tooltip title="Sort by amount" ng-click="changeSortingCriteria('amount')"></span>
+        <span class="glyphicon glyphicon-sort control-icon-blue" bs-tooltip title="Sort by amount" ng-click="changeSortingCriteria('amount')"></span>
       </th>
       <th>Currency
-        <span class="glyphicon glyphicon-sort" bs-tooltip title="Sort by currency" ng-click="changeSortingCriteria('currency')"></span>
+        <span class="glyphicon glyphicon-sort control-icon-blue" bs-tooltip title="Sort by currency" ng-click="changeSortingCriteria('currency')"></span>
       </th>
       <th>Category
-        <span class="glyphicon glyphicon-filter" bs-tooltip title="Filter by category" ng-click="filterByCategory()"></span>
-        <span class="glyphicon glyphicon-sort" bs-tooltip title="Sort by category" ng-click="changeSortingCriteria('category.name')"></span>
-        <span class="glyphicon glyphicon-question-sign" bs-tooltip title="Use colours for categories" ng-click="useColoursForCategories()"></span>
+        <span class="glyphicon glyphicon-filter control-icon-blue" bs-tooltip title="Filter by category" ng-click="filterByCategory()"></span>
+        <span class="glyphicon glyphicon-sort control-icon-blue" bs-tooltip title="Sort by category" ng-click="changeSortingCriteria('category.name')"></span>
+        <span class="glyphicon glyphicon-question-sign control-icon-blue" bs-tooltip title="Use colours for categories" ng-click="useColoursForCategories()"></span>
       </th>
       <th>Date
         <span class="glyphicon glyphicon-sort" bs-tooltip title="Sort by date" ng-click="changeSortingCriteria('creationDate')"></span>
@@ -39,9 +39,9 @@
       </td>
       <td>{{ expense.creationDate | date:'medium' }}</td>
       <td>
-        <span class="glyphicon glyphicon-pencil" bs-tooltip title="Edit expense!"
+        <span class="glyphicon glyphicon-pencil control-icon-green" bs-tooltip title="Edit expense!"
                 ng-click="editExpense(expense)"></span>
-        <span class="glyphicon glyphicon-trash" style="float:right;" bs-tooltip title="Delete expense!"
+        <span class="glyphicon glyphicon-trash control-icon-red" style="float:right;" bs-tooltip title="Delete expense!"
               ng-click="deleteExpense(expense)"></span>
       </td>
     </tr>

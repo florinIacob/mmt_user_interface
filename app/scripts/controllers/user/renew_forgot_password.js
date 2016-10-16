@@ -6,6 +6,8 @@ angular.module('mmtUiApp')
 			console.log(' -- RenewForgotPasswordCtrl --');
       console.log(' -- code: ' + $routeParams.code);
 
+      $scope.loading = false;
+
       $scope.forgot_obj = {};
       $scope.forgot_obj.np = null;
       $scope.forgot_obj.code = $routeParams.code;
@@ -50,6 +52,8 @@ angular.module('mmtUiApp')
           return;
         }
 
+        $scope.loading = true;
+
         // prepare post request
         var req = {
            method: 'POST',
@@ -78,6 +82,7 @@ angular.module('mmtUiApp')
                 },
               }
             });
+            $scope.loading = false;
             $location.path('/login');
 
           },
@@ -104,6 +109,7 @@ angular.module('mmtUiApp')
                 },
               }
             });
+            $scope.loading = false;
          });
       }
 

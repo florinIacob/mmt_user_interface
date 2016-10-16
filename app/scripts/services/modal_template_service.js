@@ -55,7 +55,8 @@ app.factory('ModalTemplateService', function() {
                   Change current password
               </h3>
               <hr>
-              <form class="form-horizontal" role="form" ng-submit="submit()" style="height:100%;background-color:#eaeae1;padding:10px;">
+              <form class="form-horizontal" role="form" ng-submit="submit()"
+                  style="height:100%;background-color:#eaeae1;padding:10px;" ng-show="loading == false">
                 <div class="form-group">
                   <label class="control-label col-sm-4" for="name">Current password:</label>
                   <div class="col-sm-7">
@@ -90,6 +91,7 @@ app.factory('ModalTemplateService', function() {
                   </div>
                 </div>
               </form>
+              <loading-page width="150px" message="Processing ..." ng-show="loading == true"></loading-page>
           </div>
       </div>
     `;
@@ -143,7 +145,7 @@ app.factory('ModalTemplateService', function() {
     const editExpenseTemplate = `
       <div class="source-list-modal" style="height:100%;background-color:#eaeae1;">
         <h2 style="text-align:center;"><img src="images/add_expense.png"> EDIT EXPENSE</h2>
-        <form class="form-horizontal" role="form" ng-submit="submit()">
+        <form class="form-horizontal" role="form" ng-submit="submit()" ng-show="loading == false" ng-show="loading == false">
           <div class="form-group">
             <label class="control-label col-sm-2" for="name">Name:</label>
             <div class="col-sm-9">
@@ -192,6 +194,7 @@ app.factory('ModalTemplateService', function() {
             </div>
           </div>
         </form>
+        <loading-page width="150px" message="Processing ..." ng-show="loading == true"></loading-page>
       </div>
     `;
     return editExpenseTemplate;
@@ -202,7 +205,7 @@ app.factory('ModalTemplateService', function() {
     const editIncomeTemplate = `
       <div class="source-list-modal" style="height:100%;background-color:#eaeae1;">
         <h2 style="text-align:center;"><img src="images/add_income.png"> EDIT INCOME</h2>
-        <form class="form-horizontal" role="form" ng-submit="submit()">
+        <form class="form-horizontal" role="form" ng-submit="submit()" ng-show="loading == false">
           <div class="form-group">
             <label class="control-label col-sm-2" for="name">Name:</label>
             <div class="col-sm-9">
@@ -237,6 +240,7 @@ app.factory('ModalTemplateService', function() {
             </div>
           </div>
         </form>
+        <loading-page width="150px" message="Processing ..." ng-show="loading == true"></loading-page>
       </div>
     `;
     return editIncomeTemplate;
@@ -273,7 +277,7 @@ app.factory('ModalTemplateService', function() {
       <div class="source-list-modal" style="height:100%;background-color:#eaeae1;">
         <div class="container sign-up-container">
           <h2 style="text-align:center;"><img src="images/expense_categories.svg"> EDIT CATEGORY</h2>
-          <form class="form-horizontal" role="form" ng-submit="submit()">
+          <form class="form-horizontal" role="form" ng-submit="submit()" ng-show="loading == false">
 
           <br>
 
@@ -305,6 +309,7 @@ app.factory('ModalTemplateService', function() {
           </label>
           <br>
           </form>
+          <loading-page width="150px" message="Processing ..." ng-show="loading == true"></loading-page>
         </div>
       </div>
     `;

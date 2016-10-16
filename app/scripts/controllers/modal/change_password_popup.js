@@ -4,6 +4,8 @@ angular.module('mmtUiApp')
   .controller('ChangePasswordController', ['$scope', '$uibModalInstance', '$http', '$uibModal', '$cookieStore', 'host_name', 'ModalTemplateService',
         function ($scope, $uibModalInstance, $http, $uibModal, $cookieStore, host_name, ModalTemplateService) {
 
+    $scope.loading = false;
+
     $scope.currentP = null;
     $scope.newP = null;
     $scope.retypeP = null;
@@ -24,6 +26,8 @@ angular.module('mmtUiApp')
           },
           data: JSON.stringify({op: $scope.currentP, np: $scope.newP})
        }
+
+       $scope.loading = true;
        // make server request
        $http(req).then(
          function success(response){
@@ -43,6 +47,7 @@ angular.module('mmtUiApp')
              }
            });
            $uibModalInstance.dismiss('cancel');
+           $scope.loading = false;
          },
          function error(response){
            var isValidString = function(string) {
@@ -53,6 +58,7 @@ angular.module('mmtUiApp')
               errMsg = ' Reason: ' + response.data.message;
            }
 
+            $scope.loading = false;
            $scope.errMessage = 'Cannot change your password!' + errMsg;
         });
 

@@ -13,6 +13,7 @@ angular.module('mmtUiApp')
         function ($scope, $http, $cookieStore, DateTimeService, $uibModal, $uibModalInstance,
                   ModalTemplateService, host_name, items) {
 
+  $scope.loading = false;
    $scope.income = items.income;
    $scope.current_date_value = DateTimeService.createDateTimeString(new Date($scope.income.creationDate));
    var old_date = $scope.income.creationDate;
@@ -25,6 +26,7 @@ angular.module('mmtUiApp')
         }
        var submitted_income = $scope.income;
 
+      $scope.loading = true;
        // prepare post request
        var req = {
           method: 'POST',
@@ -41,6 +43,7 @@ angular.module('mmtUiApp')
          function(response){
            items.afterEditCallback();
            $uibModalInstance.dismiss('cancel');
+           $scope.loading = false;
          },
          // ERROR callback
          function(response){
@@ -58,6 +61,7 @@ angular.module('mmtUiApp')
                },
              }
            });
+           $scope.loading = false;
         });
    }
 

@@ -13,6 +13,7 @@ angular.module('mmtUiApp')
         function ($scope, $http, $cookieStore, CategoryService, DateTimeService, $uibModal, $uibModalInstance,
                   ModalTemplateService, host_name, items) {
 
+   $scope.loading = false;
    $scope.category = items.category;
 
    // submit button - save the category
@@ -29,12 +30,15 @@ angular.module('mmtUiApp')
           },
           data: JSON.stringify(submitted_category)
        }
+
+       $scope.loading = true;
        // make server request
        $http(req).then(
          // SUCCESS callback
          function(response){
            items.afterEditCallback();
            $uibModalInstance.dismiss('cancel');
+           $scope.loading = false;
          },
          // ERROR callback
          function(response){
@@ -52,6 +56,7 @@ angular.module('mmtUiApp')
                },
              }
            });
+           $scope.loading = false;
         });
    }
 
