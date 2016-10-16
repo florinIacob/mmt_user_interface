@@ -113,6 +113,11 @@ var app = angular.module('mmtUiApp', [
         controller: 'RenewForgotPasswordCtrl',
         controllerAs: 'renew_forgot_password'
       })
+      .when('/user/activation/:code', {
+        templateUrl: 'views/user/activation.html',
+        controller: 'ActivationCtrl',
+        controllerAs: 'activation'
+      })
 			.otherwise({
 				redirectTo: '/'
 			});

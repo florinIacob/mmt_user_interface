@@ -34,7 +34,7 @@
               <span class="icon-bar"></span>
             </button>
 
-            <a class="navbar-brand" href="#/"><span><img class="menu_logo_img" src="images/logo.svg">My Money Tracker</span></a>
+            <a class="navbar-brand" href="#/"><span><img class="menu_logo_img" src="images/logo.svg">The Accountant</span></a>
           </div>
 
           <div class="collapse navbar-collapse" id="js-navbar-collapse">
@@ -79,7 +79,7 @@
     <div class="footer">
       <div class="container">
         <p>
-          <span><img src="images/logo.svg" height="23" width="23"> My Money Tracker | </span>
+          <span><img src="images/logo.svg" height="23" width="23"> The Accountant | </span>
           <span> {{isEng() ? 'Change language:':'Schimba limba:'}}
             <img src="{{ 'images/flags/' + FLAG}}" height="12" width="17">
             <select ng-disabled="true" type="date" id="language" placeholder="Category" ng-model="LANGUAGE"
@@ -87,7 +87,7 @@
               <option ng-repeat="language in ['ENG', 'RO']" value="{{language}}" required>{{language}}</option>
             </select>
           </span>
-          <span style="float:right;">Copyright © 2016 Florin - All rights reserved</span>
+          <span style="float:right;">Copyright © 2016 Tudor & Florin - All rights reserved</span>
         </p>
       </div>
     </div>
@@ -130,6 +130,7 @@
         <script src="scripts/controllers/user/logout.js"></script>
         <script src="scripts/controllers/user/profile.js"></script>
         <script src="scripts/controllers/user/renew_forgot_password.js"></script>
+        <script src="scripts/controllers/user/activation.js"></script>
 
         <script src="scripts/controllers/expense/add_expense.js"></script>
         <script src="scripts/controllers/expense/expenses_history.js"></script>

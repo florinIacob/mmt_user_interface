@@ -8,7 +8,7 @@
  * Controller of the mmtUiApp
  */
 angular.module('mmtUiApp')
-  .controller('SignUpCtrl', function ($scope, $http, $location, $cookieStore, $uibModal, ModalTemplateService, host_name) {
+  .controller('SignUpCtrl', function ($scope, $http, $location, $cookieStore, $uibModal, ModalTemplateService, CurrencyUtilFactory, host_name) {
 
   $scope.loading = false;
   $scope.retyped_password = null;
@@ -21,8 +21,11 @@ angular.module('mmtUiApp')
      firstName: "",
      surname: "",
      birthdate: "",
-     activated: ""
+     activated: "",
+     defaultCurrency: null
   }
+
+  $scope.availableCurrencies = CurrencyUtilFactory.getAvailableCurrencies();
 
   // submit button - save the user
   $scope.submit = function() {
@@ -46,6 +49,24 @@ angular.module('mmtUiApp')
           });
           $scope.retyped_password = null;
           $scope.user.password = null;
+          return;
+      }
+
+      if (!submitted_user.defaultCurrency) {
+          $uibModal.open({
+            animation: true,
+            template: ModalTemplateService.getInfoTemplate(),
+            controller: 'WarningPopupController',
+            resolve: {
+              items: function() {
+                return {
+                  title: 'Information!',
+                  message: "Please choose the default currency!",
+                  onYesCallback: null
+                };
+              },
+            }
+          });
           return;
       }
 
