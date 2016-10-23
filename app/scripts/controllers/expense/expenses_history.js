@@ -29,12 +29,13 @@ angular.module('mmtUiApp')
 
   // make server request
   $http(req).then(
-    function(response){
-      // SUCCESS: change the path
-      $scope.expenses = angular.fromJson(response.data);
+    function success(response){
+      if (response && response.data) {
+        $scope.expenses = angular.fromJson(response.data);
+      }
       $scope.loading = false;
     },
-    function(response){
+    function error(response){
       // ERROR: inform the user
       $uibModal.open({
         animation: true,

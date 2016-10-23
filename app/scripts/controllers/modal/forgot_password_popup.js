@@ -47,11 +47,12 @@ angular.module('mmtUiApp')
            $uibModalInstance.dismiss('cancel');
          },
          function error(response){
+
            var isValidString = function(string) {
               return (string!=undefined && string!=null && string!='');
            }
            var errMsg = '';
-           if (isValidString(response.data.message)) {
+           if (response.data && response.data.message) {
               errMsg = ' Reason: ' + response.data.message;
            }
 
