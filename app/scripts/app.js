@@ -18,7 +18,7 @@ var app = angular.module('mmtUiApp', [
 		'ui.bootstrap',
 		'chart.js'
 	])
-	.run(function($rootScope, $cookieStore) {
+	.run(function($rootScope, $cookieStore, $window, host_name) {
       $rootScope.authenticated = $cookieStore.get('mmtlt') !== undefined;
       $rootScope.username = $cookieStore.get('username');
       $rootScope.LANGUAGE = 'ENG';
@@ -40,6 +40,8 @@ var app = angular.module('mmtUiApp', [
           $rootScope.FLAG = 'romania-flag.gif';
         }
       }
+      // TODO: line to be removed when the HTTPS certificate is ready
+      $window.open(host_name, '_blank');
   })
 	.config(function ($routeProvider, $httpProvider, ChartJsProvider) {
 		$routeProvider
