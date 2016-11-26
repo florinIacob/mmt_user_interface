@@ -37,7 +37,7 @@
     <thead>
     <tr>
       <th>Category Name</th>
-      <th>Colour Name</th>
+      <!--<th>Colour Name</th>-->
       <th>Colour</th>
       <th></th>
     </tr>
@@ -45,8 +45,8 @@
     <tbody>
     <tr ng-repeat="category in categories">
       <td>{{ category.name }}</td>
-      <td>{{ category.colour }}</td>
-      <td><pre style="background-color:{{colours_map[category.colour]}};">      </pre></td>
+      <!--<td>{{ category.colour }}</td>-->
+      <td><pre style="background-color:{{colours_map[category.colour]}};height:22px;">      </pre></td>
       <td>
         <span class="glyphicon glyphicon-pencil control-icon-green" bs-tooltip title="Edit category!" ng-click="editCategory(category)"></span>
         <span class="glyphicon glyphicon-trash control-icon-red" style="float:right;" bs-tooltip title="Delete category!"
