@@ -7,9 +7,11 @@
  * # ProfileCtrl
  * Controller of the mmtUiApp
  */
-angular.module('mmtUiApp')
-  .controller('ProfileCtrl', function ($scope, $rootScope, $q, $http, $location, $route, $cookieStore,
-        CategoryService, $uibModal, ModalTemplateService, host_name, CurrencyUtilFactory) {
+angular.module('mmtUiApp').controller('ProfileCtrl',
+      ['$scope', '$rootScope', '$q', '$http', '$location', '$route', '$cookieStore',
+               'CategoryService', '$uibModal', 'ModalTemplateService', 'host_name', 'CurrencyUtilFactory', 'ExpenseUtilFactory',
+      function ($scope, $rootScope, $q, $http, $location, $route, $cookieStore,
+        CategoryService, $uibModal, ModalTemplateService, host_name, CurrencyUtilFactory, ExpenseUtilFactory) {
 
   if (!$rootScope.authenticated) {
     $location.path('/login');
@@ -69,31 +71,22 @@ angular.module('mmtUiApp')
         console.log('      - month: ' + expense.monthAsString);
         console.log('      - year: ' + expense.year);
 
-        $scope.sumOfExpensesOverall = $scope.sumOfExpensesOverall + expense.amount;
+        $scope.sumOfExpensesOverall = $scope.sumOfExpensesOverall + (expense.defaultCurrencyAmount ? expense.defaultCurrencyAmount : expense.amount);
 
         if (expense.monthAsInt === currentMonth) {
           $scope.numberOfExpensesThisMonth++;
-          $scope.sumOfExpensesThisMonth = $scope.sumOfExpensesThisMonth + expense.amount;
+          $scope.sumOfExpensesThisMonth = $scope.sumOfExpensesThisMonth + (expense.defaultCurrencyAmount ? expense.defaultCurrencyAmount : expense.amount);
         }
         if (expense.year === currentYear) {
-          $scope.sumOfExpensesThisYear = $scope.sumOfExpensesThisYear + expense.amount;
+          $scope.sumOfExpensesThisYear = $scope.sumOfExpensesThisYear + (expense.defaultCurrencyAmount ? expense.defaultCurrencyAmount : expense.amount);
         }
       })
   }
 
   // Retrieve expenses
-  var retrieveExpenses = function() {
+  var retrieveExpenses = function(startTime, endTime) {
     var deferred = $q.defer();
-    var req = {
-          method: 'GET',
-          url: host_name + '/expense/find_all',
-          headers: {
-            'Content-Type': "application/json",
-            'Authorization': $cookieStore.get('mmtlt')
-         }
-       }
-      // make server request
-      $http(req).then(
+    ExpenseUtilFactory.retrieveExpensesByTimeInterval('*', startTime, endTime).then(
         function(response){
           // SUCCESS: change the path
           deferred.resolve(angular.fromJson(response.data));
@@ -120,7 +113,7 @@ angular.module('mmtUiApp')
 
     $scope.loading++;
     $scope.expenses;
-    retrieveExpenses().then(function(expenses) {
+    retrieveExpenses(new Date(0), new Date()).then(function(expenses) {
       $scope.expenses = expenses;
 
       $scope.iterateExpenses();
@@ -143,13 +136,13 @@ angular.module('mmtUiApp')
           console.log('      - month: ' + income.monthAsString);
           console.log('      - year: ' + income.year);
 
-          $scope.sumOfIncomesOverall = $scope.sumOfIncomesOverall + income.amount;
+          $scope.sumOfIncomesOverall = $scope.sumOfIncomesOverall + (income.defaultCurrencyAmount ? income.defaultCurrencyAmount : income.amount);
 
           if (income.monthAsInt === currentMonth) {
-            $scope.sumOfIncomesThisMonth = $scope.sumOfIncomesThisMonth + income.amount;
+            $scope.sumOfIncomesThisMonth = $scope.sumOfIncomesThisMonth + (income.defaultCurrencyAmount ? income.defaultCurrencyAmount : income.amount);
           }
           if (income.year === currentYear) {
-            $scope.sumOfIncomesThisYear = $scope.sumOfIncomesThisYear + income.amount;
+            $scope.sumOfIncomesThisYear = $scope.sumOfIncomesThisYear + (income.defaultCurrencyAmount ? income.defaultCurrencyAmount : income.amount);
           }
         })
     }
@@ -159,7 +152,7 @@ angular.module('mmtUiApp')
       var deferred = $q.defer();
       var req = {
             method: 'GET',
-            url: host_name + '/income/find_all',
+            url: host_name + '/income/findByInterval/' + (new Date().getTime() - (30*24*60*60*1000)) + '/' + new Date().getTime(),
             headers: {
               'Content-Type': "application/json",
               'Authorization': $cookieStore.get('mmtlt')
@@ -271,7 +264,7 @@ angular.module('mmtUiApp')
           }
         });
       }
-});
+}]);
 
 /**
   * Function used to extract the name of the month based on the received index.

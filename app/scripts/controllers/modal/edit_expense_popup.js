@@ -9,17 +9,19 @@
  */
 angular.module('mmtUiApp')
   .controller('EditExpensePopupController', ['$scope', '$http','$cookieStore', 'CategoryService', 'DateTimeService',
-                       '$uibModal', '$uibModalInstance', 'ModalTemplateService', 'host_name', 'items',
+                       '$uibModal', '$uibModalInstance', 'ModalTemplateService', 'CurrencyUtilFactory', 'host_name', 'items',
         function ($scope, $http, $cookieStore, CategoryService, DateTimeService, $uibModal, $uibModalInstance,
-                  ModalTemplateService, host_name, items) {
+                  ModalTemplateService, CurrencyUtilFactory, host_name, items) {
 
    $scope.loading = false;
-   $scope.categories = CategoryService.getCategories();
+   $scope.categories = CategoryService.getCategoryNames();
 
    $scope.expense = items.expense;
    $scope.current_date_value = DateTimeService.createDateTimeString(new Date($scope.expense.creationDate));
    var old_date = $scope.expense.creationDate;
    $scope.expense.creationDate = null;
+
+   $scope.availableCurrencies = CurrencyUtilFactory.getAvailableCurrencies();
 
    // submit button - save the expense
    $scope.submit = function() {

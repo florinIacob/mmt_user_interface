@@ -9,7 +9,7 @@
  */
 angular.module('mmtUiApp')
   .controller('ExpensesChartCtrl', function ($scope, $rootScope, $q, $http, $location, $route, $cookieStore,
-        CategoryService, $uibModal, ModalTemplateService, host_name) {
+        CategoryService, $uibModal, ModalTemplateService, host_name, ExpenseUtilFactory) {
 
   if (!$rootScope.authenticated) {
     $location.path('/login');

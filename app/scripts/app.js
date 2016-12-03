@@ -18,7 +18,7 @@ var app = angular.module('mmtUiApp', [
 		'ui.bootstrap',
 		'chart.js'
 	])
-	.run(function($rootScope, $cookieStore, $window, host_name) {
+	.run(function($rootScope, $http, $cookieStore, $window, host_name) {
       $rootScope.authenticated = $cookieStore.get('mmtlt') !== undefined;
       $rootScope.username = $cookieStore.get('username');
       $rootScope.LANGUAGE = 'ENG';
@@ -41,7 +41,14 @@ var app = angular.module('mmtUiApp', [
         }
       }
       // TODO: line to be removed when the HTTPS certificate is ready
-      $window.open(host_name, '_blank');
+      $http.get(host_name).then(
+          function success(response) {
+              console.warn(" - Server contact attempt success: " + JSON.stringify(response));
+          }, function error(response) {
+              $window.open(host_name, "_self");
+              console.error(" - Server contact attempt ERROR: " + JSON.stringify(response));
+          });
+
   })
 	.config(function ($routeProvider, $httpProvider, ChartJsProvider) {
 		$routeProvider
