@@ -1,5 +1,5 @@
 <div class="container sign-up-container">
-  <h2 style="text-align:center;"><img src="images/incomes_chart.svg"> INCOMES CHART</h2>
+  <h2 style="text-align:center;"><img src="images/incomes_chart.svg"> INCOMES CHART <span ng-if="default_currency" style="font-style: italic;">({{default_currency}})</span></h2>
   <br>
   <div class="form-group">
     <label class="control-label col-sm-3">Graphic type:</label>
@@ -26,7 +26,9 @@
           <option ng-repeat="year in yearsArray" value="{{year}}" required>{{year}}</option>
         </select>
       </div>
-      <div class="col-sm-4"></div>
+      <div class="col-sm-4">
+        <span class="glyphicon glyphicon-info-sign" bs-tooltip title="Incomes are presented in your default currency: {{default_currency}}"></span>
+      </div>
       <div class="col-sm-3">
         <input  ng-show="graphic_type == 'DYNAMIC'" type="button" class="form-control" value="Toggle graphic type"
                 ng-click="toggleDynamicGraphic()">

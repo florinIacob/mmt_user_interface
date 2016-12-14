@@ -9,7 +9,7 @@
  */
 angular.module('mmtUiApp')
   .controller('ExpensesChartCtrl', function ($scope, $rootScope, $q, $http, $location, $route, $cookieStore,
-        CategoryService, $uibModal, ModalTemplateService, host_name, ExpenseUtilFactory) {
+        CategoryService, $uibModal, ModalTemplateService, host_name, ExpenseUtilFactory, CurrencyUtilFactory) {
 
   if (!$rootScope.authenticated) {
     $location.path('/login');
@@ -82,12 +82,18 @@ angular.module('mmtUiApp')
         $scope.monthsArray = extractMonthAsString(new Date().getMonth(), true);
         $scope.selected_month = extractMonthAsString(new Date().getMonth());
       }
-      $scope.loading = true;
 
-      retrieveExpensesByTimeInterval(new Date($scope.selected_year, 0, 1), new Date($scope.selected_year, 11, 31))
-          .then(
-            function successCallback(expenses) {
-              $scope.expenses = expenses;
+      $scope.loading = true;
+      $q.all([
+          CurrencyUtilFactory.getDefaultCurrency(),
+          retrieveExpensesByTimeInterval(new Date($scope.selected_year, 0, 1), new Date($scope.selected_year, 11, 31)),
+      ])
+        .then(
+            function successCallback(responses) {
+              var currency = angular.fromJson(responses[0].data);
+              $scope.default_currency = currency.value;
+
+              $scope.expenses = responses[1];
 
               // GRAPHIC ARRAYS
                 // - linear

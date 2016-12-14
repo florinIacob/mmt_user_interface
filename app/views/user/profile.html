@@ -20,24 +20,24 @@
     <br>
     <hr style="border-top: 1px solid #ccc;">
     <div style="width:100%;text-align:center;">
-      <p><span style="font-weight: bold;">MONTHLY EXPENSES</span>: {{username}}, you've spent <span style="font-weight: bold;">'{{sumOfExpensesThisMonth}} {{default_currency}}'</span> THIS MONTH</p>
-      <p><span style="font-weight: bold;">MONTHLY INCOMES</span>: {{username}}, you've received <span style="font-weight: bold;">'{{sumOfIncomesThisMonth}} {{default_currency}}'</span> THIS MONTH</p>
+      <p><span style="font-weight: bold;">MONTHLY EXPENSES</span>: {{username}}, you've spent <span style="font-weight: bold;">'{{sumOfExpensesThisMonth.toFixed(2)}} {{default_currency}}'</span> THIS MONTH</p>
+      <p><span style="font-weight: bold;">MONTHLY INCOMES</span>: {{username}}, you've received <span style="font-weight: bold;">'{{sumOfIncomesThisMonth.toFixed(2)}} {{default_currency}}'</span> THIS MONTH</p>
     </div>
     <pre><span style="font-size:17px;"> <span class="glyphicon glyphicon-usd"></span> Your <span style="font-weight: bold;">MONTHLY BUDGET</span> is <span style="font-weight: bold;color:
     {{(sumOfIncomesThisMonth-sumOfExpensesThisMonth) === 0 ? 'blue' : ((sumOfIncomesThisMonth-sumOfExpensesThisMonth) < 0 ? 'red' : 'green')}};"> '{{ (sumOfIncomesThisMonth - sumOfExpensesThisMonth).toFixed(2)}} {{default_currency}}'</span></span></pre>
     <br>
     <hr style="border-top: 1px solid #ccc;">
     <div style="width:100%;text-align:center;">
-      <p><span style="font-weight: bold;">YEARLY EXPENSES</span>: {{username}}, you've spent <span style="font-weight: bold;">'{{sumOfExpensesThisYear}} {{default_currency}}'</span> THIS YEAR</p>
-      <p><span style="font-weight: bold;">YEARLY INCOMES</span>: {{username}}, you've received <span style="font-weight: bold;">'{{sumOfIncomesThisYear}} {{default_currency}}'</span> THIS YEAR</p>
+      <p><span style="font-weight: bold;">YEARLY EXPENSES</span>: {{username}}, you've spent <span style="font-weight: bold;">'{{sumOfExpensesThisYear.toFixed(2)}} {{default_currency}}'</span> THIS YEAR</p>
+      <p><span style="font-weight: bold;">YEARLY INCOMES</span>: {{username}}, you've received <span style="font-weight: bold;">'{{sumOfIncomesThisYear.toFixed(2)}} {{default_currency}}'</span> THIS YEAR</p>
     </div>
     <pre><span style="font-size:17px;"> <span class="glyphicon glyphicon-usd"></span> Your <span style="font-weight: bold;">YEARLY BUDGET</span> is <span style="font-weight: bold;color:
     {{(sumOfIncomesThisYear-sumOfExpensesThisYear) === 0 ? 'blue' : ((sumOfIncomesThisYear-sumOfExpensesThisYear) < 0 ? 'red' : 'green')}};"> '{{ (sumOfIncomesThisYear - sumOfExpensesThisYear).toFixed(2) }} {{default_currency}}'</span></span></pre>
     <br>
     <hr style="border-top: 1px solid #ccc;">
     <div style="width:100%;text-align:center;">
-      <p><span style="font-weight: bold;">OVERALL EXPENSES</span>: {{username}}, you've spent <span style="font-weight: bold;">'{{sumOfExpensesOverall}} {{default_currency}}'</span> OVERALL</p>
-      <p><span style="font-weight: bold;">OVERALL INCOMES</span>: {{username}}, you've received <span style="font-weight: bold;">'{{sumOfIncomesOverall}} {{default_currency}}'</span> OVERALL</p>
+      <p><span style="font-weight: bold;">OVERALL EXPENSES</span>: {{username}}, you've spent <span style="font-weight: bold;">'{{sumOfExpensesOverall.toFixed(2)}} {{default_currency}}'</span> OVERALL</p>
+      <p><span style="font-weight: bold;">OVERALL INCOMES</span>: {{username}}, you've received <span style="font-weight: bold;">'{{sumOfIncomesOverall.toFixed(2)}} {{default_currency}}'</span> OVERALL</p>
     </div>
     <pre><span style="font-size:17px;"> <span class="glyphicon glyphicon-usd"></span> Your <span style="font-weight: bold;">OVERALL BUDGET</span> is <span style="font-weight: bold;color:
   {{(sumOfIncomesOverall-sumOfExpensesOverall) === 0 ? 'blue' : ((sumOfIncomesOverall-sumOfExpensesOverall) < 0 ? 'red' : 'green')}};"> '{{ (sumOfIncomesOverall - sumOfExpensesOverall).toFixed(2) }} {{default_currency}}'</span></span></pre>

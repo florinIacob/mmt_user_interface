@@ -9,7 +9,7 @@
  */
 angular.module('mmtUiApp')
   .controller('IncomesChartCtrl', function ($scope, $rootScope, $q, $http, $location, $route, $cookieStore,
-        $uibModal, ModalTemplateService, host_name) {
+        $uibModal, ModalTemplateService, CurrencyUtilFactory, host_name) {
 
   if (!$rootScope.authenticated) {
     $location.path('/login');
@@ -77,67 +77,91 @@ angular.module('mmtUiApp')
         }
       }
 
+      $scope.default_currency = "";
       $scope.loading = true;
-      retrieveIncomesByTimeInterval(new Date($scope.selected_year, 0, 1), new Date($scope.selected_year, 11, 31))
-        .then(
-          function(incomes) {
-            $scope.incomes = incomes;
+      $q.all([
+        CurrencyUtilFactory.getDefaultCurrency(),
+        retrieveIncomesByTimeInterval(new Date($scope.selected_year, 0, 1), new Date($scope.selected_year, 11, 31)),
+        ])
+          .then(
+            function success(responses) {
+              var currency = angular.fromJson(responses[0].data);
+              $scope.default_currency = currency.value;
 
-            // graphic arrays
-            // - linear
-            $scope.labelsLinear = extractMonthAsString(month_index, true);
-            $scope.seriesLinear = ['Incomes ' + $scope.selected_year];
-            $scope.dataLinear = [generateZeroesArray(month_index + 1)];
-            $scope.onClick = function (points, evt) {
-              console.log(points, evt);
-            };
-            // - bar
-            $scope.labelsBar = [$scope.selected_year];
-            $scope.seriesBar = extractMonthAsString(month_index, true);
-            $scope.dataBar = generateArraysWithZero(month_index + 1);
-            // - dynamic
-            $scope.labelsDynamic = extractMonthAsString(month_index, true);
-            $scope.dataDynamic = generateZeroesArray(month_index + 1);
-            $scope.typeDynamic = 'Pie';
-            $scope.toggleDynamicGraphic = function () {
-              $scope.typeDynamic = $scope.typeDynamic === 'PolarArea' ?
-                'Pie' : 'PolarArea';
-            };
+              $scope.incomes = responses[1];
 
-            $scope.incomes.forEach(function(income) {
+              // graphic arrays
+              // - linear
+              $scope.labelsLinear = extractMonthAsString(month_index, true);
+              $scope.seriesLinear = ['Incomes ' + $scope.selected_year + ' in ' + $scope.default_currency];
+              $scope.dataLinear = [generateZeroesArray(month_index + 1)];
+              $scope.onClick = function (points, evt) {
+                console.log(points, evt);
+              };
+              // - bar
+              $scope.labelsBar = [$scope.selected_year];
+              $scope.seriesBar = extractMonthAsString(month_index, true);
+              $scope.dataBar = generateArraysWithZero(month_index + 1);
+              // - dynamic
+              $scope.labelsDynamic = extractMonthAsString(month_index, true);
+              $scope.dataDynamic = generateZeroesArray(month_index + 1);
+              $scope.typeDynamic = 'Pie';
+              $scope.toggleDynamicGraphic = function () {
+                $scope.typeDynamic = $scope.typeDynamic === 'PolarArea' ?
+                  'Pie' : 'PolarArea';
+              };
 
-                var d = new Date(income.creationDate);
-                income.monthAsInt = d.getMonth();
-                income.monthAsString = extractMonthAsString(d.getMonth(), false);
-                income.year = 1900 + d.getYear();
+              $scope.incomes.forEach(function(income) {
 
-                console.log('  >> INCOME: ' + income.name);
-                console.log('      - amount: ' + income.amount);
-                console.log('      - creationDate: ' + income.creationDate);
-                console.log('      - month: ' + income.monthAsString);
-                console.log('      - year: ' + income.year);
+                  var d = new Date(income.creationDate);
+                  income.monthAsInt = d.getMonth();
+                  income.monthAsString = extractMonthAsString(d.getMonth(), false);
+                  income.year = 1900 + d.getYear();
 
-                // LINEAR graphic
-                if ($scope.selected_year == income.year.toString()) {
-                  var categ_index = $scope.labelsLinear.indexOf(income.monthAsString);
-                  $scope.dataLinear[0][categ_index] = (income.defaultCurrencyAmount == null ? income.amount : income.defaultCurrencyAmount)
-                      +$scope.dataLinear[0][categ_index];
-                }
+                  console.log('  >> INCOME: ' + income.name);
+                  console.log('      - amount: ' + income.amount);
+                  console.log('      - creationDate: ' + income.creationDate);
+                  console.log('      - month: ' + income.monthAsString);
+                  console.log('      - year: ' + income.year);
 
-                // BAR graphic
-                if ($scope.selected_year == income.year.toString()) {
-                  var categ_index = $scope.seriesBar.indexOf(income.monthAsString);
-                  $scope.dataBar[categ_index][0] = (income.defaultCurrencyAmount == null ? income.amount : income.defaultCurrencyAmount)
-                                +$scope.dataBar[categ_index][0];
-                }
+                  // LINEAR graphic
+                  if ($scope.selected_year == income.year.toString()) {
+                    var categ_index = $scope.labelsLinear.indexOf(income.monthAsString);
+                    $scope.dataLinear[0][categ_index] = (income.defaultCurrencyAmount == null ? income.amount : income.defaultCurrencyAmount)
+                        +$scope.dataLinear[0][categ_index];
+                  }
 
-                // DYNAMIC graphic
-                if ($scope.selected_year == income.year.toString()) {
-                  categ_index = $scope.labelsDynamic.indexOf(income.monthAsString);
-                  $scope.dataDynamic[categ_index] = (income.defaultCurrencyAmount == null ? income.amount : income.defaultCurrencyAmount) + $scope.dataDynamic[categ_index];
-                }
-              });
-              $scope.loading = false;
+                  // BAR graphic
+                  if ($scope.selected_year == income.year.toString()) {
+                    var categ_index = $scope.seriesBar.indexOf(income.monthAsString);
+                    $scope.dataBar[categ_index][0] = (income.defaultCurrencyAmount == null ? income.amount : income.defaultCurrencyAmount)
+                                  +$scope.dataBar[categ_index][0];
+                  }
+
+                  // DYNAMIC graphic
+                  if ($scope.selected_year == income.year.toString()) {
+                    categ_index = $scope.labelsDynamic.indexOf(income.monthAsString);
+                    $scope.dataDynamic[categ_index] = (income.defaultCurrencyAmount == null ? income.amount : income.defaultCurrencyAmount) + $scope.dataDynamic[categ_index];
+                  }
+                });
+                $scope.loading = false;
+          },
+           function error(response){
+             // ERROR: inform the user
+             $uibModal.open({
+               animation: true,
+               template: ModalTemplateService.getInfoTemplate(),
+               controller: 'WarningPopupController',
+               resolve: {
+                 items: function() {
+                   return {
+                     title: 'Information!',
+                     message: 'Cannot load Incomes Chart page!',
+                     onYesCallback: null
+                   };
+                 },
+               }
+             });
           });
     }
 
