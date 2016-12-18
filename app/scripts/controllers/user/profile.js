@@ -86,7 +86,7 @@ angular.module('mmtUiApp').controller('ProfileCtrl',
   // Retrieve expenses
   var retrieveExpenses = function(startTime, endTime) {
     var deferred = $q.defer();
-    ExpenseUtilFactory.retrieveExpensesByTimeInterval('*', startTime, endTime).then(
+    ExpenseUtilFactory.retrieveExpensesByTimeInterval('*', startTime.getTime(), endTime.getTime()).then(
         function(response){
           // SUCCESS: change the path
           deferred.resolve(angular.fromJson(response.data));

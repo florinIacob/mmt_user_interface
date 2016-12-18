@@ -138,4 +138,16 @@ body {
     color: #0066ff;
     margin: 3px;
   }
+
+  .accountant-btn {
+    background-color: #222;
+    color: #9d9d9d;
+  }
+  button.accountant-btn:hover {
+      color:#ffffff !important;
+  }
+
+  .grey-bg {
+    background-color: #eaeae1;
+  }
 }

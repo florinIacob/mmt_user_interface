@@ -1,19 +1,20 @@
 'use strict';
 
-app.factory('ExpenseUtilFactory',
+app.factory('IncomeUtilFactory',
   ['$http', '$cookieStore', 'host_name',
   function($http, $cookieStore, host_name) {
 
     var service = {};
 
     /**
-    * Function that will retrieve all the expenses in the required time interval
+    * Function that will retrieve all the incomes in the required time interval
     * from server.
     */
-    service.retrieveExpensesByTimeInterval = function(currencyCode, startTimeInMillis, endTimeInMillis) {
+    service.retrieveIncomesByTimeInterval = function(currencyCode, startTimeInMillis, endTimeInMillis) {
+        // TODO: should also contain currency_code
         var req = {
             method: 'GET',
-            url: host_name + '/expense/find/' + currencyCode + '/' + startTimeInMillis + '/' + endTimeInMillis,
+            url: host_name + '/income/findByInterval/' + startTimeInMillis + '/' + endTimeInMillis,
             headers: {
               'Content-Type': "application/json",
               'Authorization': $cookieStore.get('mmtlt')

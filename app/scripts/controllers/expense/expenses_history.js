@@ -9,50 +9,59 @@
  */
 angular.module('mmtUiApp')
   .controller('ExpensesHistoryCtrl', function ($scope, $rootScope, $http, $location, $route, $cookieStore,
-        CategoryService, $uibModal, ModalTemplateService, host_name) {
+        CategoryService, $uibModal, ModalTemplateService, ExpenseUtilFactory, host_name) {
 
   if (!$rootScope.authenticated) {
     $location.path('/login');
   }
-  $scope.loading = true;
+
+  $scope.expenseFromDate = new Date(new Date().getFullYear(), 0, 1);
+  $scope.expenseUntilDate = new Date();
+
+  $scope.loading = false;
   $scope.expenses = [];
 
-  // prepare post request
-  var req = {
-      method: 'GET',
-      url: host_name + '/expense/find_all',
-      headers: {
-        'Content-Type': "application/json",
-        'Authorization': $cookieStore.get('mmtlt')
-     }
+  /**
+   * Retrieve the List of Expenses
+   *
+   */
+  $scope.retrieveExpenseList = function() {
+    if (!$scope.expenseFromDate) {
+      $scope.expenseFromDate = new Date(new Date().getFullYear(), 0, 1);
+    }
+    if (!$scope.expenseUntilDate) {
+      $scope.expenseUntilDate = new Date();
+    }
+
+    $scope.loading = true;
+    ExpenseUtilFactory.retrieveExpensesByTimeInterval('*', $scope.expenseFromDate.getTime(), $scope.expenseUntilDate.getTime()).then(
+      function success(response){
+        if (response && response.data) {
+          $scope.expenses = angular.fromJson(response.data);
+        }
+        $scope.loading = false;
+      },
+      function error(response){
+        // ERROR: inform the user
+        $uibModal.open({
+          animation: true,
+          template: ModalTemplateService.getInfoTemplate(),
+          controller: 'WarningPopupController',
+          resolve: {
+            items: function() {
+              return {
+                title: 'Information!',
+                message: 'Expenses could NOT be loaded!',
+                onYesCallback: null
+              };
+            },
+          }
+        });
+        $scope.loading = false;
+     });
    }
 
-  // make server request
-  $http(req).then(
-    function success(response){
-      if (response && response.data) {
-        $scope.expenses = angular.fromJson(response.data);
-      }
-      $scope.loading = false;
-    },
-    function error(response){
-      // ERROR: inform the user
-      $uibModal.open({
-        animation: true,
-        template: ModalTemplateService.getInfoTemplate(),
-        controller: 'WarningPopupController',
-        resolve: {
-          items: function() {
-            return {
-              title: 'Information!',
-              message: 'Expenses could NOT be loaded!',
-              onYesCallback: null
-            };
-          },
-        }
-      });
-      $scope.loading = false;
-   });
+   $scope.retrieveExpenseList();
 
   // EDIT EXPENSE FUNCTIONALITY
   $scope.editExpense = function(expense) {

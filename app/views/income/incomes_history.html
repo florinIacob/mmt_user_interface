@@ -3,11 +3,24 @@
   <br>
 </div>
 <br>
-<button type="button" class="btn btn-primary btn-block" ng-click="addIncomeAttempt()">Add new income</button>
+<div class="form-group">
+  <label class="col-sm-4">
+    <span class="input-label">From: </span>
+    <input type="date" ng-model="incomeFromDate" ng-change="retrieveIncomeList()">
+  </label>
+  <label class="col-sm-4">
+    <span class="input-label">Until: </span>
+    <input type="date" ng-model="incomeUntilDate" ng-change="retrieveIncomeList()">
+  </label>
+  <div class="col-sm-4">
+    <button type="button" class="btn btn-block accountant-btn" ng-click="addIncomeAttempt()">Add new income</button>
+  </div>
+</div>
+<br>
 <br>
 <div>
   <table class="table table-bordered table-hover" ng-show="loading == false">
-    <thead>
+    <thead class="grey-bg">
     <tr>
       <th>Name
         <span class="glyphicon glyphicon-sort control-icon-blue" bs-tooltip title="Sort by name" ng-click="changeSortingCriteria('name')"></span>

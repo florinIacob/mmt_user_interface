@@ -9,50 +9,59 @@
  */
 angular.module('mmtUiApp')
   .controller('IncomesHistoryCtrl', function ($scope, $rootScope, $http, $location, $route, $cookieStore,
-        $uibModal, ModalTemplateService, host_name) {
+        $uibModal, ModalTemplateService, IncomeUtilFactory, host_name) {
 
   if (!$rootScope.authenticated) {
     $location.path('/login');
   }
+  $scope.incomeFromDate = new Date(new Date().getFullYear(), 0, 1);
+  $scope.incomeUntilDate = new Date();
+
   $scope.loading = true;
 
   $scope.incomes = [];
 
-  // prepare post request
-  var req = {
-      method: 'GET',
-      url: host_name + '/income/find_all',
-      headers: {
-        'Content-Type': "application/json",
-        'Authorization': $cookieStore.get('mmtlt')
-     }
-   }
-  // make server request
-  $http(req).then(
-    function success(response){
-      if (response && response.data) {
-        $scope.incomes = angular.fromJson(response.data);
-      }
-      $scope.loading = false;
-    },
-    function error(response){
-      // ERROR: inform the user
-      $uibModal.open({
-        animation: true,
-        template: ModalTemplateService.getInfoTemplate(),
-        controller: 'WarningPopupController',
-        resolve: {
-          items: function() {
-            return {
-              title: 'Information!',
-              message: 'Incomes could NOT be loaded!',
-              onYesCallback: null
-            };
-          },
+  /**
+   * Retrieve the List of Incomes
+   *
+   */
+  $scope.retrieveIncomeList = function() {
+    if (!$scope.incomeFromDate) {
+      $scope.incomeFromDate = new Date(new Date().getFullYear(), 0, 1);
+    }
+    if (!$scope.incomeUntilDate) {
+      $scope.incomeUntilDate = new Date();
+    }
+    $scope.loading = true;
+
+    IncomeUtilFactory.retrieveIncomesByTimeInterval('*', $scope.incomeFromDate.getTime(), $scope.incomeUntilDate.getTime()).then(
+      function success(response){
+        if (response && response.data) {
+          $scope.incomes = angular.fromJson(response.data);
         }
-      });
-      $scope.loading = false;
-   });
+        $scope.loading = false;
+      },
+      function error(response){
+        // ERROR: inform the user
+        $uibModal.open({
+          animation: true,
+          template: ModalTemplateService.getInfoTemplate(),
+          controller: 'WarningPopupController',
+          resolve: {
+            items: function() {
+              return {
+                title: 'Information!',
+                message: 'Incomes could NOT be loaded!',
+                onYesCallback: null
+              };
+            },
+          }
+        });
+        $scope.loading = false;
+     });
+  }
+
+  $scope.retrieveIncomeList();
 
   // EDIT INCOME FUNCTIONALITY
   $scope.editIncome = function(income) {
