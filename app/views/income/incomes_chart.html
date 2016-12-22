@@ -10,27 +10,26 @@
     </div>
   </div>
   <br>
-  <br>
 </div>
 <br>
 <br>
 
 <div id="graphic_container">
-
   <div ng-show="loading == false">
     <div id="selection_area" class="form-group">
-      <label class="control-label col-sm-2">Change year:</label>
-      <div class="col-sm-3">
-        <select type="date" class="form-control" id="year_select" placeholder="year" ng-model="selected_year"
-                ng-change="onDateSelect(true)">
-          <option ng-repeat="year in yearsArray" value="{{year}}" required>{{year}}</option>
-        </select>
-      </div>
-      <div class="col-sm-4">
+      <label class="col-sm-4">
+        <span class="input-label">From: </span>
+        <input type="date" ng-model="incomeFromDate" ng-change="onDateSelect()">
+      </label>
+      <label class="col-sm-4">
+        <span class="input-label">Until: </span>
+        <input type="date" ng-model="incomeUntilDate" ng-change="onDateSelect()">
+      </label>
+      <div class="col-sm-1">
         <span class="glyphicon glyphicon-info-sign" bs-tooltip title="Incomes are presented in your default currency: {{default_currency}}"></span>
       </div>
-      <div class="col-sm-3">
-        <input  ng-show="graphic_type == 'DYNAMIC'" type="button" class="form-control" value="Toggle graphic type"
+      <div class="col-sm-3" ng-if="graphic_type == 'DYNAMIC'" >
+        <input type="button" class="form-control" value="Toggle graphic type"
                 ng-click="toggleDynamicGraphic()">
       </div>
     </div>

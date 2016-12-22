@@ -15,7 +15,7 @@ angular.module('mmtUiApp')
     $location.path('/login');
   }
 
-  $scope.expenseFromDate = new Date(new Date().getFullYear(), 0, 1);
+  $scope.expenseFromDate = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
   $scope.expenseUntilDate = new Date();
 
   $scope.loading = false;

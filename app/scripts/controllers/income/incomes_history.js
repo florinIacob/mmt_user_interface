@@ -14,7 +14,7 @@ angular.module('mmtUiApp')
   if (!$rootScope.authenticated) {
     $location.path('/login');
   }
-  $scope.incomeFromDate = new Date(new Date().getFullYear(), 0, 1);
+  $scope.incomeFromDate = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
   $scope.incomeUntilDate = new Date();
 
   $scope.loading = true;

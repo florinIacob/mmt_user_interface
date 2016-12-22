@@ -41,7 +41,7 @@
 
             <ul class="nav navbar-nav">
               <li class="active"><a href="#/">Home</a></li>
-              <li class="dropdown" ng-if="authenticated">
+              <li class="dropdown" ng-if="authenticated === true">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="">
                   <span class="glyphicon glyphicon-piggy-bank"> Income<span class="caret"></span></span></a>
                 <ul class="dropdown-menu">
@@ -50,7 +50,7 @@
                   <li><a href="#/incomes_chart">Incomes chart</a></li>
                 </ul>
               </li>
-              <li class="dropdown" ng-if="authenticated">
+              <li class="dropdown" ng-if="authenticated === true">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="">
                   <span class="glyphicon glyphicon-usd"> Expense<span class="caret"></span></span></a>
                 <ul class="dropdown-menu">
@@ -62,10 +62,10 @@
               </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li ng-if="!authenticated"><a href="#/sign_up"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-              <li ng-if="!authenticated"><a href="#/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-              <li ng-if="authenticated"><a href="#/profile"><span class="glyphicon glyphicon-user"></span> {{username}}</a></li>
-              <li ng-if="authenticated"><a href="#/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+              <li ng-if="authenticated === false"><a href="#/sign_up"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+              <li ng-if="authenticated === false"><a href="#/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+              <li ng-if="authenticated === true"><a href="#/profile"><span class="glyphicon glyphicon-user"></span> {{username}}</a></li>
+              <li ng-if="authenticated === true"><a href="#/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
             </ul>
           </div>
         </div>
@@ -126,6 +126,7 @@
 
         <script src="scripts/services/expense/ExpenseUtilFactory.js"></script>
         <script src="scripts/services/income/IncomeUtilFactory.js"></script>
+        <script src="scripts/services/chart/ChartUtilFactory.js"></script>
         <script src="scripts/services/category_service.js"></script>
         <script src="scripts/services/CurrencyUtilFactory.js"></script>
         <script src="scripts/services/date_time_service.js"></script>

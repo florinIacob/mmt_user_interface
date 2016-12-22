@@ -146,8 +146,8 @@ body {
   button.accountant-btn:hover {
       color:#ffffff !important;
   }
+}
 
-  .grey-bg {
-    background-color: #eaeae1;
-  }
+.grey-bg {
+  background-color: #eaeae1;
 }

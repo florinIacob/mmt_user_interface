@@ -13,22 +13,39 @@
   <br>
 </div>
 <br>
-<br>
 
 <div id="graphic_container">
 
   <div ng-show="loading == false">
     <div id="selection_area" class="form-group">
-      <label class="control-label col-sm-2">Change year:</label>
-      <div class="col-sm-3">
-        <select type="date" class="form-control" id="year_select" placeholder="year" ng-model="selected_year"
-                ng-change="onDateSelect(true)">
-          <option ng-repeat="year in yearsArray" value="{{year}}" required>{{year}}</option>
-        </select>
+
+      <div ng-if="graphic_type.indexOf('LINEAR') === -1 && graphic_type != 'BAR' && graphic_type != 'DYNAMIC'">
+        <label class="control-label col-sm-2">Change year:</label>
+        <div class="col-sm-3">
+          <select type="date" class="form-control" id="year_select" placeholder="year" ng-model="selected_year"
+                  ng-change="onPeriodSelect(true)">
+            <option ng-repeat="year in yearsArray" value="{{year}}" required>{{year}}</option>
+          </select>
+        </div>
+        <div class="col-sm-4">
+          <span class="glyphicon glyphicon-info-sign" bs-tooltip title="Expenses are presented in your default currency: {{default_currency}}"></span>
+        </div>
       </div>
-      <div class="col-sm-4">
-        <span class="glyphicon glyphicon-info-sign" bs-tooltip title="Expenses are presented in your default currency: {{default_currency}}"></span>
+
+      <div ng-show="graphic_type.indexOf('LINEAR') > -1 || graphic_type == 'BAR' || graphic_type == 'DYNAMIC'">
+        <label class="col-sm-4">
+          <span class="input-label">From: </span>
+          <input type="date" ng-model="expenseFromDate" ng-change="onDateSelect()">
+        </label>
+        <label class="col-sm-4">
+          <span class="input-label">Until: </span>
+          <input type="date" ng-model="expenseUntilDate" ng-change="onDateSelect()">
+        </label>
+        <div class="col-sm-1">
+          <span class="glyphicon glyphicon-info-sign" bs-tooltip title="Expenses are presented in your default currency: {{default_currency}}"></span>
+        </div>
       </div>
+
       <div class="col-sm-3">
         <input type="button" ng-if="!show_categories_legend" class="form-control" value="Show categories legend"
                ng-click="toggleLegendShow()">
@@ -50,7 +67,9 @@
                ng-click="toggleDynamicGraphic()">
       </div>
     </div>
-    <div id="linear_chart" ng-if="graphic_type == 'LINEAR'" >
+    <br/>
+    <br/>
+    <div id="linear_chart" ng-if="graphic_type.indexOf('LINEAR') > -1" >
       <canvas ng-if="show_categories_legend" class="chart chart-line" chart-data="dataLinear"
               chart-labels="labelsLinear" chart-series="seriesLinear" chart-legend="true"
               chart-click="onClick" >

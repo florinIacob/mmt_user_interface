@@ -9,11 +9,14 @@
  */
 angular.module('mmtUiApp')
   .controller('IncomesChartCtrl', function ($scope, $rootScope, $q, $http, $location, $route, $cookieStore,
-        $uibModal, ModalTemplateService, CurrencyUtilFactory, host_name) {
+        $uibModal, ModalTemplateService, CurrencyUtilFactory, IncomeUtilFactory, ChartUtilFactory, host_name) {
 
   if (!$rootScope.authenticated) {
     $location.path('/login');
   }
+  $scope.incomeFromDate = new Date(new Date().getFullYear(), 0, 1);
+  $scope.incomeUntilDate = new Date();
+
   $scope.loading = true;
 
   $scope.yearsArray = intializeYearsArray();
@@ -22,50 +25,11 @@ angular.module('mmtUiApp')
   $scope.graphics = ["LINEAR", "BAR", "DYNAMIC"];
   $scope.graphic_type = "LINEAR";
 
-  // Retrieve incomes
-  var retrieveIncomesByTimeInterval = function(startDate, endDate) {
-    var deferred = $q.defer();
-    var req = {
-          method: 'GET',
-          url: host_name + '/income/findByInterval/' + startDate.getTime() + '/' + endDate.getTime(),
-          headers: {
-            'Content-Type': "application/json",
-            'Authorization': $cookieStore.get('mmtlt')
-         }
-       }
-      // make server request
-      $http(req).then(
-        function(response){
-          // SUCCESS
-          if (response.status == 200) {
-            deferred.resolve(angular.fromJson(response.data));
-          } else {
-            deferred.resolve([]);
-          }
-        },
-        function(response){
-          // ERROR: inform the user
-          $uibModal.open({
-            animation: true,
-            template: ModalTemplateService.getInfoTemplate(),
-            controller: 'WarningPopupController',
-            resolve: {
-              items: function() {
-                return {
-                  title: 'Information!',
-                  message: 'Incomes could NOT be loaded!',
-                  onYesCallback: null
-                };
-              },
-            }
-          });
-       });
-       return deferred.promise;
-    }
-
     // INCOMES AREA
     $scope.onDateSelect = function(yearChanged) {
       var month_index = new Date().getMonth();
+
+      // TODO: evaluate the code after 'if'
       if (yearChanged === true) {
         if ($scope.selected_year != (1900 + new Date().getYear())) {
           month_index = 11;
@@ -78,45 +42,58 @@ angular.module('mmtUiApp')
       }
 
       $scope.default_currency = "";
+      if (!$scope.incomeFromDate) {
+        $scope.incomeFromDate = new Date(new Date().getFullYear(), 0, 1);
+      }
+      if (!$scope.incomeUntilDate) {
+        $scope.incomeUntilDate = new Date();
+      }
       $scope.loading = true;
+
+      // async execution
       $q.all([
         CurrencyUtilFactory.getDefaultCurrency(),
-        retrieveIncomesByTimeInterval(new Date($scope.selected_year, 0, 1), new Date($scope.selected_year, 11, 31)),
-        ])
+        IncomeUtilFactory.retrieveIncomesByTimeInterval('*', $scope.incomeFromDate.getTime(), $scope.incomeUntilDate.getTime()),
+      ])
           .then(
             function success(responses) {
               var currency = angular.fromJson(responses[0].data);
               $scope.default_currency = currency.value;
 
-              $scope.incomes = responses[1];
+              $scope.incomes = responses[1].data;
 
               // graphic arrays
               // - linear
-              $scope.labelsLinear = extractMonthAsString(month_index, true);
-              $scope.seriesLinear = ['Incomes ' + $scope.selected_year + ' in ' + $scope.default_currency];
-              $scope.dataLinear = [generateZeroesArray(month_index + 1)];
+              // DEL: $scope.labelsLinear = extractMonthAsString(month_index, true);
+              $scope.labelsLinear = ChartUtilFactory.createChartLabelsArray($scope.incomeFromDate, $scope.incomeUntilDate);
+              $scope.seriesLinear = ['Monthly Incomes in ' + $scope.default_currency];
+              $scope.dataLinear = [generateZeroesArray(ChartUtilFactory.calculateNumberOfMonths($scope.incomeFromDate, $scope.incomeUntilDate))];
               $scope.onClick = function (points, evt) {
                 console.log(points, evt);
               };
               // - bar
-              $scope.labelsBar = [$scope.selected_year];
-              $scope.seriesBar = extractMonthAsString(month_index, true);
-              $scope.dataBar = generateArraysWithZero(month_index + 1);
+              $scope.labelsBar = [('Monthly Incomes in ' + $scope.default_currency)];
+              $scope.seriesBar = ChartUtilFactory.createChartLabelsArray($scope.incomeFromDate, $scope.incomeUntilDate);
+              $scope.dataBar = generateArraysWithZero(ChartUtilFactory.calculateNumberOfMonths($scope.incomeFromDate, $scope.incomeUntilDate));
               // - dynamic
-              $scope.labelsDynamic = extractMonthAsString(month_index, true);
-              $scope.dataDynamic = generateZeroesArray(month_index + 1);
+              $scope.labelsDynamic = ChartUtilFactory.createChartLabelsArray($scope.incomeFromDate, $scope.incomeUntilDate);
+              $scope.dataDynamic = generateZeroesArray(ChartUtilFactory.calculateNumberOfMonths($scope.incomeFromDate, $scope.incomeUntilDate));
               $scope.typeDynamic = 'Pie';
               $scope.toggleDynamicGraphic = function () {
                 $scope.typeDynamic = $scope.typeDynamic === 'PolarArea' ?
                   'Pie' : 'PolarArea';
               };
 
+              if (!$scope.incomes || $scope.incomes.length === 0) {
+                $scope.loading = false;
+                return;
+              }
               $scope.incomes.forEach(function(income) {
 
                   var d = new Date(income.creationDate);
                   income.monthAsInt = d.getMonth();
                   income.monthAsString = extractMonthAsString(d.getMonth(), false);
-                  income.year = 1900 + d.getYear();
+                  income.year = d.getFullYear();
 
                   console.log('  >> INCOME: ' + income.name);
                   console.log('      - amount: ' + income.amount);
@@ -124,29 +101,22 @@ angular.module('mmtUiApp')
                   console.log('      - month: ' + income.monthAsString);
                   console.log('      - year: ' + income.year);
 
+                  var categ_index = ChartUtilFactory.getCorrespondingMonthIndex(d, $scope.incomeFromDate, $scope.incomeUntilDate);
+                  var incomeAmount = income.defaultCurrencyAmount == null ? income.amount : income.defaultCurrencyAmount;
+                  incomeAmount = Number(incomeAmount.toFixed(2));
+
                   // LINEAR graphic
-                  if ($scope.selected_year == income.year.toString()) {
-                    var categ_index = $scope.labelsLinear.indexOf(income.monthAsString);
-                    $scope.dataLinear[0][categ_index] = (income.defaultCurrencyAmount == null ? income.amount : income.defaultCurrencyAmount)
-                        +$scope.dataLinear[0][categ_index];
-                  }
+                  $scope.dataLinear[0][categ_index] += incomeAmount;
 
                   // BAR graphic
-                  if ($scope.selected_year == income.year.toString()) {
-                    var categ_index = $scope.seriesBar.indexOf(income.monthAsString);
-                    $scope.dataBar[categ_index][0] = (income.defaultCurrencyAmount == null ? income.amount : income.defaultCurrencyAmount)
-                                  +$scope.dataBar[categ_index][0];
-                  }
+                  $scope.dataBar[categ_index][0] += incomeAmount;
 
                   // DYNAMIC graphic
-                  if ($scope.selected_year == income.year.toString()) {
-                    categ_index = $scope.labelsDynamic.indexOf(income.monthAsString);
-                    $scope.dataDynamic[categ_index] = (income.defaultCurrencyAmount == null ? income.amount : income.defaultCurrencyAmount) + $scope.dataDynamic[categ_index];
-                  }
+                  $scope.dataDynamic[categ_index] += incomeAmount;
                 });
                 $scope.loading = false;
-          },
-           function error(response){
+
+          }, function error(response){
              // ERROR: inform the user
              $uibModal.open({
                animation: true,
@@ -173,9 +143,16 @@ angular.module('mmtUiApp')
   * Function used to extract the name of the month based on the received index.
   * Used because date variables stores the month as an integer and the UI will display month as a string.
   */
-var extractMonthAsString = function(monthAsInt, returnSubArray) {
+var extractMonthAsString = function(monthAsInt, returnSubArray, year) {
   var monthStrings = ["January", "February", "March", "April", "May", "June", "July", "August",
                         "September", "October", "November", "December"];
+
+  if (year) {
+    var arrayLength = monthStrings.length;
+    for (var i = 0; i < arrayLength; i++) {
+        month
+    }
+  }
 
   if (returnSubArray) {
     return monthStrings.splice(0, monthAsInt + 1);

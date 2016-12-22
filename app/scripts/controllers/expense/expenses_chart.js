@@ -9,7 +9,7 @@
  */
 angular.module('mmtUiApp')
   .controller('ExpensesChartCtrl', function ($scope, $rootScope, $q, $http, $location, $route, $cookieStore,
-        CategoryService, $uibModal, ModalTemplateService, host_name, ExpenseUtilFactory, CurrencyUtilFactory) {
+        CategoryService, $uibModal, ModalTemplateService, host_name, ExpenseUtilFactory, CurrencyUtilFactory, ChartUtilFactory) {
 
   if (!$rootScope.authenticated) {
     $location.path('/login');
@@ -26,22 +26,13 @@ angular.module('mmtUiApp')
     $scope.show_categories_legend = !$scope.show_categories_legend;
   }
 
-  $scope.graphics = ["LINEAR", "BAR", "PIE", "DOUGHNUT", "POLAR", "DYNAMIC"];
-  $scope.graphic_type = "LINEAR";
+  $scope.graphics = ["LINEAR - Monthly progress by categories", "BAR", "PIE", "DOUGHNUT", "POLAR", "DYNAMIC"];
+  $scope.graphic_type = $scope.graphics[0];
 
   // Retrieve expenses
   var retrieveExpensesByTimeInterval = function(startDate, endDate) {
     var deferred = $q.defer();
-    var req = {
-          method: 'GET',
-          url: host_name + '/expense/find/*/' + startDate.getTime() + '/' + endDate.getTime(),
-          headers: {
-            'Content-Type': "application/json",
-            'Authorization': $cookieStore.get('mmtlt')
-         }
-       }
-      // make server request
-      $http(req).then(
+    ExpenseUtilFactory.retrieveExpensesByTimeInterval('*', startDate.getTime(), endDate.getTime()).then(
         function(response){
           // SUCCESS
           if (response.status == 200) {
@@ -71,7 +62,7 @@ angular.module('mmtUiApp')
   }
 
   // EXPENSES AREA
-  $scope.onDateSelect = function(yearChanged) {
+  $scope.onPeriodSelect = function(yearChanged) {
     var month_index = new Date().getMonth();
     if (yearChanged === true) {
       if ($scope.selected_year != (1900 + new Date().getYear())) {
@@ -90,6 +81,7 @@ angular.module('mmtUiApp')
       ])
         .then(
             function successCallback(responses) {
+              $scope.loading = false;
               var currency = angular.fromJson(responses[0].data);
               $scope.default_currency = currency.value;
 
@@ -97,9 +89,9 @@ angular.module('mmtUiApp')
 
               // GRAPHIC ARRAYS
                 // - linear
-                $scope.labelsLinear = extractMonthAsString(month_index, true);
-                $scope.seriesLinear = [];
-                $scope.dataLinear = [];
+                $scope.labelsLinearOld = extractMonthAsString(month_index, true);
+                $scope.seriesLinearOld = [];
+                $scope.dataLinearOld = [];
                 $scope.onClick = function (points, evt) {
                   console.log(points, evt);
                 };
@@ -138,15 +130,15 @@ angular.module('mmtUiApp')
                     console.log('      - year: ' + d.getFullYear());
 
                     // LINEAR graphic
-                    var categ_index = $scope.seriesLinear.indexOf(expense.category.name);
+                    var categ_index = $scope.seriesLinearOld.indexOf(expense.category.name);
                     if (categ_index > -1) {
-                      $scope.dataLinear[categ_index][expense.monthAsInt] = (expense.defaultCurrencyAmount == null ? expense.amount : expense.defaultCurrencyAmount)
-                          + $scope.dataLinear[categ_index][expense.monthAsInt];
+                      $scope.dataLinearOld[categ_index][expense.monthAsInt] = (expense.defaultCurrencyAmount == null ? expense.amount : expense.defaultCurrencyAmount)
+                          + $scope.dataLinearOld[categ_index][expense.monthAsInt];
                     } else {
-                      $scope.seriesLinear.push(expense.category.name);
+                      $scope.seriesLinearOld.push(expense.category.name);
                       var currentCategoryExpensesAmountsArray = generateZeroesArray(new Date().getMonth() + 1);
                       currentCategoryExpensesAmountsArray[expense.monthAsInt] = expense.defaultCurrencyAmount == null ? expense.amount : expense.defaultCurrencyAmount;
-                      $scope.dataLinear.push(currentCategoryExpensesAmountsArray);
+                      $scope.dataLinearOld.push(currentCategoryExpensesAmountsArray);
                     }
 
                     // BAR graphic
@@ -200,7 +192,6 @@ angular.module('mmtUiApp')
                       }
                     }
                   });
-                  $scope.loading = false;
                 },
                 function errorCallback(response) {
                   console.error("Problems on loading graphics: " + response.data);
@@ -211,7 +202,60 @@ angular.module('mmtUiApp')
   }
 
   $scope.expenses;
-  $scope.onDateSelect(true);
+  $scope.onPeriodSelect(true);
+
+  // ------------- UPDATED GRAPHICS ---------------------
+  $scope.expenseFromDate = new Date(new Date().getFullYear(), 0, 1);
+  $scope.expenseUntilDate = new Date();
+
+  /**
+   * Function to be executed when the date is changed
+   */
+  $scope.onDateSelect = function() {
+    $scope.loading = true;
+    $q.all([
+        CurrencyUtilFactory.getDefaultCurrency(),
+        retrieveExpensesByTimeInterval($scope.expenseFromDate, $scope.expenseUntilDate),
+    ])
+    .then(
+        function successCallback(responses) {
+          $scope.loading = false;
+
+          var currency = angular.fromJson(responses[0].data);
+          $scope.default_currency = currency.value;
+
+          $scope.expenses = responses[1];
+
+          // LINEAR
+          $scope.labelsLinear = ChartUtilFactory.createChartLabelsArray($scope.expenseFromDate, $scope.expenseUntilDate);
+          $scope.seriesLinear = [];
+          $scope.dataLinear = [];
+          $scope.onClick = function (points, evt) {
+            console.log(points, evt);
+          };
+
+          $scope.expenses.forEach(function(expense) {
+            var d = new Date(expense.creationDate);
+            var currentAmount = (expense.defaultCurrencyAmount == null ? expense.amount : expense.defaultCurrencyAmount);
+            currentAmount = Number(currentAmount.toFixed(2));
+            var expenseMonthAsInt = ChartUtilFactory.getCorrespondingMonthIndex(d, $scope.expenseFromDate, $scope.expenseUntilDate);
+
+            // LINEAR graphic
+            var categ_index = $scope.seriesLinear.indexOf(expense.category.name);
+            if (categ_index > -1) {
+              $scope.dataLinear[categ_index][expenseMonthAsInt] += currentAmount;
+            } else {
+              $scope.seriesLinear.push(expense.category.name);
+              var currentCategoryExpensesAmountsArray = generateZeroesArray(ChartUtilFactory.calculateNumberOfMonths($scope.expenseFromDate, $scope.expenseUntilDate));
+              currentCategoryExpensesAmountsArray[expenseMonthAsInt] = currentAmount;
+              $scope.dataLinear.push(currentCategoryExpensesAmountsArray);
+            }
+          });
+        }
+    );
+  }
+
+  $scope.onDateSelect();
 });
 
 /**
