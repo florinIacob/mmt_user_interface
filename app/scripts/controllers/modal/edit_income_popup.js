@@ -8,9 +8,9 @@
  * Controller of the mmtUiApp
  */
 angular.module('mmtUiApp')
-  .controller('EditIncomePopupController', ['$scope', '$http','$cookieStore', 'DateTimeService',
+  .controller('EditIncomePopupController', ['$scope', '$http','$cookieStore', 'DateTimeService', 'CurrencyUtilFactory',
                        '$uibModal', '$uibModalInstance', 'ModalTemplateService', 'host_name', 'items',
-        function ($scope, $http, $cookieStore, DateTimeService, $uibModal, $uibModalInstance,
+        function ($scope, $http, $cookieStore, DateTimeService, CurrencyUtilFactory, $uibModal, $uibModalInstance,
                   ModalTemplateService, host_name, items) {
 
   $scope.loading = false;
@@ -18,6 +18,8 @@ angular.module('mmtUiApp')
    $scope.current_date_value = DateTimeService.createDateTimeString(new Date($scope.income.creationDate));
    var old_date = $scope.income.creationDate;
    $scope.income.creationDate = null;
+
+   $scope.availableCurrencies = CurrencyUtilFactory.getAvailableCurrencies();
 
    // submit button - save the income
    $scope.submit = function() {
@@ -67,7 +69,6 @@ angular.module('mmtUiApp')
 
    // Cancel button
    $scope.cancel = function() {
-      items.afterEditCallback();
       $uibModalInstance.dismiss('cancel');
    }
 

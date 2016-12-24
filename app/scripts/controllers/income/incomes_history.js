@@ -67,12 +67,12 @@ angular.module('mmtUiApp')
   $scope.editIncome = function(income) {
 
     var refreshValues = function() {
-       $route.reload();
+       $scope.retrieveIncomeList();
     }
 
     $uibModal.open({
       animation: true,
-      template: ModalTemplateService.getEditIncomeTemplate(),
+      templateUrl: 'views/modal/edit-income-popup.html',
       controller: 'EditIncomePopupController',
       backdrop: 'static',
       size: 'lg',
@@ -106,7 +106,7 @@ angular.module('mmtUiApp')
         $http(req).then(
           function(response){
 
-            $route.reload();
+            $scope.retrieveIncomeList();
             $uibModal.open({
               animation: true,
               template: ModalTemplateService.getInfoTemplate(),
@@ -146,6 +146,7 @@ angular.module('mmtUiApp')
         template: ModalTemplateService.getWarningTemplate(),
         controller: 'WarningPopupController',
         scope: $scope,
+        size: 'lg',
         resolve: {
           items: function() {
             return {

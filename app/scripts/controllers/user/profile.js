@@ -255,7 +255,7 @@ angular.module('mmtUiApp').controller('ProfileCtrl',
           }
         });
      });
-}
+  }
 
   /**
    * Open modal for changing password

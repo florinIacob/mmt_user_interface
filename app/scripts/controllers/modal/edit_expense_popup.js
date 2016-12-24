@@ -71,7 +71,6 @@ angular.module('mmtUiApp')
 
    // Cancel button
    $scope.cancel = function() {
-      items.afterEditCallback();
       $uibModalInstance.dismiss('cancel');
    }
 

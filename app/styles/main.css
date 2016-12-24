@@ -151,3 +151,11 @@ body {
 .grey-bg {
   background-color: #eaeae1;
 }
+
+.multiselect-parent {
+  width: 100% !important;
+}
+
+.dropdown-toggle {
+  width: 100% !important;
+}

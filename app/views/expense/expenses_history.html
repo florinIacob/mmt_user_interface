@@ -32,12 +32,13 @@
         <span class="glyphicon glyphicon-sort control-icon-blue" bs-tooltip title="Sort by currency" ng-click="changeSortingCriteria('currency')"></span>
       </th>
       <th>Category
-        <span class="glyphicon glyphicon-filter control-icon-blue" bs-tooltip title="Filter by category" ng-click="filterByCategory()"></span>
+        <span class="glyphicon glyphicon-filter {{(!filter_category || filter_category === '< ALL CATEGORIES >') ? 'control-icon-blue' : 'control-icon-red'}}"
+              bs-tooltip title="Filter by category" ng-click="filterByCategory()"></span>
         <span class="glyphicon glyphicon-sort control-icon-blue" bs-tooltip title="Sort by category" ng-click="changeSortingCriteria('category.name')"></span>
-        <span class="glyphicon glyphicon-question-sign control-icon-blue" bs-tooltip title="Use colours for categories" ng-click="useColoursForCategories()"></span>
+        <span class="glyphicon glyphicon-flag control-icon-blue" bs-tooltip title="Use colours for categories" ng-click="useColoursForCategories()"></span>
       </th>
       <th>Date
-        <span class="glyphicon glyphicon-sor control-icon-blue" bs-tooltip title="Sort by date" ng-click="changeSortingCriteria('creationDate')"></span>
+        <span class="glyphicon glyphicon-sort control-icon-blue" bs-tooltip title="Sort by date" ng-click="changeSortingCriteria('creationDate')"></span>
       </th>
       <th></th>
     </tr>

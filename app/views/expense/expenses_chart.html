@@ -19,11 +19,11 @@
   <div ng-show="loading == false">
     <div id="selection_area" class="form-group">
 
-      <div ng-if="graphic_type.indexOf('LINEAR') === -1 && graphic_type != 'BAR' && graphic_type != 'DYNAMIC'">
+      <div ng-if="graphic_type.indexOf('LINEAR') === -1 && graphic_type.indexOf('BAR') === -1 && graphic_type != 'DYNAMIC'">
         <label class="control-label col-sm-2">Change year:</label>
         <div class="col-sm-3">
           <select type="date" class="form-control" id="year_select" placeholder="year" ng-model="selected_year"
-                  ng-change="onPeriodSelect(true)">
+                  ng-change="onPeriodSelect(true, selected_year)">
             <option ng-repeat="year in yearsArray" value="{{year}}" required>{{year}}</option>
           </select>
         </div>
@@ -32,7 +32,7 @@
         </div>
       </div>
 
-      <div ng-show="graphic_type.indexOf('LINEAR') > -1 || graphic_type == 'BAR' || graphic_type == 'DYNAMIC'">
+      <div ng-show="graphic_type.indexOf('LINEAR') > -1 || graphic_type.indexOf('BAR') > -1 || graphic_type == 'DYNAMIC'">
         <label class="col-sm-4">
           <span class="input-label">From: </span>
           <input type="date" ng-model="expenseFromDate" ng-change="onDateSelect()">
@@ -57,7 +57,7 @@
       <label class="control-label col-sm-2">Change month:</label>
       <div class="col-sm-3">
         <select type="date" class="form-control" id="month_select" placeholder="month" ng-model="selected_month"
-                ng-change="onDateSelect(false)">
+                ng-change="onPeriodSelect(false)">
           <option ng-repeat="month in monthsArray" value="{{month}}" required>{{month}}</option>
         </select>
       </div>
@@ -80,7 +80,17 @@
       </canvas>
     </div>
 
-    <div id="bar_chart" ng-if="graphic_type == 'BAR'" >
+    <div id="bar_chart" ng-if="graphic_type.indexOf('BAR') > -1" >
+      <label class="col-sm-4">
+        <span class="input-label">Select caregories: </span>
+      </label>
+      <div class="form-group col-sm-4">
+        <div ng-dropdown-multiselect="" options="categoriesData" selected-model="categoriesModel" extra-settings="categoriesSettings"
+             style="width:80%;"></div>
+      </div>
+      <div class="form-group col-sm-4">
+        <button type="button" class="btn btn-block accountant-btn" ng-click="applyCategoriesSelect()" style="color:white !important;">APPLY SELECT</button>
+      </div>
       <canvas ng-if="show_categories_legend" class="chart chart-bar"
               chart-data="dataBar" chart-labels="labelsBar" chart-series="seriesBar" chart-legend="true">
       </canvas>

@@ -1,0 +1,59 @@
+<div class="source-list-modal" style="height:100%;background-color:#eaeae1;">
+  <h2 style="text-align:center;"><img src="images/add_expense.png"> EDIT EXPENSE</h2>
+  <form class="form-horizontal" role="form" ng-submit="submit()" ng-show="loading == false" ng-show="loading == false">
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="name">Name:</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" id="name" placeholder="Expense name" ng-model="expense.name" required >
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="date">Category:</label>
+      <div class="col-sm-4">
+        <select type="date" class="form-control" id="category" placeholder="Category" ng-model="expense.category.name" required>
+          <option ng-repeat="category in categories" value="{{category}}" required>{{category}}</option>
+        </select>
+      </div>
+      <div class="col-sm-3">
+        <input type="text" class="form-control" placeholder="New category" ng-model="newCategory">
+      </div>
+      <div class="col-sm-2">
+        <input type="button" class="form-control" placeholder="Add new category" value="Add" ng-click="addCategory()">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="description">Description:</label>
+      <div class="col-sm-9">
+        <textarea type="text" rows="5"  class="form-control" id="description" placeholder="Description ..." ng-model="expense.description"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="amount">Amount:</label>
+      <div class="col-sm-4">
+        <input type="number" step="any" class="form-control" id="amount" placeholder="Expense amount" ng-model="expense.amount" required >
+      </div>
+      <label class="control-label col-sm-2" for="amount">Currency:</label>
+      <div class="col-sm-3">
+        <select type="string" class="form-control" id="currency" placeholder="Currency" ng-model="expense.currency" required>
+          <option ng-repeat="currency in availableCurrencies" value="{{currency}}" required>{{currency}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="date">Creation date:</label>
+      <div class="col-sm-9">
+        <input type="datetime-local" value="{{current_date_value}}" class="form-control" id="date" placeholder="date"
+               ng-model="expense.creationDate" required >
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-2">
+        <button type="submit" class="btn btn-default submit-btn">Save</button>
+      </div>
+      <div class="col-sm-7">
+        <button type="button" ng-click="cancel()" class="btn btn-default submit-btn">Cancel</button>
+      </div>
+    </div>
+  </form>
+  <loading-page width="150px" message="Processing ..." ng-show="loading == true"></loading-page>
+</div>

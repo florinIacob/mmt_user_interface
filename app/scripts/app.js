@@ -16,7 +16,8 @@ var app = angular.module('mmtUiApp', [
 		'ngSanitize',
 		'ngTouch',
 		'ui.bootstrap',
-		'chart.js'
+		'chart.js',
+		'angularjs-dropdown-multiselect'
 	])
 	.run(function($rootScope, $http, $cookieStore, $window, host_name) {
       $rootScope.authenticated = $cookieStore.get('mmtlt') !== undefined;
@@ -40,10 +41,18 @@ var app = angular.module('mmtUiApp', [
           $rootScope.FLAG = 'romania-flag.gif';
         }
       }
+
+      Date.prototype.formatDate = function(separator) {
+        if (!separator) {
+          separator = "-";
+        }
+        return this.getDate() + " " + extractMonthAsString(this.getMonth(), false) + " " + this.getFullYear();
+      }
+
       // TODO: line to be removed when the HTTPS certificate is ready
       $http.get(host_name).then(
           function success(response) {
-              console.warn(" - Server contact attempt success: " + JSON.stringify(response));
+              console.warn(" - Server contact attempt SUCCESS!");
           }, function error(response) {
               $window.open(host_name, "_self");
               console.error(" - Server contact attempt ERROR: " + JSON.stringify(response));

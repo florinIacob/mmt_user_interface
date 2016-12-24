@@ -67,12 +67,12 @@ angular.module('mmtUiApp')
   $scope.editExpense = function(expense) {
 
     var refreshValues = function() {
-       $route.reload();
+       $scope.retrieveExpenseList();
     }
 
     $uibModal.open({
       animation: true,
-      template: ModalTemplateService.getEditExpenseTemplate(),
+      templateUrl: 'views/modal/edit-expense-popup.html',
       controller: 'EditExpensePopupController',
       backdrop: 'static',
       size: 'lg',
@@ -106,7 +106,7 @@ angular.module('mmtUiApp')
         $http(req).then(
           function(response){
 
-            $route.reload();
+            $scope.retrieveExpenseList();
             $uibModal.open({
               animation: true,
               template: ModalTemplateService.getInfoTemplate(),
@@ -146,6 +146,7 @@ angular.module('mmtUiApp')
         template: ModalTemplateService.getWarningTemplate(),
         controller: 'WarningPopupController',
         scope: $scope,
+        size: 'lg',
         resolve: {
           items: function() {
             return {
