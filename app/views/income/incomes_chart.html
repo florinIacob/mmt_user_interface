@@ -12,7 +12,6 @@
   <br>
 </div>
 <br>
-<br>
 
 <div id="graphic_container">
   <div ng-show="loading == false">
@@ -35,6 +34,9 @@
     </div>
 
     <div id="linear_chart" ng-if="graphic_type == 'LINEAR'" >
+      <label ng-if="dataLinear.length === 0" class="warn-chart-label">
+        <br/><br/><br/><br/>- No incomes for the selected period -
+      </label>
       <canvas class="chart chart-line" chart-data="dataLinear" chart-legend="true"
               chart-labels="labelsLinear" chart-series="seriesLinear"
               chart-click="onClick" >
@@ -42,12 +44,18 @@
     </div>
 
     <div id="bar_chart" ng-if="graphic_type == 'BAR'" >
+      <label ng-if="dataBar.length === 0" class="warn-chart-label">
+        <br/><br/><br/><br/>- No incomes for the selected period -
+      </label>
       <canvas class="chart chart-bar"
               chart-data="dataBar" chart-labels="labelsBar" chart-series="seriesBar" chart-legend="true">
       </canvas>
     </div>
 
     <div id="dynamic_chart" ng-if="graphic_type == 'DYNAMIC'">
+      <label ng-if="dataDynamic.length === 0" class="warn-chart-label">
+        <br/><br/><br/><br/>- No incomes for the selected period -
+      </label>
       <canvas class="chart-base" chart-type="typeDynamic"
               chart-data="dataDynamic" chart-labels="labelsDynamic" chart-legend="true">
       </canvas>

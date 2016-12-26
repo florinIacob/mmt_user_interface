@@ -29,10 +29,10 @@ angular.module('mmtUiApp')
   $scope.graphics = [
     "LINEAR - Monthly progress by categories",
     "BAR - Compare categories",
-    "PIE",
-    "DOUGHNUT",
-    "POLAR",
-    "DYNAMIC"];
+    "DYNAMIC - Present expenses for each category",
+    "PIE - Monthly presentation",
+    "DOUGHNUT - Yearly presentation"
+  ];
   $scope.graphic_type = $scope.graphics[0];
 
   // Retrieve expenses
@@ -70,7 +70,7 @@ angular.module('mmtUiApp')
   // EXPENSES AREA
   $scope.onPeriodSelect = function(yearChanged, selected_year) {
     if (selected_year) {
-    $scope.selected_year = selected_year;
+      $scope.selected_year = selected_year;
     }
 
     var month_index = new Date().getMonth();
@@ -106,17 +106,6 @@ angular.module('mmtUiApp')
             // - doughnut
             $scope.labelsDoughnut = [];
             $scope.dataDoughnut = [];
-            // - polar
-            $scope.labelsPolar = [];
-            $scope.dataPolar = [];
-            // - dynamic
-            $scope.labelsDynamic = [];
-            $scope.dataDynamic = [];
-            $scope.typeDynamic = 'PolarArea';
-            $scope.toggleDynamicGraphic = function () {
-              $scope.typeDynamic = $scope.typeDynamic === 'PolarArea' ?
-                'Pie' : 'PolarArea';
-            };
 
             $scope.expenses.forEach(function(expense) {
 
@@ -149,26 +138,6 @@ angular.module('mmtUiApp')
                     $scope.dataPie.push(expense.defaultCurrencyAmount == null ? expense.amount : expense.defaultCurrencyAmount);
                   }
                 }
-
-                // POLAR graphic
-                categ_index = $scope.labelsPolar.indexOf(expense.category.name);
-                if (categ_index > -1) {
-                  $scope.dataPolar[categ_index] = (expense.defaultCurrencyAmount == null ? expense.amount : expense.defaultCurrencyAmount) + $scope.dataPolar[categ_index];
-                } else {
-                  $scope.labelsPolar.push(expense.category.name);
-                  $scope.dataPolar.push((expense.defaultCurrencyAmount == null ? expense.amount : expense.defaultCurrencyAmount));
-                }
-
-                // DYNAMIC graphic
-                if ($scope.selected_month == expense.monthAsString) {
-                  categ_index = $scope.labelsDynamic.indexOf(expense.category.name);
-                  if (categ_index > -1) {
-                    $scope.dataDynamic[categ_index] = (expense.defaultCurrencyAmount == null ? expense.amount : expense.defaultCurrencyAmount) + $scope.dataDynamic[categ_index];
-                  } else {
-                    $scope.labelsDynamic.push(expense.category.name);
-                    $scope.dataDynamic.push((expense.defaultCurrencyAmount == null ? expense.amount : expense.defaultCurrencyAmount));
-                  }
-                }
               });
             },
             function errorCallback(response) {
@@ -180,13 +149,18 @@ angular.module('mmtUiApp')
   }
 
   $scope.expenses;
-  $scope.onPeriodSelect(true);
+  $scope.onGraphicChange = function(graphic_type, selected_year) {
+    if (graphic_type.indexOf("PIE") > -1 || graphic_type.indexOf("DOUGHNUT") > -1) {
+      $scope.onPeriodSelect(true, selected_year);
+    }
+  }
 
   // ------------- UPDATED GRAPHICS ---------------------
   $scope.expenseFromDate = new Date(new Date().getFullYear(), 0, 1);
   $scope.expenseUntilDate = new Date();
 
-  $scope.categoriesModel = [];
+  $scope.barCategoriesModel = [];
+  $scope.dynamicCategoriesModel = [];
   $scope.categoriesData = [];
   $scope.categoriesDataLoaded = false;
   var categoryContained = function(categoriesDataArray, categoryName) {
@@ -199,6 +173,12 @@ angular.module('mmtUiApp')
     return false;
   }
   $scope.categoriesSettings = {externalIdProp: ''};
+
+  $scope.typeDynamic = 'PolarArea';
+  $scope.toggleDynamicGraphic = function () {
+    $scope.typeDynamic = $scope.typeDynamic === 'PolarArea' ?
+      'Pie' : 'PolarArea';
+  };
 
   /**
    * Function to be executed when the date is changed
@@ -233,6 +213,10 @@ angular.module('mmtUiApp')
           $scope.seriesBar = [];
           $scope.dataBar = [];
 
+          // DYNAMIC - Present expenses for each category
+          $scope.labelsDynamic = [];
+          $scope.dataDynamic = [];
+
           $scope.expenses.forEach(function(expense) {
             var d = new Date(expense.creationDate);
             var currentAmount = (expense.defaultCurrencyAmount == null ? expense.amount : expense.defaultCurrencyAmount);
@@ -245,10 +229,14 @@ angular.module('mmtUiApp')
               if ($scope.categoriesData.length > 0) {
                 id = $scope.categoriesData[$scope.categoriesData.length - 1].id + 1;
               }
-              $scope.categoriesData.push({
+              var selectableCategory = {
                 id: id,
                 label: expense.category.name
-              });
+              };
+              $scope.categoriesData.push(selectableCategory);
+              if ($scope.dynamicCategoriesModel.length === 0) {
+                $scope.dynamicCategoriesModel.push(selectableCategory);
+              }
             }
 
             // LINEAR - Monthly progress by categories
@@ -263,7 +251,7 @@ angular.module('mmtUiApp')
             }
 
             // BAR - Compare categories
-            if ($scope.categoriesModel.length === 0 || categoryContained($scope.categoriesModel, expense.category.name)) {
+            if ($scope.barCategoriesModel.length === 0 || categoryContained($scope.barCategoriesModel, expense.category.name)) {
               var categ_index = $scope.seriesBar.indexOf(expense.category.name);
               if (categ_index > -1) {
                 var amounts = [currentAmount + $scope.dataBar[categ_index][0]];
@@ -273,6 +261,12 @@ angular.module('mmtUiApp')
                 var amounts = [currentAmount];
                 $scope.dataBar.push(amounts);
               }
+            }
+
+            // DYNAMIC - Present expenses for each category
+            if ($scope.dynamicCategoriesModel.length === 0 || categoryContained($scope.dynamicCategoriesModel, expense.category.name)) {
+              $scope.labelsDynamic.push(expense.name);
+              $scope.dataDynamic.push(currentAmount);
             }
           });
 

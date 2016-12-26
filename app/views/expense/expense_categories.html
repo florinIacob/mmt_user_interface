@@ -23,7 +23,9 @@
         <input type="text" class="form-control" placeholder="New category name" ng-model="newCategory.name">
       </div>
       <div class="col-sm-2">
-        <input type="button" class="form-control" placeholder="Add new category" value="Add category" ng-click="addCategory()">
+        <button type="submit" class="btn btn-default submit-btn" ng-click="addCategory()">
+          <span class="glyphicon glyphicon-plus"></span> Add category
+        </button>
       </div>
     </div>
   </label>
