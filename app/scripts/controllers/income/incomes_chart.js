@@ -64,7 +64,6 @@ angular.module('mmtUiApp')
 
               // graphic arrays
               // - linear
-              // DEL: $scope.labelsLinear = extractMonthAsString(month_index, true);
               $scope.labelsLinear = ChartUtilFactory.createChartLabelsArray($scope.incomeFromDate, $scope.incomeUntilDate);
               $scope.seriesLinear = ['Monthly Incomes in ' + $scope.default_currency];
               $scope.dataLinear = [generateZeroesArray(ChartUtilFactory.calculateNumberOfMonths($scope.incomeFromDate, $scope.incomeUntilDate))];

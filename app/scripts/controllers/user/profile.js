@@ -8,9 +8,9 @@
  * Controller of the mmtUiApp
  */
 angular.module('mmtUiApp').controller('ProfileCtrl',
-      ['$scope', '$rootScope', '$q', '$http', '$location', '$route', '$cookieStore', 'IncomeUtilFactory',
+      ['$scope', '$rootScope', '$q', '$http', '$location', '$route', '$cookieStore', 'IncomeUtilFactory', 'ChartUtilFactory',
                'CategoryService', '$uibModal', 'ModalTemplateService', 'host_name', 'CurrencyUtilFactory', 'ExpenseUtilFactory',
-      function ($scope, $rootScope, $q, $http, $location, $route, $cookieStore, IncomeUtilFactory,
+      function ($scope, $rootScope, $q, $http, $location, $route, $cookieStore, IncomeUtilFactory, ChartUtilFactory,
         CategoryService, $uibModal, ModalTemplateService, host_name, CurrencyUtilFactory, ExpenseUtilFactory) {
 
   if (!$rootScope.authenticated) {
@@ -50,11 +50,9 @@ angular.module('mmtUiApp').controller('ProfileCtrl',
   $scope.numberOfExpensesThisMonth = 0;
   $scope.sumOfExpensesThisYear = 0;
   $scope.sumOfExpensesThisMonth = 0;
-  $scope.sumOfExpensesOverall = 0;
 
   $scope.sumOfIncomesThisYear = 0;
   $scope.sumOfIncomesThisMonth = 0;
-  $scope.sumOfIncomesOverall = 0;
 
   // ----------- EXPENSES AREA ----------------
   $scope.iterateExpenses = function() {
@@ -142,18 +140,19 @@ angular.module('mmtUiApp').controller('ProfileCtrl',
   }
 
   // Retrieve incomes
-  var retrieveIncomes = function() {
+  var retrieveIncomes = function(startDate, endDate) {
     var deferred = $q.defer();
     // make server request
-    IncomeUtilFactory.retrieveIncomesByTimeInterval('*', (new Date().getTime() - (30*24*60*60*1000)), new Date().getTime()).then(
-        function(response){
-          // SUCCESS: change the path
+    IncomeUtilFactory.retrieveIncomesByTimeInterval('*', startDate.getTime(), endDate.getTime())
+      .then(
+        function success(response){
+
           if (!response.data) {
             response.data = [];
           }
           deferred.resolve(angular.fromJson(response.data));
         },
-        function(response){
+        function error(response){
           // ERROR: inform the user
           $uibModal.open({
             animation: true,
@@ -174,30 +173,90 @@ angular.module('mmtUiApp').controller('ProfileCtrl',
     }
 
   // ----------------- FUNCTIONS TO BE EXECUTED ------------------
+
+  /**
+   * Function executed to create Charts When expenses and incomes are loaded
+   */
+  $scope.createCharts = function(incomeArray, expenseArray) {
+
+    // graphic arrays
+    // - linear
+    $scope.labelsLinear = ChartUtilFactory.createChartLabelsArray($scope.chartFromDate, $scope.chartUntilDate);
+    $scope.seriesLinear = ['INCOMES in ' + $scope.default_currency, 'EXPENSES in ' + $scope.default_currency];
+    var zeroesArray = generateZeroesArray(ChartUtilFactory.calculateNumberOfMonths($scope.chartFromDate, $scope.chartUntilDate));
+    var zeroesArray2 = generateZeroesArray(ChartUtilFactory.calculateNumberOfMonths($scope.chartFromDate, $scope.chartUntilDate));
+    $scope.dataLinear = [zeroesArray, zeroesArray2];
+    $scope.onClick = function (points, evt) {
+      console.log(points, evt);
+    };
+
+    // BAR
+    var startDateLabel = $scope.chartFromDate.formatDate(" ");
+    var endDateLabel = $scope.chartUntilDate.formatDate(" ");
+    $scope.labelsBar = [startDateLabel + ' - ' + endDateLabel];
+    $scope.seriesBar = ['INCOMES in ' + $scope.default_currency, 'EXPENSES in ' + $scope.default_currency];
+    $scope.dataBar = [[0], [0]];
+
+    if (incomeArray && incomeArray.length > 0) {
+      incomeArray.forEach(function(income) {
+        var d = new Date(income.creationDate);
+
+        var categ_index = ChartUtilFactory.getCorrespondingMonthIndex(d, $scope.chartFromDate, $scope.chartUntilDate);
+        var incomeAmount = income.defaultCurrencyAmount == null ? income.amount : income.defaultCurrencyAmount;
+        incomeAmount = Number(incomeAmount.toFixed(2));
+
+        // LINEAR graphic
+        $scope.dataLinear[0][categ_index] += incomeAmount;
+
+        // BAR graphic
+        $scope.dataBar[0][0] += incomeAmount;
+      });
+    }
+
+    if (expenseArray && expenseArray.length > 0) {
+      expenseArray.forEach(function(expense) {
+        var d = new Date(expense.creationDate);
+
+        var categ_index = ChartUtilFactory.getCorrespondingMonthIndex(d, $scope.chartFromDate, $scope.chartUntilDate);
+        var expenseAmount = expense.defaultCurrencyAmount == null ? expense.amount : expense.defaultCurrencyAmount;
+        expenseAmount = Number(expenseAmount.toFixed(2));
+
+        // LINEAR graphic
+        $scope.dataLinear[1][categ_index] += expenseAmount;
+
+        // BAR graphic
+        $scope.dataBar[1][0] +=expenseAmount;
+      });
+    }
+  }
+
+  /**
+   * Initiate budgets calculation
+   */
   $scope.initiateBudgets = function() {
       $scope.numberOfExpensesThisMonth = 0;
       $scope.sumOfExpensesThisYear = 0;
       $scope.sumOfExpensesThisMonth = 0;
-      $scope.sumOfExpensesOverall = 0;
 
       $scope.sumOfIncomesThisYear = 0;
       $scope.sumOfIncomesThisMonth = 0;
-      $scope.sumOfIncomesOverall = 0;
 
       $scope.loading++;
       $scope.expenses;
-      retrieveExpenses(new Date(0), new Date()).then(function(expenses) {
-        $scope.expenses = expenses;
+      $q.all([
+            retrieveExpenses(new Date(new Date().getFullYear(), 0, 1), new Date()),
+            retrieveIncomes(new Date(new Date().getFullYear(), 0, 1), new Date())
+        ]).then(function(responses) {
 
-        $scope.iterateExpenses();
+          $scope.expenses = responses[0];
+          $scope.incomes = responses[1];
 
-        $scope.incomes;
-        retrieveIncomes().then(function(incomes) {
-          $scope.incomes = incomes;
-
+          $scope.iterateExpenses();
           $scope.iterateIncomes();
+
+          $scope.createCharts($scope.incomes, $scope.expenses);
+
           $scope.loading--;
-        });
       });
   };
 
@@ -275,6 +334,57 @@ angular.module('mmtUiApp').controller('ProfileCtrl',
         },
       }
     });
+  }
+
+  // ----------------------------- UPDATED WITH CHARTS -----------------------
+  $scope.chartFromDate = new Date(new Date().getFullYear(), 0, 1);
+  $scope.chartUntilDate = new Date();
+
+  $scope.graphics = [
+    "LINEAR",
+    "BAR"
+  ];
+  $scope.graphic_index = 0;
+  $scope.graphic_type = $scope.graphics[0];
+
+  $scope.loadingCharts = 0;
+  /**
+   * Function executed when the date is changed
+   */
+  $scope.onDateSelect = function(yearChanged) {
+
+      if (!$scope.chartFromDate) {
+        $scope.chartFromDate = new Date(new Date().getFullYear(), 0, 1);
+      }
+      if (!$scope.chartUntilDate) {
+        $scope.chartUntilDate = new Date();
+      }
+      $scope.loadingCharts--;
+
+      // async execution
+      $q.all([
+        retrieveExpenses($scope.chartFromDate, $scope.chartUntilDate),
+        retrieveIncomes($scope.chartFromDate, $scope.chartUntilDate)
+      ]).then(
+        function success(responseArray) {
+          $scope.createCharts(responseArray[1].data, responseArray[0].data);
+          $scope.loadingCharts++;
+        },
+        function error(errorArray) {
+
+        }
+      );
+  }
+
+  /**
+   * Change graphic chart type
+   */
+  $scope.toggleGraphicTpye = function() {
+    $scope.graphic_index ++;
+    if ($scope.graphic_index >= $scope.graphics.length) {
+      $scope.graphic_index = 0;
+    }
+    $scope.graphic_type = $scope.graphics[$scope.graphic_index];
   }
 }]);
 

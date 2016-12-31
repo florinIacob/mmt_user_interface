@@ -68,14 +68,14 @@ app.factory('ModalTemplateService', function() {
                   <label class="control-label col-sm-4" for="name">New password:</label>
                   <div class="col-sm-7">
                     <input type="password" class="form-control" id="current_pass" placeholder="Type new password ..."
-                      ng-model="newP" required >
+                      ng-model="newP" bs-tooltip title="Password should contain at least 8 characters" required >
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="control-label col-sm-4" for="name">Retype password:</label>
                   <div class="col-sm-7">
                     <input type="password" class="form-control" id="current_pass" placeholder="Retype new password ..."
-                      ng-model="retypeP" required >
+                      ng-model="retypeP" bs-tooltip title="Password should contain at least 8 characters" required >
                   </div>
                 </div>
                 <div class="form-group">
