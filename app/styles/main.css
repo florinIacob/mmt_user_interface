@@ -111,6 +111,14 @@ body {
     padding: 15px;
   }
 
+  .modal-message-div {
+    background-color:#eaeae1;
+    border-radius: 10px;
+    padding: 10px;
+    font-size:18px;
+    white-space: pre-wrap;
+  }
+
   .submit-btn {
     width:150px;
   }

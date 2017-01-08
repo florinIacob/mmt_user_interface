@@ -79,7 +79,7 @@ angular.module('mmtUiApp')
       resolve: {
         items: function() {
           return {
-            expense: expense,
+            expense: JSON.parse(JSON.stringify(expense)),
             afterEditCallback: refreshValues
           };
         },

@@ -39,7 +39,28 @@ angular.module('mmtUiApp')
   }
 
   $scope.deleteCategory = function(category) {
-    CategoryService.deleteCategory(category, $scope.categories);
+
+    function _onDeleteCallback() {
+        CategoryService.deleteCategory(category, $scope.categories);
+    }
+
+    $uibModal.open({
+        animation: true,
+        template: ModalTemplateService.getWarningTemplate(),
+        controller: 'WarningPopupController',
+        scope: $scope,
+        size: 'lg',
+        resolve: {
+          items: function() {
+            return {
+              title: 'Warning!',
+              message: 'Besides this category, all expenses having the category [' + category.name + '] will be deleted. Proceed ?',
+              onYesCallback: _onDeleteCallback
+            };
+          },
+        }
+      });
+
   }
 
   $scope.editCategory = function(category) {
@@ -56,7 +77,7 @@ angular.module('mmtUiApp')
       resolve: {
         items: function() {
           return {
-            category: category,
+            category: JSON.parse(JSON.stringify(category)),
             afterEditCallback: refreshValues
           };
         },

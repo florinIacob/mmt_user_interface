@@ -12,7 +12,7 @@ app.factory('ModalTemplateService', function() {
                   {{items.title}}
               </h3>
               <hr>
-              <pre style="font-size:18px;">{{items.message}}</pre>
+              <div class="modal-message-div">{{items.message}}</div>
               <hr>
               <div class="controls">
                   <button style="left-margin:3px;" class="btn btn-primary" type="button" ng-click="yes()">Yes</button>
@@ -33,7 +33,7 @@ app.factory('ModalTemplateService', function() {
                   {{items.title}}
               </h3>
               <hr>
-              <pre style="font-size:18px;">{{items.message}}</pre>
+              <div class="modal-message-div">{{items.message}}</div>
               <hr>
               <div class="controls">
                   <button class="btn btn-primary" type="button" ng-click="no()">OK</button>
