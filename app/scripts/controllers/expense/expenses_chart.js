@@ -184,7 +184,19 @@ angular.module('mmtUiApp')
    * Function to be executed when the date is changed
    */
   $scope.onDateSelect = function() {
+
+    if (!$scope.expenseFromDate) {
+      $scope.expenseFromDate = new Date(new Date().getFullYear(), 0, 1);
+    }
+    if (!$scope.expenseUntilDate) {
+      $scope.expenseUntilDate = new Date();
+    }
+    $scope.expenseFromDate.setHours(0);
+    $scope.expenseFromDate.setMinutes(0);
+    $scope.expenseUntilDate.setHours(23);
+    $scope.expenseUntilDate.setMinutes(59);
     $scope.loading = true;
+
     $q.all([
         CurrencyUtilFactory.getDefaultCurrency(),
         retrieveExpensesByTimeInterval($scope.expenseFromDate, $scope.expenseUntilDate),
@@ -195,6 +207,8 @@ angular.module('mmtUiApp')
 
           var currency = angular.fromJson(responses[0].data);
           $scope.default_currency = currency.value;
+
+          $scope.categoriesData = [];
 
           $scope.expenses = responses[1];
 
@@ -224,13 +238,9 @@ angular.module('mmtUiApp')
             var expenseMonthAsInt = ChartUtilFactory.getCorrespondingMonthIndex(d, $scope.expenseFromDate, $scope.expenseUntilDate);
 
             // Populate Categories for Choice
-            if ($scope.categoriesDataLoaded === false && !categoryContained($scope.categoriesData, expense.category.name)) {
-              var id = 0;
-              if ($scope.categoriesData.length > 0) {
-                id = $scope.categoriesData[$scope.categoriesData.length - 1].id + 1;
-              }
+            if (!categoryContained($scope.categoriesData, expense.category.name)) {
               var selectableCategory = {
-                id: id,
+                id: expense.category.id,
                 label: expense.category.name
               };
               $scope.categoriesData.push(selectableCategory);

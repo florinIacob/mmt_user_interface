@@ -359,6 +359,10 @@ angular.module('mmtUiApp').controller('ProfileCtrl',
       if (!$scope.chartUntilDate) {
         $scope.chartUntilDate = new Date();
       }
+      $scope.chartFromDate.setHours(0);
+      $scope.chartFromDate.setMinutes(0);
+      $scope.chartUntilDate.setHours(23);
+      $scope.chartUntilDate.setMinutes(59);
       $scope.loadingCharts--;
 
       // async execution
@@ -367,11 +371,11 @@ angular.module('mmtUiApp').controller('ProfileCtrl',
         retrieveIncomes($scope.chartFromDate, $scope.chartUntilDate)
       ]).then(
         function success(responseArray) {
-          $scope.createCharts(responseArray[1].data, responseArray[0].data);
+          $scope.createCharts(responseArray[1], responseArray[0]);
           $scope.loadingCharts++;
         },
         function error(errorArray) {
-
+          console.error(JSON.stringify(errorArray))
         }
       );
   }

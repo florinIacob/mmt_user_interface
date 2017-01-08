@@ -33,7 +33,13 @@ angular.module('mmtUiApp')
       $scope.expenseUntilDate = new Date();
     }
 
+    $scope.expenses = [];
+    $scope.expenseFromDate.setHours(0);
+    $scope.expenseFromDate.setMinutes(0);
+    $scope.expenseUntilDate.setHours(23);
+    $scope.expenseUntilDate.setMinutes(59);
     $scope.loading = true;
+
     ExpenseUtilFactory.retrieveExpensesByTimeInterval('*', $scope.expenseFromDate.getTime(), $scope.expenseUntilDate.getTime()).then(
       function success(response){
         if (response && response.data) {

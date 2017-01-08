@@ -48,6 +48,11 @@ angular.module('mmtUiApp')
       if (!$scope.incomeUntilDate) {
         $scope.incomeUntilDate = new Date();
       }
+
+      $scope.incomeFromDate.setHours(0);
+      $scope.incomeFromDate.setMinutes(0);
+      $scope.incomeUntilDate.setHours(23);
+      $scope.incomeUntilDate.setMinutes(59);
       $scope.loading = true;
 
       // async execution
