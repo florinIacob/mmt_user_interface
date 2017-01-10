@@ -20,8 +20,20 @@ angular.module('mmtUiApp')
    $scope.current_date_value = DateTimeService.createDateTimeString(new Date($scope.expense.creationDate));
    var old_date = $scope.expense.creationDate;
    $scope.expense.creationDate = null;
+   if (!$scope.expense.frequency) {
+      $scope.expense.frequency = 0;
+   } else {
+      $scope.expense.frequency = parseInt($scope.expense.frequency);
+   }
 
    $scope.availableCurrencies = CurrencyUtilFactory.getAvailableCurrencies();
+   $scope.availableFrequencies = [
+      {value:0, text: 'Only once'},
+      {value:1, text: 'Monthly'},
+      {value:2, text: 'Every 2 months'},
+      {value:3, text: 'Quarterly'},
+      {value:6, text: 'Every 6 months'},
+   ];
 
    // submit button - save the expense
    $scope.submit = function() {

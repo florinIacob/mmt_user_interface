@@ -24,11 +24,19 @@ angular.module('mmtUiApp')
      name: "",
      description: "",
      amount: null,
+     frequency: 0,
      creationDate: null,
      currency: null
   }
 
   $scope.availableCurrencies = CurrencyUtilFactory.getAvailableCurrencies();
+  $scope.availableFrequencies = [
+     {value:0, text: 'Only once'},
+     {value:1, text: 'Monthly'},
+     {value:2, text: 'Every 2 months'},
+     {value:3, text: 'Quarterly'},
+     {value:6, text: 'Every 6 months'},
+  ];
 
   CurrencyUtilFactory.getDefaultCurrency().then(
     function(response){
