@@ -48,15 +48,15 @@
       </div>
 
       <div class="col-sm-3" ng-if="graphic_type.indexOf('DYNAMIC') === -1">
-        <button ng-if="!show_categories_legend" type="button" class="btn btn-default" ng-click="toggleLegendShow()" style="width:100%">
+        <button ng-if="!show_categories_legend" type="button" class="btn accountant-btn" ng-click="toggleLegendShow()" style="width:100%">
           <span class="glyphicon glyphicon-retweet"></span> Show categories legend
         </button>
-        <button ng-if="show_categories_legend" type="button" class="btn btn-default" ng-click="toggleLegendShow()" style="width:100%">
+        <button ng-if="show_categories_legend" type="button" class="btn accountant-btn" ng-click="toggleLegendShow()" style="width:100%">
           <span class="glyphicon glyphicon-retweet"></span> Hide categories legend
         </button>
       </div>
       <div class="col-sm-3" ng-if="graphic_type.indexOf('DYNAMIC') > -1">
-        <button type="button" class="btn btn-default" ng-click="toggleDynamicGraphic()" style="width:100%">
+        <button type="button" class="btn accountant-btn" ng-click="toggleDynamicGraphic()" style="width:100%">
           <span class="glyphicon glyphicon-retweet"></span> Toggle graphic type
         </button>
       </div>

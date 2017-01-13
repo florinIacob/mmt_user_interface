@@ -84,10 +84,14 @@ app.factory('ModalTemplateService', function() {
                 <br/>
                 <div class="form-group">
                   <div class="col-sm-offset-2 col-sm-4">
-                    <button type="submit" class="btn btn-default submit-btn">Change</button>
+                    <button type="submit" class="btn btn-success submit-btn">
+                      <span class="glyphicon glyphicon-pencil"></span> Change
+                    </button>
                   </div>
                   <div class="col-sm-5">
-                    <button type="button" ng-click="cancel()" class="btn btn-default submit-btn">Cancel</button>
+                    <button type="button" ng-click="cancel()" class="btn btn-danger submit-btn">
+                      <span class="glyphicon glyphicon-remove"></span> Cancel
+                    </button>
                   </div>
                 </div>
               </form>
@@ -99,7 +103,7 @@ app.factory('ModalTemplateService', function() {
   }
 
   /**
-   * Return modal window template for change password
+   * Return modal window template for change forgot password
    */
   service.getForgotPasswordTemplate = function() {
     const warningTemplate = `
@@ -126,10 +130,14 @@ app.factory('ModalTemplateService', function() {
                 <br/>
                 <div class="form-group">
                   <div class="col-sm-offset-2 col-sm-4">
-                    <button type="submit" class="btn btn-default submit-btn">Submit</button>
+                    <button type="submit" class="btn btn-success submit-btn">
+                      <span class="glyphicon glyphicon-envelope"></span> Submit
+                    </button>
                   </div>
                   <div class="col-sm-5">
-                    <button type="button" ng-click="cancel()" class="btn btn-default submit-btn">Cancel</button>
+                    <button type="button" ng-click="cancel()" class="btn btn-danger submit-btn">
+                      <span class="glyphicon glyphicon-remove"></span> Cancel
+                    </button>
                   </div>
                 </div>
               </form>
@@ -178,26 +186,30 @@ app.factory('ModalTemplateService', function() {
             <div class="form-group">
               <label class="control-label col-sm-1" for="date">Colour:</label>
               <div class="col-sm-3">
-                <select class="form-control" ng-model="category.colour">
-                  <option selected style="background-color: white" class="light">light</option>
-                  <option style="background-color: cornsilk" class="stable">stable</option>
-                  <option style="background-color: DodgerBlue " class="positive">positive</option>
-                  <option style="background-color: aqua" class="calm">calm</option>
-                  <option style="background-color: YellowGreen" class="balanced">balanced</option>
-                  <option style="background-color: Gold" class="energized">energized</option>
-                  <option style="background-color: Crimson " class="assertive">assertive</option>
-                  <option style="background-color: BlueViolet " class="royal">royal</option>
-                  <option style="background-color: black" class="dark">dark</option>
+                <select class="form-control" ng-model="category.colour" ng-style="{'background-color': colours_map[category.colour]}">
+                  <option selected style="background-color: white" class="light" value="light">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+                  <option style="background-color: cornsilk" class="stable" value="stable">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+                  <option style="background-color: DodgerBlue " class="positive" value="positive">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+                  <option style="background-color: aqua" class="calm" value="calm">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+                  <option style="background-color: YellowGreen" class="balanced" value="balanced">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+                  <option style="background-color: Gold" class="energized" value="energized">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+                  <option style="background-color: Crimson " class="assertive" value="assertive">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+                  <option style="background-color: BlueViolet " class="royal" value="royal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+                  <option style="background-color: black" class="dark" value="dark">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
                 </select>
               </div>
               <div class="col-sm-3">
                 <input type="text" class="form-control" placeholder="New category name" ng-model="category.name">
               </div>
               <div class="col-sm-2">
-                <input type="button" class="form-control" placeholder="Edit category" value="Edit" ng-click="submit()">
+                <button type="button" class="btn btn-success submit-btn" ng-click="submit()">
+                  <span class="glyphicon glyphicon-pencil"></span> Save
+                </button>
               </div>
               <div class="col-sm-2">
-                <input type="button" class="form-control" placeholder="Cancel" value="Cancel" ng-click="cancel()">
+                <button type="button" class="btn btn-danger submit-btn" ng-click="cancel()">
+                  <span class="glyphicon glyphicon-remove"></span> Cancel
+                </button>
               </div>
             </div>
           </label>

@@ -5,23 +5,24 @@
   <h2 style="text-align:center;"><img src="images/login.png"> LOGIN FORM</h2>
   <form class="form-horizontal" role="form" ng-submit="controller.login()" ng-show="controller.loading == false">
     <div class="form-group">
-      <label class="control-label col-sm-2" for="login_username">Username:</label>
-      <div class="col-sm-10">
+      <label class="control-label col-sm-3" for="login_username">Username:</label>
+      <div class="col-sm-9">
         <input type="text" class="form-control" id="login_username" placeholder="Enter username or email" ng-model="controller.credentials.username" required >
       </div>
     </div>
     <div class="form-group">
-      <label class="control-label col-sm-2" for="_login_pwd">Password:</label>
-      <div class="col-sm-10">
+      <label class="control-label col-sm-3" for="_login_pwd">Password:</label>
+      <div class="col-sm-9">
         <input type="password" class="form-control" id="_login_pwd" placeholder="Enter password" ng-model="controller.credentials.password" required >
       </div>
     </div>
     <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-7">
-        <button type="submit" class="btn btn-default submit-btn">
+      <div class="col-sm-offset-3 col-sm-3">
+        <button type="submit" class="btn accountant-btn">
           <span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;Login
         </button>
       </div>
+      <div class="col-sm-3"></div>
       <label class="control-label col-sm-3" id="forgot_password" style="cursor:pointer;cursor:hand;"><a ng-click="controller.forgotPassword()">Forgot your password?</a></label>
     </div>
   </form>

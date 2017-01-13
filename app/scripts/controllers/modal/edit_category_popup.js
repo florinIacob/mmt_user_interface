@@ -65,4 +65,16 @@ angular.module('mmtUiApp')
       $uibModalInstance.dismiss('cancel');
    }
 
+    // COLOURS
+    $scope.colours_map = {
+      light: 'white',
+      stable: 'cornsilk',
+      positive: 'DodgerBlue',
+      calm: 'aqua',
+      balanced: 'YellowGreen',
+      energized: 'Gold',
+      assertive: 'Crimson',
+      royal: 'BlueViolet',
+      dark: 'black'
+    }
 }]);

@@ -28,8 +28,9 @@
         <span class="glyphicon glyphicon-info-sign" bs-tooltip title="Incomes are presented in your default currency: {{default_currency}}"></span>
       </div>
       <div class="col-sm-3" ng-if="graphic_type == 'DYNAMIC'" >
-        <input type="button" class="form-control" value="Toggle graphic type"
-                ng-click="toggleDynamicGraphic()">
+        <button type="button" class="btn accountant-btn" ng-click="toggleDynamicGraphic()">
+          <span class="glyphicon glyphicon-retweet"></span> Toggle graphic type
+        </button>
       </div>
     </div>
 

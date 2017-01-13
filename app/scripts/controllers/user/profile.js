@@ -341,8 +341,8 @@ angular.module('mmtUiApp').controller('ProfileCtrl',
   $scope.chartUntilDate = new Date();
 
   $scope.graphics = [
-    "LINEAR",
-    "BAR"
+    "BAR",
+    "LINEAR"
   ];
   $scope.graphic_index = 0;
   $scope.graphic_type = $scope.graphics[0];
