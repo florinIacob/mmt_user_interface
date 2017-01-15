@@ -76,10 +76,11 @@
     <div ng-view=""></div>
     </div>
 
-    <div class="footer navbar navbar-inverse" style="margin-bottom:0px; !important">
+    <div class="footer navbar navbar-inverse"
+         style="margin-bottom:2px; !important;margin-top:2px; !important; padding-top:10px !important; font-size: 12px;">
       <div class="container">
-        <p>
-          <span><img src="images/logo.svg" height="23" width="23"> The Accountant  </span>
+        <p style="margin-bottom: 3px;">
+          <span><img src="images/logo.svg" height="18" width="18"> The Accountant  </span>
           <!--<span> {{isEng() ? 'Change language:':'Schimba limba:'}}
             <img src="{{ 'images/flags/' + FLAG}}" height="12" width="17">
             <select ng-disabled="true" type="date" id="language" placeholder="Category" ng-model="LANGUAGE"
@@ -88,6 +89,16 @@
             </select>
           </span>-->
           <span style="float:right;">Tudor & Florin Production</span>
+        </p>
+        <p>
+          <!--<span> {{isEng() ? 'Change language:':'Schimba limba:'}}
+            <img src="{{ 'images/flags/' + FLAG}}" height="12" width="17">
+            <select ng-disabled="true" type="date" id="language" placeholder="Category" ng-model="LANGUAGE"
+                  ng-change="changeLanguage(LANGUAGE)" required>
+              <option ng-repeat="language in ['ENG', 'RO']" value="{{language}}" required>{{language}}</option>
+            </select>
+          </span>-->
+          <div style="width:100%; text-align: center;">Any feedback appreciated at: <b><i>feedback.theacctnt@gmail.com</i></b></div>
         </p>
       </div>
     </div>
