@@ -1,6 +1,5 @@
 <div class="container sign-up-container">
-  <h2 style="text-align:center;"><img src="images/expenses_history.svg"> EXPENSES HISTORY</h2>
-  <br>
+  <h3 style="text-align:center;"><img src="images/expenses_history.svg"> EXPENSES HISTORY</h3>
 </div>
 <br>
 <div class="form-group">
@@ -25,22 +24,22 @@
     <thead class="grey-bg">
     <tr>
       <th>Name
-        <span class="glyphicon glyphicon-sort control-icon-blue" bs-tooltip title="Sort by name" ng-click="changeSortingCriteria('name')"></span>
+        <span class="glyphicon glyphicon-sort header-icon control-icon-blue" bs-tooltip title="Sort by name" ng-click="changeSortingCriteria('name')"></span>
       </th>
       <th>Amount
-        <span class="glyphicon glyphicon-sort control-icon-blue" bs-tooltip title="Sort by amount" ng-click="changeSortingCriteria('amount')"></span>
+        <span class="glyphicon glyphicon-sort header-icon control-icon-blue" bs-tooltip title="Sort by amount" ng-click="changeSortingCriteria('amount')"></span>
       </th>
       <th>Currency
-        <span class="glyphicon glyphicon-sort control-icon-blue" bs-tooltip title="Sort by currency" ng-click="changeSortingCriteria('currency')"></span>
+        <span class="glyphicon glyphicon-sort header-icon control-icon-blue" bs-tooltip title="Sort by currency" ng-click="changeSortingCriteria('currency')"></span>
       </th>
       <th>Category
-        <span class="glyphicon glyphicon-filter {{(!filter_category || filter_category === '< ALL CATEGORIES >') ? 'control-icon-blue' : 'control-icon-red'}}"
+        <span class="glyphicon glyphicon-filter header-icon {{(!filter_category || filter_category === '< ALL CATEGORIES >') ? 'control-icon-blue' : 'control-icon-red'}}"
               bs-tooltip title="Filter by category" ng-click="filterByCategory()"></span>
-        <span class="glyphicon glyphicon-sort control-icon-blue" bs-tooltip title="Sort by category" ng-click="changeSortingCriteria('category.name')"></span>
-        <span class="glyphicon glyphicon-flag control-icon-blue" bs-tooltip title="Use colours for categories" ng-click="useColoursForCategories()"></span>
+        <span class="glyphicon glyphicon-sort header-icon control-icon-blue" bs-tooltip title="Sort by category" ng-click="changeSortingCriteria('category.name')"></span>
+        <span class="glyphicon glyphicon-flag header-icon control-icon-blue" bs-tooltip title="Use colours for categories" ng-click="useColoursForCategories()"></span>
       </th>
       <th>Date
-        <span class="glyphicon glyphicon-sort control-icon-blue" bs-tooltip title="Sort by date" ng-click="changeSortingCriteria('creationDate')"></span>
+        <span class="glyphicon glyphicon-sort header-icon control-icon-blue" bs-tooltip title="Sort by date" ng-click="changeSortingCriteria('creationDate')"></span>
       </th>
       <th></th>
     </tr>

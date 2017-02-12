@@ -84,6 +84,7 @@ app.factory('CategoryService', function($http, $q, $cookieStore, $route, $uibMod
   // ADD A CATEGORY
   service.addCategory = function(category, categoriesArray) {
 
+    debugger;
     if (category.name == null || category.name == '') {
       openInfoPopup('WARNING', "The name of the category should not be empty!");
       return;

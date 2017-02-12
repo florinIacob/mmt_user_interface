@@ -127,7 +127,7 @@ body {
     cursor: pointer;
     cursor: hand;
     font-size: 18px;
-    color: red;
+    color: #df4620;
     margin: 3px;
   }
 
@@ -143,8 +143,12 @@ body {
     cursor: pointer;
     cursor: hand;
     font-size: 18px;
-    color: #0066ff;
+    color: #4d8ab3;
     margin: 3px;
+  }
+
+  .header-icon {
+    font-size: 14px;
   }
 
   .accountant-btn {
@@ -174,4 +178,9 @@ body {
   text-align:center;
   font-style: italic;
   font-size: 18px;
+}
+
+h3 {
+  margin-top: 20px;
+  margin-bottom: 20px;
 }

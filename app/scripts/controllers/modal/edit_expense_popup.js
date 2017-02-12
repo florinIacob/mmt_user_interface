@@ -88,7 +88,7 @@ angular.module('mmtUiApp')
 
    // Add a new category for the expense
    $scope.addCategory = function() {
-     CategoryService.addCategory($scope.newCategory, $scope.categories);
+     CategoryService.addCategoryName($scope.newCategory, $scope.categories);
      $scope.expense.category.name = $scope.newCategory;
      $scope.newCategory = null;
    }
