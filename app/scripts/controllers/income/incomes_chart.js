@@ -9,7 +9,7 @@
  */
 angular.module('mmtUiApp')
   .controller('IncomesChartCtrl', function ($scope, $rootScope, $q, $http, $location, $route, $cookieStore,
-        $uibModal, ModalTemplateService, CurrencyUtilFactory, IncomeUtilFactory, ChartUtilFactory, host_name) {
+        $uibModal, ModalTemplateService, CurrencyUtilFactory, IncomeUtilFactory, ChartUtilFactory, DateTimeService, host_name) {
 
   if (!$rootScope.authenticated) {
     $location.path('/login');
@@ -141,6 +141,25 @@ angular.module('mmtUiApp')
 
     $scope.incomes;
     $scope.onDateSelect(true);
+
+   /*---- Start DATE PICKER ----*/
+    $scope.format = 'dd-MMMM-yyyy';
+    $scope.altInputFormats = ['M!/d!/yyyy'];
+    $scope.dateOptions = DateTimeService.getDateOptions();
+
+    $scope.datePopup1 = {
+      opened: false
+    };
+    $scope.openDatePicker1 = function() {
+      $scope.datePopup1.opened = true;
+    };
+    $scope.datePopup2 = {
+      opened: false
+    };
+    $scope.openDatePicker2 = function() {
+      $scope.datePopup2.opened = true;
+    };
+    /*---- End DATE PICKER ----*/
 });
 
 /**

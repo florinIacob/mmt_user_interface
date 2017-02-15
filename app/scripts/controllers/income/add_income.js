@@ -25,7 +25,7 @@ angular.module('mmtUiApp')
      description: "",
      amount: null,
      frequency: 0,
-     creationDate: null,
+     creationDate: new Date(),
      currency: null
   }
 
@@ -93,4 +93,18 @@ angular.module('mmtUiApp')
           $scope.loading = false;
        });
   }
+
+  /*---- Start DATE PICKER ----*/
+  $scope.format = 'dd-MMMM-yyyy';
+  $scope.altInputFormats = ['M!/d!/yyyy'];
+
+  $scope.datePopup = {
+    opened: false
+  };
+  $scope.openDatePicker = function() {
+    $scope.datePopup.opened = true;
+  };
+  $scope.dateOptions = DateTimeService.getDateOptions();
+  /*---- End DATE PICKER ----*/
+
 });

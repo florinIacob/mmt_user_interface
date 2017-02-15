@@ -19,7 +19,7 @@ angular.module('mmtUiApp')
    $scope.expense = items.expense;
    $scope.current_date_value = DateTimeService.createDateTimeString(new Date($scope.expense.creationDate));
    var old_date = $scope.expense.creationDate;
-   $scope.expense.creationDate = null;
+   $scope.expense.creationDate = new Date($scope.expense.creationDate);
    if (!$scope.expense.frequency) {
       $scope.expense.frequency = 0;
    } else {
@@ -93,4 +93,16 @@ angular.module('mmtUiApp')
      $scope.newCategory = null;
    }
 
+  /*---- Start DATE PICKER ----*/
+   $scope.format = 'dd-MMMM-yyyy';
+   $scope.altInputFormats = ['M!/d!/yyyy'];
+
+   $scope.datePopup = {
+     opened: false
+   };
+   $scope.openDatePicker = function() {
+     $scope.datePopup.opened = true;
+   };
+   $scope.dateOptions = DateTimeService.getDateOptions();
+   /*---- End DATE PICKER ----*/
 }]);

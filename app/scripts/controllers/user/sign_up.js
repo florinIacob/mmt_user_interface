@@ -8,7 +8,8 @@
  * Controller of the mmtUiApp
  */
 angular.module('mmtUiApp')
-  .controller('SignUpCtrl', function ($scope, $http, $location, $cookieStore, $uibModal, ModalTemplateService, CurrencyUtilFactory, host_name) {
+  .controller('SignUpCtrl', function ($scope, $http, $location, $cookieStore, $uibModal, ModalTemplateService, CurrencyUtilFactory,
+          DateTimeService, host_name) {
 
   $scope.loading = false;
   $scope.retyped_password = null;
@@ -131,4 +132,17 @@ angular.module('mmtUiApp')
           $scope.loading = false;
        });
   }
+
+  /*---- Start DATE PICKER ----*/
+  $scope.format = 'dd-MMMM-yyyy';
+  $scope.altInputFormats = ['M!/d!/yyyy'];
+
+  $scope.datePopup = {
+    opened: false
+  };
+  $scope.openDatePicker = function() {
+    $scope.datePopup.opened = true;
+  };
+  $scope.dateOptions = DateTimeService.getDateOptions();
+  /*---- End DATE PICKER ----*/
 });

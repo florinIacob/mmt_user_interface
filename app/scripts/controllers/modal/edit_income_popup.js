@@ -17,7 +17,7 @@ angular.module('mmtUiApp')
    $scope.income = items.income;
    $scope.current_date_value = DateTimeService.createDateTimeString(new Date($scope.income.creationDate));
    var old_date = $scope.income.creationDate;
-   $scope.income.creationDate = null;
+   $scope.income.creationDate = new Date($scope.income.creationDate);
    if (!$scope.income.frequency) {
       $scope.income.frequency = 0;
    } else {
@@ -83,5 +83,18 @@ angular.module('mmtUiApp')
    $scope.cancel = function() {
       $uibModalInstance.dismiss('cancel');
    }
+
+   /*---- Start DATE PICKER ----*/
+   $scope.format = 'dd-MMMM-yyyy';
+   $scope.altInputFormats = ['M!/d!/yyyy'];
+
+   $scope.datePopup = {
+     opened: false
+   };
+   $scope.openDatePicker = function() {
+     $scope.datePopup.opened = true;
+   };
+   $scope.dateOptions = DateTimeService.getDateOptions();
+   /*---- End DATE PICKER ----*/
 
 }]);

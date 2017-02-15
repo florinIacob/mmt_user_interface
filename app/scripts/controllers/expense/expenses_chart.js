@@ -8,7 +8,7 @@
  * Controller of the mmtUiApp
  */
 angular.module('mmtUiApp')
-  .controller('ExpensesChartCtrl', function ($scope, $rootScope, $q, $http, $location, $route, $cookieStore,
+  .controller('ExpensesChartCtrl', function ($scope, $rootScope, $q, $http, $location, $route, $cookieStore, DateTimeService,
         CategoryService, $uibModal, ModalTemplateService, host_name, ExpenseUtilFactory, CurrencyUtilFactory, ChartUtilFactory) {
 
   if (!$rootScope.authenticated) {
@@ -290,6 +290,25 @@ angular.module('mmtUiApp')
   $scope.applyCategoriesSelect = function() {
       $scope.onDateSelect();
   }
+
+  /*---- Start DATE PICKER ----*/
+  $scope.format = 'dd-MMMM-yyyy';
+  $scope.altInputFormats = ['M!/d!/yyyy'];
+  $scope.dateOptions = DateTimeService.getDateOptions();
+
+  $scope.datePopup1 = {
+    opened: false
+  };
+  $scope.openDatePicker1 = function() {
+    $scope.datePopup1.opened = true;
+  };
+  $scope.datePopup2 = {
+    opened: false
+  };
+  $scope.openDatePicker2 = function() {
+    $scope.datePopup2.opened = true;
+  };
+  /*---- End DATE PICKER ----*/
 });
 
 /**

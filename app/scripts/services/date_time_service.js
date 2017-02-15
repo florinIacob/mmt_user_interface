@@ -26,4 +26,18 @@ app.service('DateTimeService', function($http, $cookieStore, host_name) {
     }
     return string_value;
   }
+
+  /*
+   * Get options for Date Inputs
+   */
+  this.getDateOptions = function() {
+      var dateOptions = {
+       dateDisabled: false,
+       formatYear: 'yy',
+       maxDate: new Date(2025, 5, 22),
+       minDate: new Date(2010, 5, 22),
+       startingDay: 1
+     };
+     return dateOptions;
+  }
 });

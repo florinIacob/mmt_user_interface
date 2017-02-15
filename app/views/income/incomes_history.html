@@ -3,15 +3,33 @@
 </div>
 <br>
 <div class="form-group">
-  <label class="col-sm-4">
-    <span class="input-label">From: </span>
-    <input type="date" ng-model="incomeFromDate" ng-change="retrieveIncomeList()">
+  <label class="col-sm-1 date-label">
+    From:
   </label>
-  <label class="col-sm-4">
-    <span class="input-label">Until: </span>
-    <input type="date" ng-model="incomeUntilDate" ng-change="retrieveIncomeList()">
+  <div class="col-md-3">
+    <p class="input-group">
+      <input type="text" id="date1" class="form-control" uib-datepicker-popup="{{format}}"
+             ng-model="incomeFromDate" ng-change="retrieveIncomeList()" is-open="datePopup1.opened" datepicker-options="dateOptions"
+             ng-required="true" close-text="Close" alt-input-formats="altInputFormats"/>
+      <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="openDatePicker1()"><i class="glyphicon glyphicon-calendar"></i></button>
+      </span>
+    </p>
+  </div>
+  <label class="col-sm-1 date-label">
+    Until:
   </label>
-  <div class="col-sm-4">
+  <div class="col-md-3">
+    <p class="input-group">
+      <input type="text" id="date2" class="form-control" uib-datepicker-popup="{{format}}"
+             ng-model="incomeUntilDate" ng-change="retrieveIncomeList()" is-open="datePopup2.opened" datepicker-options="dateOptions"
+             ng-required="true" close-text="Close" alt-input-formats="altInputFormats"/>
+      <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="openDatePicker2()"><i class="glyphicon glyphicon-calendar"></i></button>
+      </span>
+    </p>
+  </div>
+  <div class="col-md-4">
     <button type="button" class="btn btn-block accountant-btn" ng-click="addIncomeAttempt()">
       <span class="glyphicon glyphicon-plus"></span> Add new income
     </button>
@@ -43,7 +61,7 @@
       <td>{{ income.name }}</td>
       <td>{{ income.amount }}</td>
       <td>{{ income.currency }}</td>
-      <td>{{ income.creationDate | date:'medium' }}</td>
+      <td>{{ income.creationDate | date:'mediumDate' }}</td>
       <td>
         <span class="glyphicon glyphicon-pencil control-icon-green" bs-tooltip title="Edit income!" ng-click="editIncome(income)"></span>
         <span class="glyphicon glyphicon-trash control-icon-red" style="float:right;" bs-tooltip title="Delete income!"

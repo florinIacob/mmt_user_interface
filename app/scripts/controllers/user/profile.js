@@ -8,9 +8,9 @@
  * Controller of the mmtUiApp
  */
 angular.module('mmtUiApp').controller('ProfileCtrl',
-      ['$scope', '$rootScope', '$q', '$http', '$location', '$route', '$cookieStore', 'IncomeUtilFactory', 'ChartUtilFactory',
+      ['$scope', '$rootScope', '$q', '$http', '$location', '$route', '$cookieStore', 'IncomeUtilFactory', 'ChartUtilFactory', 'DateTimeService',
                'CategoryService', '$uibModal', 'ModalTemplateService', 'host_name', 'CurrencyUtilFactory', 'ExpenseUtilFactory',
-      function ($scope, $rootScope, $q, $http, $location, $route, $cookieStore, IncomeUtilFactory, ChartUtilFactory,
+      function ($scope, $rootScope, $q, $http, $location, $route, $cookieStore, IncomeUtilFactory, ChartUtilFactory, DateTimeService,
         CategoryService, $uibModal, ModalTemplateService, host_name, CurrencyUtilFactory, ExpenseUtilFactory) {
 
   if (!$rootScope.authenticated) {
@@ -390,6 +390,25 @@ angular.module('mmtUiApp').controller('ProfileCtrl',
     }
     $scope.graphic_type = $scope.graphics[$scope.graphic_index];
   }
+
+  /*---- Start DATE PICKER ----*/
+  $scope.format = 'dd-MMMM-yyyy';
+  $scope.altInputFormats = ['M!/d!/yyyy'];
+  $scope.dateOptions = DateTimeService.getDateOptions();
+
+  $scope.datePopup1 = {
+    opened: false
+  };
+  $scope.openDatePicker1 = function() {
+    $scope.datePopup1.opened = true;
+  };
+  $scope.datePopup2 = {
+    opened: false
+  };
+  $scope.openDatePicker2 = function() {
+    $scope.datePopup2.opened = true;
+  };
+  /*---- End DATE PICKER ----*/
 }]);
 
 /**

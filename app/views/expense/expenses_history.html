@@ -3,14 +3,32 @@
 </div>
 <br>
 <div class="form-group">
-  <label class="col-sm-4">
-    <span class="input-label">From: </span>
-    <input type="date" ng-model="expenseFromDate" ng-change="retrieveExpenseList()">
+  <label class="col-sm-1 date-label">
+    From:
   </label>
-  <label class="col-sm-4">
-    <span class="input-label">Until: </span>
-    <input type="date" ng-model="expenseUntilDate" ng-change="retrieveExpenseList()">
+  <div class="col-md-3">
+    <p class="input-group">
+      <input type="text" id="date1" class="form-control" uib-datepicker-popup="{{format}}"
+             ng-model="expenseFromDate" ng-change="retrieveExpenseList()" is-open="datePopup1.opened" datepicker-options="dateOptions"
+             ng-required="true" close-text="Close" alt-input-formats="altInputFormats"/>
+      <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="openDatePicker1()"><i class="glyphicon glyphicon-calendar"></i></button>
+      </span>
+    </p>
+  </div>
+  <label class="col-sm-1 date-label">
+    Until:
   </label>
+  <div class="col-md-3">
+    <p class="input-group">
+      <input type="text" id="date2" class="form-control" uib-datepicker-popup="{{format}}"
+             ng-model="expenseUntilDate" ng-change="retrieveExpenseList()" is-open="datePopup2.opened" datepicker-options="dateOptions"
+             ng-required="true" close-text="Close" alt-input-formats="altInputFormats"/>
+      <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="openDatePicker2()"><i class="glyphicon glyphicon-calendar"></i></button>
+      </span>
+    </p>
+  </div>
   <div class="col-sm-4">
     <button type="button" class="btn btn-block accountant-btn" ng-click="addExpenseAttempt()">
       <span class="glyphicon glyphicon-plus"></span> Add new expense
@@ -52,7 +70,7 @@
       <td style=" background-color:{{(showCategoriesColors == true) ? colours_map[expense.category.colour] : white}};">
         {{ expense.category.name }}
       </td>
-      <td>{{ expense.creationDate | date:'medium' }}</td>
+      <td>{{ expense.creationDate | date:'mediumDate' }}</td>
       <td>
         <span class="glyphicon glyphicon-pencil control-icon-green" bs-tooltip title="Edit expense!"
                 ng-click="editExpense(expense)"></span>

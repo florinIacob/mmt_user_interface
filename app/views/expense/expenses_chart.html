@@ -35,14 +35,32 @@
       </div>
 
       <div ng-show="graphic_type.indexOf('LINEAR') > -1 || graphic_type.indexOf('BAR') > -1 || graphic_type.indexOf('DYNAMIC') > -1">
-        <label class="col-sm-4">
-          <span class="input-label">From: </span>
-          <input type="date" ng-model="expenseFromDate" ng-change="onDateSelect()">
+        <label class="col-sm-1 date-label">
+          From:
         </label>
-        <label class="col-sm-4">
-          <span class="input-label">Until: </span>
-          <input type="date" ng-model="expenseUntilDate" ng-change="onDateSelect()">
+        <div class="col-md-3">
+          <p class="input-group">
+            <input type="text" id="date1" class="form-control" uib-datepicker-popup="{{format}}"
+                   ng-model="expenseFromDate" ng-change="onDateSelect()" is-open="datePopup1.opened" datepicker-options="dateOptions"
+                   ng-required="true" close-text="Close" alt-input-formats="altInputFormats"/>
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-default" ng-click="openDatePicker1()"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+          </p>
+        </div>
+        <label class="col-sm-1 date-label">
+          Until:
         </label>
+        <div class="col-md-3">
+          <p class="input-group">
+            <input type="text" id="date2" class="form-control" uib-datepicker-popup="{{format}}"
+                   ng-model="expenseUntilDate" ng-change="onDateSelect()" is-open="datePopup2.opened" datepicker-options="dateOptions"
+                   ng-required="true" close-text="Close" alt-input-formats="altInputFormats"/>
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-default" ng-click="openDatePicker2()"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+          </p>
+        </div>
         <div class="col-sm-1">
           <span class="glyphicon glyphicon-info-sign" bs-tooltip title="Expenses are presented in your default currency: {{default_currency}}"></span>
         </div>
