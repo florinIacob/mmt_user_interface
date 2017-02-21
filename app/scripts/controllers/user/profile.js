@@ -203,13 +203,14 @@ angular.module('mmtUiApp').controller('ProfileCtrl',
 
         var categ_index = ChartUtilFactory.getCorrespondingMonthIndex(d, $scope.chartFromDate, $scope.chartUntilDate);
         var incomeAmount = income.defaultCurrencyAmount == null ? income.amount : income.defaultCurrencyAmount;
-        incomeAmount = Number(incomeAmount.toFixed(2));
 
         // LINEAR graphic
         $scope.dataLinear[0][categ_index] += incomeAmount;
+        $scope.dataLinear[0][categ_index] = Number($scope.dataLinear[0][categ_index].toFixed(2));
 
         // BAR graphic
         $scope.dataBar[0][0] += incomeAmount;
+        $scope.dataBar[0][0] = Number($scope.dataBar[0][0].toFixed(2));
       });
     }
 
@@ -219,13 +220,14 @@ angular.module('mmtUiApp').controller('ProfileCtrl',
 
         var categ_index = ChartUtilFactory.getCorrespondingMonthIndex(d, $scope.chartFromDate, $scope.chartUntilDate);
         var expenseAmount = expense.defaultCurrencyAmount == null ? expense.amount : expense.defaultCurrencyAmount;
-        expenseAmount = Number(expenseAmount.toFixed(2));
 
         // LINEAR graphic
         $scope.dataLinear[1][categ_index] += expenseAmount;
+        $scope.dataLinear[1][categ_index] = Number($scope.dataLinear[1][categ_index].toFixed(2));
 
         // BAR graphic
         $scope.dataBar[1][0] +=expenseAmount;
+        $scope.dataBar[1][0] = Number($scope.dataBar[1][0].toFixed(2));
       });
     }
   }
@@ -241,23 +243,39 @@ angular.module('mmtUiApp').controller('ProfileCtrl',
       $scope.sumOfIncomesThisYear = 0;
       $scope.sumOfIncomesThisMonth = 0;
 
+      $scope.chartFromDate = new Date(new Date().getFullYear(), 0, 1);
+      $scope.chartFromDate.setHours(0);
+      $scope.chartFromDate.setMinutes(0);
+
+      $scope.chartUntilDate = new Date();
+      $scope.chartUntilDate.setHours(23);
+      $scope.chartUntilDate.setMinutes(59);
+
       $scope.loading++;
       $scope.expenses;
-      $q.all([
-            retrieveExpenses(new Date(new Date().getFullYear(), 0, 1), new Date()),
-            retrieveIncomes(new Date(new Date().getFullYear(), 0, 1), new Date())
-        ]).then(function(responses) {
+      retrieveExpenses(new Date(new Date().getFullYear(), 0, 1), new Date()).then(
+         function success(expenseArray) {
+           retrieveIncomes(new Date(new Date().getFullYear(), 0, 1), new Date()).then(
+              function success(incomesArray) {
 
-          $scope.expenses = responses[0];
-          $scope.incomes = responses[1];
+                $scope.expenses = expenseArray;
+                $scope.incomes = incomesArray;
 
-          $scope.iterateExpenses();
-          $scope.iterateIncomes();
+                $scope.iterateExpenses();
+                $scope.iterateIncomes();
 
-          $scope.createCharts($scope.incomes, $scope.expenses);
-
-          $scope.loading--;
-      });
+                $scope.createCharts(incomesArray, expenseArray);
+                $scope.loading--;
+              },
+              function error(errorArray) {
+                console.error(JSON.stringify(errorArray))
+              }
+            );
+         },
+         function error(errorArray) {
+           console.error(JSON.stringify(errorArray))
+         }
+       );
   };
 
   $scope.initiateBudgets();

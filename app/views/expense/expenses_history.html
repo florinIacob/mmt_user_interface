@@ -50,9 +50,14 @@
       <th>Currency
         <span class="glyphicon glyphicon-sort header-icon control-icon-blue" bs-tooltip title="Sort by currency" ng-click="changeSortingCriteria('currency')"></span>
       </th>
+      <th>
+        <span title="Default currency amount">D.C. amount</span>
+        <span class="glyphicon glyphicon-sort header-icon control-icon-blue" bs-tooltip title="Sort by default currency amound" ng-click="changeSortingCriteria('defaultCurrencyAmount')"></span>
+      </th>
       <th>Category
         <span class="glyphicon glyphicon-filter header-icon {{(!filter_category || filter_category === '< ALL CATEGORIES >') ? 'control-icon-blue' : 'control-icon-red'}}"
-              bs-tooltip title="Filter by category" ng-click="filterByCategory()"></span>
+              bs-tooltip title="Filter by category" ng-click="filterByCategory()">
+        </span>
         <span class="glyphicon glyphicon-sort header-icon control-icon-blue" bs-tooltip title="Sort by category" ng-click="changeSortingCriteria('category.name')"></span>
         <span class="glyphicon glyphicon-flag header-icon control-icon-blue" bs-tooltip title="Use colours for categories" ng-click="useColoursForCategories()"></span>
       </th>
@@ -67,6 +72,7 @@
       <td>{{ expense.name }}</td>
       <td>{{ expense.amount }}</td>
       <td>{{ expense.currency }}</td>
+      <td>{{ expense.defaultCurrencyAmount ? expense.defaultCurrencyAmount.toFixed(2) : null }}</td>
       <td style=" background-color:{{(showCategoriesColors == true) ? colours_map[expense.category.colour] : white}};">
         {{ expense.category.name }}
       </td>

@@ -188,3 +188,7 @@ h3 {
 .date-label {
   margin-top: 10px;
 }
+
+.carousel-caption {
+  color: black !important;
+}

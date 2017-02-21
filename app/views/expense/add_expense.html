@@ -11,7 +11,7 @@
     <div class="form-group">
       <label class="control-label col-sm-2" for="date">Category:</label>
       <div class="col-sm-5">
-        <select type="date" class="form-control" id="category" placeholder="Category" ng-model="expense.category.name" required>
+        <select type="date" class="form-control" id="category" placeholder="Category" ng-model="expense.category.name" ng-required="true">
           <option ng-repeat="category in categories" value="{{category}}" required>{{category}}</option>
         </select>
       </div>

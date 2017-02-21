@@ -15,6 +15,19 @@
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
+
+    <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase.js"></script>
+    <script>
+	  // Initialize Firebase
+	  var config = {
+      apiKey: "AIzaSyC_jk-frIJgf841nRq8_Ookx9ILbVJDVtk",
+      authDomain: "the-accountant-88723.firebaseapp.com",
+      databaseURL: "https://the-accountant-88723.firebaseio.com",
+      storageBucket: "",
+      messagingSenderId: "1039276371225"
+	  };
+	  firebase.initializeApp(config);
+	</script>
   </head>
   <body ng-app="mmtUiApp">
     <!--[if lte IE 8]>
