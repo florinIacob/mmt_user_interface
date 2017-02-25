@@ -90,10 +90,10 @@
     </div>
 
     <div class="footer navbar navbar-inverse"
-         style="margin-bottom:2px; !important;margin-top:2px; !important; padding-top:10px !important; font-size: 12px;">
+         style="margin-bottom:2px; !important;margin-top:2px; !important; padding-top:10px !important; font-size: 13px;">
       <div class="container">
-        <p style="margin-bottom: 3px;">
-          <span><img src="images/logo.svg" height="18" width="18"> The Accountant  </span>
+        <div class="form-group row" style="margin-bottom: 5px;">
+          <span class="col-5"><img src="images/logo.svg" height="20" width="20"> The Accountant - <a href="#/privacypolicy.htm">Privacy Policy</a> </span>
           <!--<span> {{isEng() ? 'Change language:':'Schimba limba:'}}
             <img src="{{ 'images/flags/' + FLAG}}" height="12" width="17">
             <select ng-disabled="true" type="date" id="language" placeholder="Category" ng-model="LANGUAGE"
@@ -101,18 +101,12 @@
               <option ng-repeat="language in ['ENG', 'RO']" value="{{language}}" required>{{language}}</option>
             </select>
           </span>-->
-          <span style="float:right;">Tudor & Florin Production</span>
-        </p>
-        <p>
-          <!--<span> {{isEng() ? 'Change language:':'Schimba limba:'}}
-            <img src="{{ 'images/flags/' + FLAG}}" height="12" width="17">
-            <select ng-disabled="true" type="date" id="language" placeholder="Category" ng-model="LANGUAGE"
-                  ng-change="changeLanguage(LANGUAGE)" required>
-              <option ng-repeat="language in ['ENG', 'RO']" value="{{language}}" required>{{language}}</option>
-            </select>
-          </span>-->
-          <div style="width:100%; text-align: center;">Any feedback appreciated at: <b><i>feedback.theacctnt@gmail.com</i></b></div>
-        </p>
+          <span class="col-7" style="float:right;"><a href="https://play.google.com/store/apps/details?id=com.ionicframework.mymoneytracker" style="cursor: hand; cursor: pointer;color: #777;"><img src="images/logo/20_20_gogleplay.svg"> Check out Android App</a></span>
+        </div>
+        <div class="form-group row" style="margin-bottom: 5px;">
+          <span class="col-5">Made by Wasy Software</span>
+          <span class="col-7" style="float:right;">Any feedback appreciated at: <b><i>feedback.theacctnt@gmail.com</i></b></span>
+        </div>
       </div>
     </div>
 

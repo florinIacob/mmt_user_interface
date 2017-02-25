@@ -91,6 +91,11 @@ var app = angular.module('mmtUiApp', [
         controller: 'ProfileCtrl',
         controllerAs: 'controller'
       })
+      .when('/privacypolicy.htm', {
+        templateUrl: 'views/user/privacypolicy.htm',
+        controller: null,
+        controllerAs: 'controller'
+      })
 			.when('/add_expense', {
 				templateUrl: 'views/expense/add_expense.html',
 				controller: 'AddExpenseCtrl',
