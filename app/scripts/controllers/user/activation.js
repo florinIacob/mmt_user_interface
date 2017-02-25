@@ -15,7 +15,7 @@ angular.module('mmtUiApp')
         if (!$scope.code) {
           $uibModal.open({
             animation: true,
-            template: ModalTemplateService.getInfoTemplate(),
+            templateUrl: 'views/modal/info-modal.html',
             controller: 'WarningPopupController',
             resolve: {
               items: function() {
@@ -47,7 +47,7 @@ angular.module('mmtUiApp')
 
             $uibModal.open({
               animation: true,
-              template: ModalTemplateService.getInfoTemplate(),
+              templateUrl: 'views/modal/info-modal.html',
               controller: 'WarningPopupController',
               resolve: {
                 items: function() {
@@ -74,7 +74,7 @@ angular.module('mmtUiApp')
 
             $uibModal.open({
               animation: true,
-              template: ModalTemplateService.getInfoTemplate(),
+              templateUrl: 'views/modal/info-modal.html',
               controller: 'WarningPopupController',
               resolve: {
                 items: function() {

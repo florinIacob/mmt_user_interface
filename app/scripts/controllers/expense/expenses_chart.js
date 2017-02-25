@@ -51,7 +51,7 @@ angular.module('mmtUiApp')
           // ERROR: inform the user
           $uibModal.open({
             animation: true,
-            template: ModalTemplateService.getInfoTemplate(),
+            templateUrl: 'views/modal/info-modal.html',
             controller: 'WarningPopupController',
             resolve: {
               items: function() {

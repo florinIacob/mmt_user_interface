@@ -78,7 +78,7 @@ angular.module('mmtUiApp')
 
           $uibModal.open({
             animation: true,
-            template: ModalTemplateService.getInfoTemplate(),
+            templateUrl: 'views/modal/info-modal.html',
             controller: 'WarningPopupController',
             resolve: {
               items: function() {

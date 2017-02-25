@@ -57,7 +57,7 @@ angular.module('mmtUiApp')
 
             $uibModal.open({
               animation: true,
-              template: ModalTemplateService.getInfoTemplate(),
+              templateUrl: 'views/modal/info-modal.html',
               controller: 'WarningPopupController',
               resolve: {
                 items: function() {
@@ -81,7 +81,7 @@ angular.module('mmtUiApp')
 			self.forgotPassword = function() {
 			  $uibModal.open({
           animation: true,
-          template: ModalTemplateService.getForgotPasswordTemplate(),
+          templateUrl: 'views/modal/forgot-password-modal.html',
           controller: 'ForgotPasswordPopupController',
           resolve: {
             items: function() {

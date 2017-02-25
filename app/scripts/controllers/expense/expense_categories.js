@@ -46,7 +46,7 @@ angular.module('mmtUiApp')
 
     $uibModal.open({
         animation: true,
-        template: ModalTemplateService.getWarningTemplate(),
+        templateUrl: 'views/modal/warning-modal.html',
         controller: 'WarningPopupController',
         scope: $scope,
         size: 'lg',
@@ -70,7 +70,7 @@ angular.module('mmtUiApp')
 
     $uibModal.open({
       animation: true,
-      template: ModalTemplateService.getEditCategoryTemplate(),
+      templateUrl: 'views/modal/edit-category-modal.html',
       controller: 'EditCategoryPopupController',
       backdrop: 'static',
       size: 'lg',

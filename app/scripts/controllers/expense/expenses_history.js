@@ -51,7 +51,7 @@ angular.module('mmtUiApp')
         // ERROR: inform the user
         $uibModal.open({
           animation: true,
-          template: ModalTemplateService.getInfoTemplate(),
+          templateUrl: 'views/modal/info-modal.html',
           controller: 'WarningPopupController',
           resolve: {
             items: function() {
@@ -115,7 +115,7 @@ angular.module('mmtUiApp')
             $scope.retrieveExpenseList();
             $uibModal.open({
               animation: true,
-              template: ModalTemplateService.getInfoTemplate(),
+              templateUrl: 'views/modal/info-modal.html',
               controller: 'WarningPopupController',
               resolve: {
                 items: function() {
@@ -132,7 +132,7 @@ angular.module('mmtUiApp')
 
             $uibModal.open({
               animation: true,
-              template: ModalTemplateService.getInfoTemplate(),
+              templateUrl: 'views/modal/info-modal.html',
               controller: 'WarningPopupController',
               resolve: {
                 items: function() {
@@ -149,7 +149,7 @@ angular.module('mmtUiApp')
 
       $uibModal.open({
         animation: true,
-        template: ModalTemplateService.getWarningTemplate(),
+        templateUrl: 'views/modal/warning-modal.html',
         controller: 'WarningPopupController',
         scope: $scope,
         size: 'lg',
@@ -185,7 +185,7 @@ angular.module('mmtUiApp')
 
       $uibModal.open({
         animation: true,
-        template: ModalTemplateService.getCategoryFilterTemplate(),
+        templateUrl: 'views/modal/category-filter-modal.html',
         controller: 'CategoryFilterPopupController',
         resolve: {
           items: function() {

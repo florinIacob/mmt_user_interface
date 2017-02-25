@@ -30,7 +30,7 @@ angular.module('mmtUiApp').controller('ProfileCtrl',
       // ERROR: inform the user
       $uibModal.open({
         animation: true,
-        template: ModalTemplateService.getInfoTemplate(),
+        templateUrl: 'views/modal/info-modal.html',
         controller: 'WarningPopupController',
         resolve: {
           items: function() {
@@ -96,7 +96,7 @@ angular.module('mmtUiApp').controller('ProfileCtrl',
           // ERROR: inform the user
           $uibModal.open({
             animation: true,
-            template: ModalTemplateService.getInfoTemplate(),
+            templateUrl: 'views/modal/info-modal.html',
             controller: 'WarningPopupController',
             resolve: {
               items: function() {
@@ -156,7 +156,7 @@ angular.module('mmtUiApp').controller('ProfileCtrl',
           // ERROR: inform the user
           $uibModal.open({
             animation: true,
-            template: ModalTemplateService.getInfoTemplate(),
+            templateUrl: 'views/modal/info-modal.html',
             controller: 'WarningPopupController',
             resolve: {
               items: function() {
@@ -301,7 +301,7 @@ angular.module('mmtUiApp').controller('ProfileCtrl',
         // SUCCESS: open inform modal
         $uibModal.open({
           animation: true,
-          template: ModalTemplateService.getInfoTemplate(),
+          templateUrl: 'views/modal/info-modal.html',
           controller: 'WarningPopupController',
           resolve: {
             items: function() {
@@ -319,7 +319,7 @@ angular.module('mmtUiApp').controller('ProfileCtrl',
       function(response){
         $uibModal.open({
           animation: true,
-          template: ModalTemplateService.getInfoTemplate(),
+          templateUrl: 'views/modal/info-modal.html',
           controller: 'WarningPopupController',
           resolve: {
             items: function() {
@@ -340,7 +340,7 @@ angular.module('mmtUiApp').controller('ProfileCtrl',
   $scope.changePassword = function() {
     $uibModal.open({
       animation: true,
-      template: ModalTemplateService.getChangePasswordTemplate(),
+      templateUrl: 'views/modal/change-password-modal.html',
       controller: 'ChangePasswordController',
       resolve: {
         items: function() {

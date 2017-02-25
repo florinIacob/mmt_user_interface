@@ -19,7 +19,7 @@ angular.module('mmtUiApp')
         if (!$scope.forgot_obj.code) {
           $uibModal.open({
             animation: true,
-            template: ModalTemplateService.getInfoTemplate(),
+            templateUrl: 'views/modal/info-modal.html',
             controller: 'WarningPopupController',
             resolve: {
               items: function() {
@@ -37,7 +37,7 @@ angular.module('mmtUiApp')
         if ($scope.forgot_obj.np != $scope.retyped_password) {
           $uibModal.open({
             animation: true,
-            template: ModalTemplateService.getInfoTemplate(),
+            templateUrl: 'views/modal/info-modal.html',
             controller: 'WarningPopupController',
             resolve: {
               items: function() {
@@ -70,7 +70,7 @@ angular.module('mmtUiApp')
 
             $uibModal.open({
               animation: true,
-              template: ModalTemplateService.getInfoTemplate(),
+              templateUrl: 'views/modal/info-modal.html',
               controller: 'WarningPopupController',
               resolve: {
                 items: function() {
@@ -97,7 +97,7 @@ angular.module('mmtUiApp')
 
             $uibModal.open({
               animation: true,
-              template: ModalTemplateService.getInfoTemplate(),
+              templateUrl: 'views/modal/info-modal.html',
               controller: 'WarningPopupController',
               resolve: {
                 items: function() {

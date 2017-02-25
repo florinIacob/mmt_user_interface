@@ -84,7 +84,6 @@ app.factory('CategoryService', function($http, $q, $cookieStore, $route, $uibMod
   // ADD A CATEGORY
   service.addCategory = function(category, categoriesArray) {
 
-    debugger;
     if (category.name == null || category.name == '') {
       openInfoPopup('WARNING', "The name of the category should not be empty!");
       return;
@@ -142,7 +141,7 @@ app.factory('CategoryService', function($http, $q, $cookieStore, $route, $uibMod
   var openInfoPopup = function(title, message) {
     $uibModal.open({
       animation: true,
-      template: ModalTemplateService.getInfoTemplate(),
+      templateUrl: 'views/modal/info-modal.html',
       controller: 'WarningPopupController',
       resolve: {
         items: function() {
