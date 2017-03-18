@@ -8,7 +8,7 @@
  * Controller of the mmtUiApp
  */
 angular.module('mmtUiApp')
-  .controller('AddIncomeCtrl', function ($scope, $rootScope, $http, $location, $cookieStore, DateTimeService,
+  .controller('AddIncomesCtrl', function ($scope, $rootScope, $http, $location, $cookieStore, DateTimeService,
          $uibModal, ModalTemplateService, host_name, CurrencyUtilFactory) {
 
   if (!$rootScope.authenticated) {
@@ -16,16 +16,11 @@ angular.module('mmtUiApp')
   }
   $scope.loading = false;
 
-  $scope.current_date_value = DateTimeService.createCurrentDateTimeString();
-  console.log($scope.current_date_value);
-
-  $scope.income = {
+  $scope.commonIncome = {
      id: 0,
      name: "",
      description: "",
-     amount: null,
      frequency: 0,
-     creationDate: new Date(),
      currency: null
   }
 
@@ -41,21 +36,55 @@ angular.module('mmtUiApp')
   CurrencyUtilFactory.getDefaultCurrency().then(
     function(response){
       var currency = angular.fromJson(response.data);
-      $scope.income.currency = currency.value;
+      $scope.commonIncome.currency = currency.value;
     },
     function(response){
       // ERROR: inform the user
       console.error("[add_income] Cannot retrieve defaul Currency for Reason: " + JSON.stringify(response));
    });
 
+
+  /*---- Start DATE PICKER ----*/
+  $scope.format = 'dd-MMMM-yyyy';
+  $scope.altInputFormats = ['M!/d!/yyyy'];
+
+  $scope.datePopup = [{
+    opened: false
+  }];
+  $scope.openDatePicker = function(index) {
+    $scope.datePopup[index].opened = true;
+  };
+  $scope.dateOptions = DateTimeService.getDateOptions();
+  /*---- End DATE PICKER ----*/
+
+  /** --------------------- Start: Incomes Array ----------------------------- */
+  $scope.incomesArray = [
+    {amount: null, creationDate: null}
+  ];
+
+  $scope.addAnotherIncome = function() {
+    $scope.incomesArray.push({amount: null, creationDate: null});
+    $scope.datePopup.push({opened: false});
+  }
+  /** --------------------- End: Incomes Array ------------------------------- */
+
   // submit button - save the expense
   $scope.submit = function() {
-      var submitted_income = $scope.income;
-      if (submitted_income.creationDate == null) {
-        submitted_income.creationDate = new Date();
-      }
 
       $scope.loading = true;
+
+      var incomesToSubmit = [];
+      angular.forEach($scope.incomesArray, function(income, index) {
+        var incomeToAdd = {};
+        incomeToAdd.id = $scope.commonIncome.id;
+        incomeToAdd.name = $scope.commonIncome.name;
+        incomeToAdd.description = $scope.commonIncome.description;
+        incomeToAdd.frequency = $scope.commonIncome.frequency;
+        incomeToAdd.currency = $scope.commonIncome.currency;
+        incomeToAdd.amount = income.amount;
+        incomeToAdd.creationDate = income.creationDate;
+        incomesToSubmit.push(incomeToAdd);
+      });
 
       // prepare post request
       var req = {
@@ -65,7 +94,7 @@ angular.module('mmtUiApp')
            'Content-Type': "application/json",
            'Authorization': $cookieStore.get('mmtlt')
          },
-         data: JSON.stringify(submitted_income)
+         data: JSON.stringify(incomesToSubmit)
       }
       // make server request
       $http(req).then(
@@ -76,6 +105,7 @@ angular.module('mmtUiApp')
         },
         function(response){
 
+          console.error((response && response.data) ? JSON.stringify(response.data) : "Invalid income");
           $uibModal.open({
             animation: true,
             templateUrl: 'views/modal/info-modal.html',
@@ -84,7 +114,7 @@ angular.module('mmtUiApp')
               items: function() {
                 return {
                   title: 'Information!',
-                  message: 'Income not created! Please use another income name!',
+                  message: 'Income not created! Invalid request!',
                   onYesCallback: null
                 };
               },
@@ -93,18 +123,5 @@ angular.module('mmtUiApp')
           $scope.loading = false;
        });
   }
-
-  /*---- Start DATE PICKER ----*/
-  $scope.format = 'dd-MMMM-yyyy';
-  $scope.altInputFormats = ['M!/d!/yyyy'];
-
-  $scope.datePopup = {
-    opened: false
-  };
-  $scope.openDatePicker = function() {
-    $scope.datePopup.opened = true;
-  };
-  $scope.dateOptions = DateTimeService.getDateOptions();
-  /*---- End DATE PICKER ----*/
 
 });

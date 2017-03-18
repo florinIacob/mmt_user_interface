@@ -4,11 +4,11 @@
  * @ngdoc function
  * @name mmtUiApp.controller:AddExpenseCtrl
  * @description
- * # AddExpenseCtrl
+ * # AddExpensesCtrl
  * Controller of the mmtUiApp
  */
 angular.module('mmtUiApp')
-  .controller('AddExpenseCtrl', function ($scope, $rootScope, $http, $location, $cookieStore, CategoryService, DateTimeService,
+  .controller('AddExpensesCtrl', function ($scope, $rootScope, $http, $location, $cookieStore, CategoryService, DateTimeService,
        $uibModal, ModalTemplateService, host_name, CurrencyUtilFactory) {
 
   if (!$rootScope.authenticated) {
@@ -20,10 +20,7 @@ angular.module('mmtUiApp')
   $scope.categories = [];
   $scope.categories = CategoryService.getCategoryNames();
 
-  $scope.current_date_value = DateTimeService.createCurrentDateTimeString();
-  console.log($scope.current_date_value);
-
-  $scope.expense = {
+  $scope.commonExpense = {
      id: 0,
      name: "",
      category: {
@@ -45,10 +42,34 @@ angular.module('mmtUiApp')
      {value:6, text: 'Every 6 months'},
   ];
 
+  /*---- Start DATE PICKER ----*/
+  $scope.format = 'dd-MMMM-yyyy';
+  $scope.altInputFormats = ['M!/d!/yyyy'];
+
+  $scope.datePopup = [{
+    opened: false
+  }];
+  $scope.openDatePicker = function(index) {
+    $scope.datePopup[index].opened = true;
+  };
+  $scope.dateOptions = DateTimeService.getDateOptions();
+  /*---- End DATE PICKER ----*/
+
+  /**-------------- Start: Multiple expenses features ---------------*/
+  $scope.expensesArray = [
+    {amount: null, creationDate: null}
+  ];
+
+  $scope.addAnotherExpense = function() {
+    $scope.expensesArray.push({amount: null, creationDate: null});
+    $scope.datePopup.push({opened: false});
+  }
+  /**----------------- End: Multiple expenses features ---------------*/
+
   CurrencyUtilFactory.getDefaultCurrency().then(
     function(response){
       var currency = angular.fromJson(response.data);
-      $scope.expense.currency = currency.value;
+      $scope.commonExpense.currency = currency.value;
     },
     function(response){
       // ERROR: inform the user
@@ -57,12 +78,23 @@ angular.module('mmtUiApp')
 
   // submit button - save the expense
   $scope.submit = function() {
-      var submitted_expense = $scope.expense;
-      if (submitted_expense.creationDate == null) {
-        submitted_expense.creationDate = new Date();
-      }
 
       $scope.loading = true;
+
+      var expensesToSubmit = [];
+      angular.forEach($scope.expensesArray, function(expense, index) {
+        var expenseToAdd = {};
+        expenseToAdd.id = $scope.commonExpense.id;
+        expenseToAdd.name = $scope.commonExpense.name;
+        expenseToAdd.category = $scope.commonExpense.category;
+        expenseToAdd.description = $scope.commonExpense.description;
+        expenseToAdd.frequency = $scope.commonExpense.frequency;
+        expenseToAdd.currency = $scope.commonExpense.currency;
+        expenseToAdd.amount = expense.amount;
+        expenseToAdd.creationDate = expense.creationDate;
+        expensesToSubmit.push(expenseToAdd);
+      });
+
       // prepare post request
       var req = {
          method: 'POST',
@@ -71,7 +103,7 @@ angular.module('mmtUiApp')
            'Content-Type': "application/json",
            'Authorization': $cookieStore.get('mmtlt')
          },
-         data: JSON.stringify(submitted_expense)
+         data: JSON.stringify(expensesToSubmit)
       }
       // make server request
       $http(req).then(
@@ -101,20 +133,8 @@ angular.module('mmtUiApp')
 
   $scope.addCategory = function() {
     CategoryService.addCategoryName($scope.newCategory, $scope.categories);
-    $scope.expense.category.name = $scope.newCategory;
+    $scope.commonExpense.category.name = $scope.newCategory;
     $scope.newCategory = null;
   }
 
-  /*---- Start DATE PICKER ----*/
-  $scope.format = 'dd-MMMM-yyyy';
-  $scope.altInputFormats = ['M!/d!/yyyy'];
-
-  $scope.datePopup = {
-    opened: false
-  };
-  $scope.openDatePicker = function() {
-    $scope.datePopup.opened = true;
-  };
-  $scope.dateOptions = DateTimeService.getDateOptions();
-  /*---- End DATE PICKER ----*/
 });

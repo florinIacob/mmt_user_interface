@@ -93,13 +93,15 @@ var app = angular.module('mmtUiApp', [
       })
       .when('/privacypolicy.htm', {
         templateUrl: 'views/user/privacypolicy.htm',
-        controller: null,
+        controller: ['$log', function($log) {
+                $log.log('Privacy policy route!');
+        }],
         controllerAs: 'controller'
       })
-			.when('/add_expense', {
-				templateUrl: 'views/expense/add_expense.html',
-				controller: 'AddExpenseCtrl',
-				controllerAs: 'add_expense'
+			.when('/add_expenses', {
+				templateUrl: 'views/expense/add_expenses.html',
+				controller: 'AddExpensesCtrl',
+				controllerAs: 'add_expenses'
 			})
 			.when('/expenses_history', {
         templateUrl: 'views/expense/expenses_history.html',
@@ -116,10 +118,10 @@ var app = angular.module('mmtUiApp', [
         controller: 'ExpenseCategoriesCtrl',
         controllerAs: 'expense_categories'
       })
-			.when('/add_income', {
-        templateUrl: 'views/income/add_income.html',
-        controller: 'AddIncomeCtrl',
-        controllerAs: 'add_income'
+			.when('/add_incomes', {
+        templateUrl: 'views/income/add_incomes.html',
+        controller: 'AddIncomesCtrl',
+        controllerAs: 'add_incomes'
       })
       .when('/incomes_history', {
         templateUrl: 'views/income/incomes_history.html',

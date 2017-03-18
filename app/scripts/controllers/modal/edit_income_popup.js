@@ -15,7 +15,7 @@ angular.module('mmtUiApp')
 
   $scope.loading = false;
    $scope.income = items.income;
-   $scope.current_date_value = DateTimeService.createDateTimeString(new Date($scope.income.creationDate));
+
    var old_date = $scope.income.creationDate;
    $scope.income.creationDate = new Date($scope.income.creationDate);
    if (!$scope.income.frequency) {

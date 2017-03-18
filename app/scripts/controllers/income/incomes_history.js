@@ -176,7 +176,7 @@ angular.module('mmtUiApp')
 
    // REDIRECT TO ADD INCOME PAGE
    $scope.addIncomeAttempt = function() {
-      $location.path('/add_income');
+      $location.path('/add_incomes');
    }
 
    /*---- Start DATE PICKER ----*/

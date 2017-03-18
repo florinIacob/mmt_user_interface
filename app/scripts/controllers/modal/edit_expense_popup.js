@@ -17,7 +17,7 @@ angular.module('mmtUiApp')
    $scope.categories = CategoryService.getCategoryNames();
 
    $scope.expense = items.expense;
-   $scope.current_date_value = DateTimeService.createDateTimeString(new Date($scope.expense.creationDate));
+
    var old_date = $scope.expense.creationDate;
    $scope.expense.creationDate = new Date($scope.expense.creationDate);
    if (!$scope.expense.frequency) {

@@ -5,14 +5,16 @@ app.service('DateTimeService', function($http, $cookieStore, host_name) {
   this.createCurrentDateTimeString = function() {
 
     var date = new Date();
-    return date_value = date.getFullYear() + "-" + f(date.getMonth()+1) + "-"
+    var date_value = date.getFullYear() + "-" + f(date.getMonth()+1) + "-"
           + f(date.getDate()) + "T" + f(date.getHours()) + ":" + f(date.getMinutes()) + '';
+    return date_value;
   }
 
   this.createDateTimeString = function(date) {
 
-    return date_value = date.getFullYear() + "-" + f(date.getMonth()+1) + "-"
+    var date_value = date.getFullYear() + "-" + f(date.getMonth()+1) + "-"
           + f(date.getDate()) + "T" + f(date.getHours()) + ":" + f(date.getMinutes()) + '';
+    return date_value;
   }
 
   /*

@@ -167,7 +167,7 @@ angular.module('mmtUiApp')
 
    // REDIRECT TO ADD EXPENSE PAGE
    $scope.addExpenseAttempt = function() {
-      $location.path('/add_expense');
+      $location.path('/add_expenses');
    }
 
    // ------------------- CATEGORIES AREA ----------------------
