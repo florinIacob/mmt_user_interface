@@ -133,6 +133,11 @@ var app = angular.module('mmtUiApp', [
         controller: 'IncomesChartCtrl',
         controllerAs: 'incomes_chart'
       })
+      .when('/add_loan', {
+        templateUrl: 'views/loans/add_loan.html',
+        controller: 'AddLoanCtrl',
+        controllerAs: 'add_loan'
+      })
       .when('/user/renew_forgot_password/:code', {
         templateUrl: 'views/user/renew_forgot_password.html',
         controller: 'RenewForgotPasswordCtrl',

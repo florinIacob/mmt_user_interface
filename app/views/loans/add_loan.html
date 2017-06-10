@@ -1,0 +1,101 @@
+<div class="container sign-up-container">
+  <h3 style="text-align:center;"><img src="images/add_loan.svg" width="90px"> ADD LOAN</h3>
+  <br/>
+  <form class="form-horizontal" role="form" ng-submit="submit()" ng-show="loading == false">
+    <div class="form-group">
+      <label class="control-label col-sm-3" for="newCounterparty">New counterparty?</label>
+      <div class="col-sm-9">
+        <input type="checkbox" ng-model="isNewCounterparty" class="" id="newCounterparty" style="margin-top: 10px;">
+      </div>
+    </div>
+    <div class="form-group" ng-if="!isNewCounterparty">
+      <label class="control-label col-sm-3" for="counterpartySelect">
+        <span class="glyphicon glyphicon-user"></span> Counterparty:
+      </label>
+      <div class="col-sm-9">
+        <select class="form-control" id="counterpartySelect" placeholder="Counterparty"
+                ng-model="loan.counterparty.id" ng-required="true" ng-change="">
+          <option ng-repeat="counterparty in data.counterpartyList" value="{{counterparty.id}}" required>
+            {{counterparty.name}}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group" ng-if="isNewCounterparty">
+      <label class="control-label col-sm-3" for="counterpartyName">
+        <span class="glyphicon glyphicon-user"></span> Counterparty name:
+      </label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" id="counterpartyName" placeholder="Counterparty name ..."
+               ng-model="loan.counterparty.name" required >
+      </div>
+    </div>
+    <div class="form-group" ng-if="isNewCounterparty">
+      <label class="control-label col-sm-3" for="counterpartyEmail">Counterparty email:</label>
+      <div class="col-sm-9">
+        <input type="email" class="form-control" id="counterpartyEmail" placeholder="Counterparty email ..."
+               ng-model="loan.counterparty.email">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-3" for="amount">Amount:</label>
+      <div class="col-sm-6">
+        <input type="number" class="form-control" id="amount" placeholder="Loan amount" ng-model="loan.amount" required >
+      </div>
+      <div class="col-sm-3">
+        <select type="string" class="form-control" id="currency" placeholder="Currency" ng-model="loan.currency" required>
+          <option ng-repeat="currency in availableCurrencies" value="{{currency}}" required>{{currency}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-3" for="receiving">
+        Giving?
+        <span class="glyphicon glyphicon-question-sign" title="Are you giving the money to the counterparty?"></span>
+      </label>
+      <div class="col-sm-9">
+        <input type="checkbox" ng-model="loan.receiving" class="" id="receiving" style="margin-top: 10px;">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-3" for="creationDate">Creation date:</label>
+      <div class="col-sm-9">
+        <p class="input-group" style="margin-bottom: 0px;">
+          <input type="text" id="creationDate" class="form-control" uib-datepicker-popup="{{format}}"
+                 ng-model="loan.creationDate" is-open="datePopup[0].opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="openDatePicker(0)"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+        </p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-3" for="untilDate">Until date:</label>
+      <div class="col-sm-9">
+        <p class="input-group" style="margin-bottom: 0px;">
+          <input type="text" id="untilDate" class="form-control" uib-datepicker-popup="{{format}}"
+                 ng-model="loan.untilDate" is-open="datePopup[1].opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="openDatePicker(1)"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+        </p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-3" for="description">Description:</label>
+      <div class="col-sm-9">
+        <textarea type="text" rows="2"  class="form-control" id="description" placeholder="Description ..."
+                  ng-model="loan.description"></textarea>
+      </div>
+    </div>
+
+
+    <div class="form-group" style="">
+      <div class="col-sm-offset-3 col-sm-3">
+        <button type="submit" class="btn accountant-btn"><span class="glyphicon glyphicon-plus"></span> Add loan</button>
+      </div>
+      <div class="col-sm-6"></div>
+    </div>
+  </form>
+  <loading-page width="150px" message="Processing ..." ng-show="loading == true"></loading-page>
+</div>
