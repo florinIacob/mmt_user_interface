@@ -1,0 +1,83 @@
+<div class="container sign-up-container text-center">
+  <h3><img src="images/loan_list.svg" width="90px"> MY LOANS</h3>
+  <h5 ng-if="counterpartyName"> For counterparty <b>{{counterpartyName}}</b></h5>
+</div>
+<br/>
+
+<form class="form-horizontal" role="form" ng-submit="submit()" ng-show="loading == false">
+  <div class="form-group">
+    <div class="col-md-4">
+    </div>
+    <div class="col-md-4">
+    </div>
+    <div class="col-sm-4">
+      <button type="button" class="btn btn-block accountant-btn" ng-click="saveLoan()">
+        <span class="glyphicon glyphicon-plus"></span> Add loan
+      </button>
+    </div>
+  </div>
+  <div>
+    <table class="table table-bordered table-hover">
+      <thead class="grey-bg">
+      <tr>
+        <th ng-if="!counterpartyName">Counterparty
+          <span class="glyphicon glyphicon-sort header-icon control-icon-blue" bs-tooltip title="Sort by counterparty"
+                ng-click="changeSortingCriteria('counterparty.name')"></span>
+        </th>
+        <th>Amount
+          <span class="glyphicon glyphicon-sort header-icon control-icon-blue" bs-tooltip title="Sort by amount"
+                ng-click="changeSortingCriteria('amount')"></span>
+        </th>
+        <th>State
+          <span class="glyphicon glyphicon-sort header-icon control-icon-blue" bs-tooltip title="Sort by state"
+                ng-click="changeSortingCriteria('active')"></span>
+        </th>
+        <th>Creation date
+          <span class="glyphicon glyphicon-sort header-icon control-icon-blue" bs-tooltip title="Sort by creation date"
+                ng-click="changeSortingCriteria('creationDate')"></span>
+        </th>
+        <th>Until date
+          <span class="glyphicon glyphicon-sort header-icon control-icon-blue" bs-tooltip title="Sort by until date"
+                ng-click="changeSortingCriteria('untilDate')"></span>
+        </th>
+        <th style="width: 120px;"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="loan in loanList | orderBy:sortColumn:sortReverse | filter:filter_category:strict">
+        <td ng-if="!counterpartyName">
+         {{ loan.counterparty.name }}
+        </td>
+        <td class="text-right">
+          {{ (loan.receiving ? 1 : -1 ) * loan.amount}} <span class="text-primary">{{loan.currency}}</span>&nbsp;&nbsp;
+        </td>
+        <td class="">
+          {{ (loan.active ? 'ACTIVE' : 'INACTIVE' ) }}
+        </td>
+        <td class="">
+          {{ loan.creationDate | date }}
+        </td>
+        <td class="">
+          {{ loan.untilDate | date }}
+        </td>
+        <td class="text-right">
+          &nbsp;&nbsp;
+          <span ng-if="!loan.active" class="glyphicon glyphicon-ok-circle control-icon-blue"
+                bs-tooltip title="Switch loan to ACTIVE" ng-click="toggleActivation(counterparty)"></span>
+          <span ng-if="loan.active" class="glyphicon glyphicon-remove-circle control-icon-blue"
+                bs-tooltip title="Switch loan to INACTIVE" ng-click="toggleActivation(counterparty)"></span>
+          <span class="glyphicon glyphicon-pencil control-icon-green" bs-tooltip title="Edit loan!"
+                  ng-click="saveLoan(loan)"></span>
+          <span class="glyphicon glyphicon-trash control-icon-red" bs-tooltip title="Delete loan!"
+                ng-click="deleteLoan(loan)"></span>
+        </td>
+      </tr>
+      <tr ng-show="expenses.length == 0">
+        <td style="font-style:italic;" colspan="5">No counterparty have been found!</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</form>
+<loading-page width="150px" message="Processing ..." ng-if="loading == true"></loading-page>
+

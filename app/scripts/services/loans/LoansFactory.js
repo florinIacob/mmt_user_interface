@@ -7,6 +7,56 @@ app.factory('LoansFactory',
     var service = {};
 
     /**
+    * Get the loan list for the specified counterparty
+    */
+    service.findAllByCounterparty = function(counterpartyId) {
+      var deferred = $q.defer();
+
+      $http({
+          method: 'GET',
+          url: host_name + '/loans/' + counterpartyId,
+          headers: {
+            'Content-Type': "application/json",
+            'Authorization': $cookieStore.get('mmtlt')
+          }
+      }).then(
+        function success(response) {
+          deferred.resolve(response.data);
+        },
+        function error(response) {
+          deferred.reject(response);
+          console.error(' --- GET ERROR: ' + host_name + '/loans/' + counterpartyId + ' WITH ERROR: +++' + JSON.stringify(response.data) + '+++');
+        }
+      );
+      return deferred.promise;
+    };
+
+    /**
+    * Get the loan list for current user
+    */
+    service.findAll = function() {
+      var deferred = $q.defer();
+
+      $http({
+          method: 'GET',
+          url: host_name + '/loans',
+          headers: {
+            'Content-Type': "application/json",
+            'Authorization': $cookieStore.get('mmtlt')
+          }
+      }).then(
+        function success(response) {
+          deferred.resolve(response.data);
+        },
+        function error(response) {
+          deferred.reject(response);
+          console.error(' --- GET ERROR: ' + host_name + '/loans WITH ERROR: +++' + JSON.stringify(response.data) + '+++');
+        }
+      );
+      return deferred.promise;
+    };
+
+    /**
     * Function used for adding a new loan
     */
     service.addLoan = function(loanEntity) {

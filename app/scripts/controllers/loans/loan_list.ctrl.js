@@ -8,12 +8,17 @@
  * Controller of the mmtUiApp
  */
 angular.module('mmtUiApp')
-  .controller('CounterpartyListCtrl', function ($scope, $q, $rootScope, $http, $location, $cookieStore, CurrencyUtilFactory,
-      CounterpartyFactory, AlertService, $uibModal) {
+  .controller('LoanListCtrl', function ($scope, $q, $rootScope, $routeParams, $location, $cookieStore, CurrencyUtilFactory,
+      LoansFactory, AlertService, $uibModal) {
 
   if (!$rootScope.authenticated) {
     $location.path('/login');
   }
+
+  $scope.counterpartyId = $routeParams.counterparty;
+  $scope.counterpartyName = $routeParams.counterpartyName;
+  console.log(' -- counterparty: ' + $scope.counterpartyId);
+
   $scope.loading = false;
 
   /**
@@ -22,31 +27,27 @@ angular.module('mmtUiApp')
    */
   $scope.initData = function() {
     var serverRequestArray = [];
-    serverRequestArray.push(CurrencyUtilFactory.getDefaultCurrency());
-    serverRequestArray.push(CounterpartyFactory.getCounterpartyList());
+    if ($scope.counterpartyId) {
+      serverRequestArray.push(LoansFactory.findAllByCounterparty($scope.counterpartyId));
+    } else {
+      serverRequestArray.push(LoansFactory.findAll());
+    }
 
     $scope.loading = true;
 
     $q.all(serverRequestArray).then(
       function(responseArray){
-        var currency = angular.fromJson(responseArray[0].data);
-        $scope.defaultCurrency = currency.value;
-        $scope.counterpartyList = responseArray[1];
+        $scope.loanList = responseArray[0];
         $scope.loading = false;
       },
       function(response){
         // ERROR: inform the user
         $scope.loading = false;
-        console.error("[counterparty_list] Cannot retrieve data for Reason: " + JSON.stringify(response));
+        console.error("[loan_list] Cannot retrieve data for Reason: " + JSON.stringify(response));
      });
   }
 
   $scope.initData();
-
-  // See loans list for the selected counterparty
-  $scope.seeLoansList = function(counterparty) {
-    $location.path('/loan_list/' + counterparty.id + '/' + counterparty.name);
-  };
 
   // Save counterparty
   $scope.saveCounterparty = function(counterparty) {
