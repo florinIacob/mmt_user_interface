@@ -9,18 +9,26 @@
  */
 angular.module('mmtUiApp')
   .controller('AddLoanCtrl', function ($scope, $q, $rootScope, $http, $location, $cookieStore, DateTimeService, CurrencyUtilFactory,
-      LoansFactory, CounterpartyFactory, AlertService) {
+      LoansFactory, CounterpartyFactory, AlertService, $routeParams) {
 
   if (!$rootScope.authenticated) {
     $location.path('/login');
   }
   $scope.loading = false;
 
+  $scope.loanId = $routeParams.loan != 0 ? $routeParams.loan : null;
+  $scope.counterpartyId = $routeParams.counterparty;
+
+  $scope.isEditMode = false;
+  if ($scope.loanId) {
+    $scope.isEditMode = true;
+  }
+
   $scope.isNewCounterparty = false;
 
   $scope.loan = {
     counterparty: {
-      id: null,
+      id: $scope.counterpartyId,
       name: null,
       email: null
     },
@@ -44,19 +52,28 @@ angular.module('mmtUiApp')
     var serverRequestArray = [];
     serverRequestArray.push(CurrencyUtilFactory.getDefaultCurrency());
     serverRequestArray.push(CounterpartyFactory.getCounterpartyList());
+    if ($scope.isEditMode) {
+      serverRequestArray.push(LoansFactory.findOneById($scope.loanId));
+    }
 
     $scope.data = {};
     $scope.data.counterpartyList = [];
 
+    $scope.loading = true;
     $q.all(serverRequestArray).then(
       function(responseArray){
         var currency = angular.fromJson(responseArray[0].data);
         $scope.loan.currency = currency.value;
         $scope.data.counterpartyList = responseArray[1];
 
+        if ($scope.isEditMode) {
+          $scope.loan = responseArray[2];
+          $scope.loan.counterparty.id = "" + $scope.loan.counterparty.id;
+        }
+        $scope.loading = false;
       },
       function(response){
-        // ERROR: inform the user
+        $scope.loading = false;
         console.error("[add_income] Cannot retrieve default Currency for Reason: " + JSON.stringify(response));
      });
   }
@@ -77,10 +94,18 @@ angular.module('mmtUiApp')
 
     $scope.loading = true;
     var addLoanRequest = function() {
-      LoansFactory.addLoan($scope.loan).then(
+      var serverRequestArray = [];
+      if ($scope.isEditMode) {
+        serverRequestArray.push(LoansFactory.updateLoan($scope.loan));
+      } else {
+        serverRequestArray.push(LoansFactory.addLoan($scope.loan));
+      }
+
+     $q.all(serverRequestArray).then(
         function success(response) {
           $scope.loading = false;
-          $location.path('/counterparty_list');
+          var loanPathSuffix = $scope.counterpartyId ? ('/' + $scope.counterpartyId + '/' + $scope.loan.counterparty.name) : '';
+          $location.path('/loan_list' + loanPathSuffix);
         },
         function error(response) {
           AlertService.displaySimpleAlert('Error', 'Error while adding Loan!');

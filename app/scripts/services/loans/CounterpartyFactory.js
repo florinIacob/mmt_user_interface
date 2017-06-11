@@ -84,7 +84,7 @@ app.factory('CounterpartyFactory',
     };
 
     /**
-    * Function used for deleting a new Counterparty
+    * Function used for deleting a Counterparty
     */
     service.deleteCounterparty = function(counterpartyEntity) {
       var deferred = $q.defer();

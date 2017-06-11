@@ -133,7 +133,7 @@ var app = angular.module('mmtUiApp', [
         controller: 'IncomesChartCtrl',
         controllerAs: 'incomes_chart'
       })
-      .when('/add_loan', {
+      .when('/add_loan/:loan?/:counterparty?', {
         templateUrl: 'views/loans/add_loan.html',
         controller: 'AddLoanCtrl',
         controllerAs: 'add_loan'

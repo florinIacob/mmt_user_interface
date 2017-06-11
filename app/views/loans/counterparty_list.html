@@ -29,7 +29,7 @@
         </th>
         <th>Total amount
           <span class="glyphicon glyphicon-sort header-icon control-icon-blue" bs-tooltip title="Sort by total amount"
-                ng-click="changeSortingCriteria('amount')"></span>
+                ng-click="changeSortingCriteria('total')"></span>
         </th>
         <th style="width: 120px;"></th>
       </tr>
@@ -39,7 +39,7 @@
         <td>{{ counterparty.name }}</td>
         <td>{{ counterparty.email }}</td>
         <td class="text-right">
-          {{ counterparty.total}} <span class="text-primary">{{defaultCurrency}}</span>&nbsp;&nbsp;
+          {{ counterparty.total.toFixed(2)}} <span class="text-primary">{{defaultCurrency}}</span>&nbsp;&nbsp;
         </td>
         <td class="text-right">
           &nbsp;&nbsp;
@@ -51,8 +51,8 @@
                 ng-click="deleteCounterparty(counterparty)"></span>
         </td>
       </tr>
-      <tr ng-show="expenses.length == 0">
-        <td style="font-style:italic;" colspan="5">No counterparty have been found!</td>
+      <tr class="text-center" ng-show="counterpartyList.length == 0">
+        <td style="font-style:italic;" colspan="4">No counterparty have been found!</td>
       </tr>
       </tbody>
     </table>

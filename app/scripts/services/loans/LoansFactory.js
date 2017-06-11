@@ -32,6 +32,31 @@ app.factory('LoansFactory',
     };
 
     /**
+    * Get one loan by ID
+    */
+    service.findOneById = function(loanId) {
+      var deferred = $q.defer();
+
+      $http({
+          method: 'GET',
+          url: host_name + '/loans/findOne/' + loanId,
+          headers: {
+            'Content-Type': "application/json",
+            'Authorization': $cookieStore.get('mmtlt')
+          }
+      }).then(
+        function success(response) {
+          deferred.resolve(response.data);
+        },
+        function error(response) {
+          deferred.reject(response);
+          console.error(' --- GET ERROR: ' + host_name + '/loans/findOne/' + loanId + ' WITH ERROR: +++' + JSON.stringify(response.data) + '+++');
+        }
+      );
+      return deferred.promise;
+    };
+
+    /**
     * Get the loan list for current user
     */
     service.findAll = function() {
@@ -76,6 +101,57 @@ app.factory('LoansFactory',
         },
         function error(response) {
           console.error(' --- POST ERROR: ' + host_name + '/loans WITH ERROR: +++' + JSON.stringify(response.data) + '+++');
+          deferred.reject(response);
+        }
+      );
+      return deferred.promise;
+    };
+
+    /**
+    * Function used for updating a new Loan
+    */
+    service.updateLoan = function(loanEntity) {
+      var deferred = $q.defer();
+
+      $http({
+          method: 'PUT',
+          url: host_name + '/loans/' + loanEntity.id,
+          headers: {
+            'Content-Type': "application/json",
+            'Authorization': $cookieStore.get('mmtlt')
+          },
+          data: JSON.stringify(loanEntity)
+      }).then(
+        function success(response) {
+          deferred.resolve(response.data);
+        },
+        function error(response) {
+          console.error(' --- PUT ERROR: ' + host_name + '/loans/' + loanEntity.id + ' WITH ERROR: +++' + JSON.stringify(response.data) + '+++');
+          deferred.reject(response);
+        }
+      );
+      return deferred.promise;
+    };
+
+    /**
+    * Function used for deleting a Loan
+    */
+    service.deleteLoan = function(loanEntity) {
+      var deferred = $q.defer();
+
+      $http({
+          method: 'DELETE',
+          url: host_name + '/loans/' + loanEntity.id,
+          headers: {
+            'Content-Type': "application/json",
+            'Authorization': $cookieStore.get('mmtlt')
+          }
+      }).then(
+        function success(response) {
+          deferred.resolve(response.data);
+        },
+        function error(response) {
+          console.error(' --- DELETE ERROR: ' + host_name + '/loans/' + loanEntity.id + ' WITH ERROR: +++' + JSON.stringify(response.data) + '+++');
           deferred.reject(response);
         }
       );

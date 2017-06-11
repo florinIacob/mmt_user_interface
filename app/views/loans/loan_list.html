@@ -44,12 +44,13 @@
       </tr>
       </thead>
       <tbody>
-      <tr ng-repeat="loan in loanList | orderBy:sortColumn:sortReverse | filter:filter_category:strict">
+      <tr ng-repeat="loan in loanList | orderBy:sortColumn:sortReverse | filter:filter_category:strict"
+          bs-tooltip title="{{loan.description}}">
         <td ng-if="!counterpartyName">
          {{ loan.counterparty.name }}
         </td>
         <td class="text-right">
-          {{ (loan.receiving ? 1 : -1 ) * loan.amount}} <span class="text-primary">{{loan.currency}}</span>&nbsp;&nbsp;
+          {{ (loan.receiving ? 1 : -1 ) * loan.amount.toFixed(2)}} <span class="text-primary">{{loan.currency}}</span>&nbsp;&nbsp;
         </td>
         <td class="">
           {{ (loan.active ? 'ACTIVE' : 'INACTIVE' ) }}
@@ -63,17 +64,17 @@
         <td class="text-right">
           &nbsp;&nbsp;
           <span ng-if="!loan.active" class="glyphicon glyphicon-ok-circle control-icon-blue"
-                bs-tooltip title="Switch loan to ACTIVE" ng-click="toggleActivation(counterparty)"></span>
+                bs-tooltip title="Switch loan to ACTIVE" ng-click="toggleActivation(loan)"></span>
           <span ng-if="loan.active" class="glyphicon glyphicon-remove-circle control-icon-blue"
-                bs-tooltip title="Switch loan to INACTIVE" ng-click="toggleActivation(counterparty)"></span>
+                bs-tooltip title="Switch loan to INACTIVE" ng-click="toggleActivation(loan)"></span>
           <span class="glyphicon glyphicon-pencil control-icon-green" bs-tooltip title="Edit loan!"
                   ng-click="saveLoan(loan)"></span>
           <span class="glyphicon glyphicon-trash control-icon-red" bs-tooltip title="Delete loan!"
                 ng-click="deleteLoan(loan)"></span>
         </td>
       </tr>
-      <tr ng-show="expenses.length == 0">
-        <td style="font-style:italic;" colspan="5">No counterparty have been found!</td>
+      <tr class="text-center" ng-show="loanList.length == 0">
+        <td style="font-style:italic;" colspan="6">No loan have been found!</td>
       </tr>
       </tbody>
     </table>

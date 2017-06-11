@@ -49,46 +49,32 @@ angular.module('mmtUiApp')
 
   $scope.initData();
 
-  // Save counterparty
-  $scope.saveCounterparty = function(counterparty) {
-    var modalInstance = $uibModal.open({
-      animation: true,
-      templateUrl: 'views/modal/save-counterparty.modal.html',
-      controller: 'SaveCounterpartyModalCtrl',
-      backdrop: 'static',
-      size: 'lg',
-      resolve: {
-        counterpartyEntity: function() {
-          return counterparty;
-        },
+  // Save loan
+  $scope.saveLoan = function(loan) {
+    var loanPathSuffix = "";
+    if (loan) {
+      loanPathSuffix += "/" + loan.id;
+      if ($scope.counterpartyId) {
+        loanPathSuffix += "/" + $scope.counterpartyId;
       }
-    })
+    } else {
+      if ($scope.counterpartyId) {
+        loanPathSuffix += "/0/" + $scope.counterpartyId;
+      }
+    }
 
-    modalInstance.result.then(
-      function success(responseCounterparty) {
-        if (counterparty) {
-          angular.forEach($scope.counterpartyList, function(counterpartyItem, index) {
-            if (counterpartyItem.id === responseCounterparty.id) {
-              $scope.counterpartyList[index] = responseCounterparty;
-              return;
-            }
-          });
-        } else {
-          $scope.counterpartyList.push(responseCounterparty);
-        }
-      }
-    );
+    $location.path('/add_loan' + loanPathSuffix);
   };
 
-  // Delete counterparty
-  $scope.deleteCounterparty = function(counterparty) {
+  // Delete loan
+  $scope.deleteLoan = function(loan) {
     // Function to be executed if the user press Yes on modal window
     var deleteFunction = function() {
-      CounterpartyFactory.deleteCounterparty(counterparty).then(
+      LoansFactory.deleteLoan(loan).then(
         function(response){
-          angular.forEach($scope.counterpartyList, function(counterpartyItem, index) {
-            if (counterpartyItem.id === counterparty.id) {
-              $scope.counterpartyList.splice(index, 1);
+          angular.forEach($scope.loanList, function(loanItem, index) {
+            if (loanItem.id === loan.id) {
+              $scope.loanList.splice(index, 1);
               return;
             }
           });
@@ -103,16 +89,17 @@ angular.module('mmtUiApp')
               items: function() {
                 return {
                   title: 'Error!',
-                  message: 'Error on deleting counterparty!',
+                  message: 'Error on deleting loan!',
                   onYesCallback: null
                 };
               },
             }
           });
-          console.error('Error on deleting counterparty! MESSAGE: ' + JSON.stringify(response))
+          console.error('Error on deleting loan! MESSAGE: ' + JSON.stringify(response))
        });
      }
 
+    var loanAmountString = (loan.receiving ? 1 : -1) * loan.amount + ' ' + loan.currency;
     $uibModal.open({
       animation: true,
       templateUrl: 'views/modal/warning-modal.html',
@@ -123,12 +110,25 @@ angular.module('mmtUiApp')
         items: function() {
           return {
             title: 'Warning!',
-            message: 'Are you sure do you want to delete counterparty [' + counterparty.name + '] and all his loans ?',
+            message: 'Are you sure do you want to delete loan with amount ' + loanAmountString + ' for counterparty ' + loan.counterparty.name + '?',
             onYesCallback: deleteFunction
           };
         },
       }
     });
+  };
+
+  $scope.toggleActivation = function(loan) {
+    var isActive = loan.active;
+    loan.active = !isActive;
+    LoansFactory.updateLoan(loan).then(
+      function success(response) {
+
+      }, function error(response) {
+        loan.active = isActive;
+        console.error('Error on toggle loan activation! MESSAGE: ' + JSON.stringify(response))
+      }
+    );
   };
 
   // Sort options
