@@ -9,7 +9,7 @@
  */
 angular.module('mmtUiApp')
   .controller('AddLoanCtrl', function ($scope, $q, $rootScope, $http, $location, $cookieStore, DateTimeService, CurrencyUtilFactory,
-      LoansFactory, AlertService) {
+      LoansFactory, CounterpartyFactory, AlertService) {
 
   if (!$rootScope.authenticated) {
     $location.path('/login');
@@ -43,7 +43,7 @@ angular.module('mmtUiApp')
   $scope.initData = function() {
     var serverRequestArray = [];
     serverRequestArray.push(CurrencyUtilFactory.getDefaultCurrency());
-    serverRequestArray.push(LoansFactory.getCounterpartyList());
+    serverRequestArray.push(CounterpartyFactory.getCounterpartyList());
 
     $scope.data = {};
     $scope.data.counterpartyList = [];
@@ -80,6 +80,7 @@ angular.module('mmtUiApp')
       LoansFactory.addLoan($scope.loan).then(
         function success(response) {
           $scope.loading = false;
+          $location.path('/counterparty_list');
         },
         function error(response) {
           AlertService.displaySimpleAlert('Error', 'Error while adding Loan!');
@@ -90,7 +91,7 @@ angular.module('mmtUiApp')
 
     if ($scope.isNewCounterparty) {
       $scope.loan.counterparty.id = null;
-      LoansFactory.addCounterparty($scope.loan.counterparty).then(
+      CounterpartyFactory.addCounterparty($scope.loan.counterparty).then(
         function success(responseCounterparty) {
           $scope.loan.counterparty = responseCounterparty;
           addLoanRequest();

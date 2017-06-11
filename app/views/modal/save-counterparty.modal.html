@@ -1,0 +1,37 @@
+<div class="source-list-modal">
+  <div class="modal-header">
+    <h3 class="modal-title">
+      <span class="glyphicon glyphicon-user"></span> SAVE COUNTERPARTY
+    </h3>
+    <hr>
+
+    <form class="form-horizontal" role="form" ng-submit="saveCounterparty()">
+      <div class="form-group">
+        <label class="control-label col-sm-3" for="counterpartyName">
+          Counterparty name:
+        </label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="counterpartyName" placeholder="Counterparty name ..."
+                 ng-model="counterparty.name" required >
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-3" for="counterpartyEmail">Counterparty email:</label>
+        <div class="col-sm-9">
+          <input type="email" class="form-control" id="counterpartyEmail" placeholder="Counterparty email ..."
+                 ng-model="counterparty.email">
+        </div>
+      </div>
+
+      <hr>
+      <div class="controls">
+        <button style="left-margin:3px;" class="btn btn-primary" type="submit">
+          <span class="glyphicon glyphicon-floppy-disk"></span> SAVE
+        </button>
+        <button class="btn btn-default" type="button" ng-click="cancel()">
+          <span class="glyphicon glyphicon-ban-circle"></span> CANCEL
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

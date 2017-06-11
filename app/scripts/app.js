@@ -138,6 +138,11 @@ var app = angular.module('mmtUiApp', [
         controller: 'AddLoanCtrl',
         controllerAs: 'add_loan'
       })
+      .when('/counterparty_list', {
+        templateUrl: 'views/loans/counterparty_list.html',
+        controller: 'CounterpartyListCtrl',
+        controllerAs: 'counterparty_list'
+      })
       .when('/user/renew_forgot_password/:code', {
         templateUrl: 'views/user/renew_forgot_password.html',
         controller: 'RenewForgotPasswordCtrl',
