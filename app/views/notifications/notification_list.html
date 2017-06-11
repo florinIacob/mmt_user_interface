@@ -1,0 +1,35 @@
+<div class="container sign-up-container">
+  <h3 style="text-align:center;"><img src="images/notifications.svg" width="90px"> MY NOTIFICATIONS</h3>
+  <br/>
+  <form class="form-horizontal" role="form" ng-submit="submit()" ng-show="loading == false">
+
+    <div ng-repeat="notification in notificationList" ng-if="!notification.seen"
+         class="panel panel-{{getPanelClass(notification.priority)}}">
+      <div class="panel-heading form-horizontal">
+        <div class="form-group" style="margin-bottom: 0px;">
+          <div class="col-md-8">
+            <label style="float: none;">{{notification.message}}</label>
+          </div>
+          <div class="col-md-3">
+            <label style="float: none;">{{notification.creationDate | date:'MMM dd, yyyy hh:mm'}}</label>
+          </div>
+          <div class="col-md-1 text-right">
+            <span class="glyphicon glyphicon-remove-sign" ng-click="markAsSeen($index)"
+                  style="float: none; cursor: pointer; cursor: hand;"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div ng-if="notificationList.length == 0" class="panel panel-default">
+      <div class="panel-heading form-horizontal">
+        <div class="form-group" style="margin-bottom: 0px;">
+          <div class="col-md-12 text-center">
+            <i><label style="float: none;">There are no new notifications!</label></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </form>
+  <loading-page width="150px" message="Processing ..." ng-show="loading == true"></loading-page>
+</div>

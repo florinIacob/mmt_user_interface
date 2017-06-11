@@ -158,6 +158,11 @@ var app = angular.module('mmtUiApp', [
         controller: 'ActivationCtrl',
         controllerAs: 'activation'
       })
+      .when('/notifications', {
+        templateUrl: 'views/notifications/notification_list.html',
+        controller: 'NotificationListCtrl',
+        controllerAs: 'notification_list'
+      })
 			.otherwise({
 				redirectTo: '/'
 			});

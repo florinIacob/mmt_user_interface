@@ -1,57 +1,43 @@
 <div class="container sign-up-container">
   <h3 style="text-align:center;"><img src="images/expense_categories.svg"> EXPENSE CATEGORIES</h3>
-  <br/>
-  <form class="form-horizontal" role="form" ng-submit="submit()">
-
-  <br>
-
-    <div class="form-group">
-      <label class="control-label col-sm-2" for="date">Colour:</label>
-      <div class="col-sm-3">
-        <select class="form-control" ng-model="newCategory.colour" ng-style="{'background-color': colours_map[newCategory.colour]}">
-          <option selected style="background-color: white" class="light" value="light">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
-          <option style="background-color: cornsilk" class="stable" value="stable">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
-          <option style="background-color: DodgerBlue " class="positive" value="positive">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
-          <option style="background-color: aqua" class="calm" value="calm">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
-          <option style="background-color: YellowGreen" class="balanced" value="balanced">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
-          <option style="background-color: Gold" class="energized" value="energized">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
-          <option style="background-color: Crimson " class="assertive" value="assertive">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
-          <option style="background-color: BlueViolet " class="royal" value="royal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
-          <option style="background-color: black" class="dark" value="dark">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
-        </select>
-      </div>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" placeholder="New category name" ng-model="newCategory.name">
-      </div>
-      <div class="col-sm-3">
-        <button type="submit" class="btn accountant-btn" ng-click="addCategory()">
-          <span class="glyphicon glyphicon-plus"></span> Add category
-        </button>
-      </div>
-    </div>
-  </label>
-  <br>
-  </form>
 </div>
 
 <br>
 <div>
+  <form class="form-horizontal" role="form">
+    <div class="form-group">
+      <div class="col-sm-9">
+      </div>
+      <div class="col-sm-3">
+        <button type="submit" class="btn accountant-btn" ng-click="saveCategory()">
+          <span class="glyphicon glyphicon-plus"></span> Add category
+        </button>
+      </div>
+    </div>
+    </label>
+  </form>
   <table class="table table-bordered table-hover" ng-show="loading == false">
     <thead class="grey-bg">
     <tr>
       <th>Category Name</th>
       <!--<th>Colour Name</th>-->
+      <th>Amount limit</th>
       <th>Colour</th>
-      <th></th>
+      <th style="width: 80px;"></th>
     </tr>
     </thead>
     <tbody>
     <tr ng-repeat="category in categories">
       <td>{{ category.name }}</td>
-      <!--<td>{{ category.colour }}</td>-->
-      <td><pre style="background-color:{{colours_map[category.colour]}};height:22px;">      </pre></td>
+      <td class="text-right">
+        {{ category.threshold.toFixed(2) }} <span class="text-primary">{{defaultCurrency}}</span>&nbsp;&nbsp;&nbsp;
+      </td>
       <td>
-        <span class="glyphicon glyphicon-pencil control-icon-green" bs-tooltip title="Edit category!" ng-click="editCategory(category)"></span>
+        <pre style="background-color:{{colours_map[category.colour]}};height:22px;">      </pre>
+      </td>
+      <td class="text-right">
+        <span class="glyphicon glyphicon-pencil control-icon-green" bs-tooltip title="Edit category!"
+              ng-click="saveCategory(category)"></span>
         <span class="glyphicon glyphicon-trash control-icon-red" style="float:right;" bs-tooltip title="Delete category!"
               ng-click="deleteCategory(category)"></span></td>
     </tr>

@@ -98,7 +98,15 @@
             <ul class="nav navbar-nav navbar-right">
               <li ng-if="authenticated === false"><a href="#/sign_up"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
               <li ng-if="authenticated === false"><a href="#/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-              <li ng-if="authenticated === true"><a href="#/profile"><span class="glyphicon glyphicon-user"></span> {{username}}</a></li>
+              <li class="dropdown" ng-if="authenticated === true">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="">
+                  <span class="glyphicon glyphicon-user"> {{username}}<span class="caret"></span></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="#/profile">My profile</a></li>
+                  <li><a href="#/notifications">My notifications</a></li>
+                </ul>
+              </li>
               <li ng-if="authenticated === true"><a href="#/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
             </ul>
           </div>
@@ -171,6 +179,7 @@
         <script src="scripts/services/chart/ChartUtilFactory.js"></script>
         <script src="scripts/services/loans/LoansFactory.js"></script>
         <script src="scripts/services/loans/CounterpartyFactory.js"></script>
+        <script src="scripts/services/notifications/NotificationsFactory.js"></script>
         <script src="scripts/services/category_service.js"></script>
         <script src="scripts/services/CurrencyUtilFactory.js"></script>
         <script src="scripts/services/date_time_service.js"></script>
@@ -199,6 +208,7 @@
         <script src="scripts/controllers/loans/add_loan.ctrl.js"></script>
         <script src="scripts/controllers/loans/counterparty_list.ctrl.js"></script>
         <script src="scripts/controllers/loans/loan_list.ctrl.js"></script>
+        <script src="scripts/controllers/notifications/notification_list.ctrl.js"></script>
         <script src="scripts/controllers/modal/warning_popup.js"></script>
         <script src="scripts/controllers/modal/change_password_popup.js"></script>
         <script src="scripts/controllers/modal/forgot_password_popup.js"></script>

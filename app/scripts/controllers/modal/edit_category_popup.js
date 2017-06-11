@@ -8,36 +8,43 @@
  * Controller of the mmtUiApp
  */
 angular.module('mmtUiApp')
-  .controller('EditCategoryPopupController', ['$scope', '$http','$cookieStore', 'CategoryService', 'DateTimeService',
+  .controller('EditCategoryPopupController', ['$scope', '$q','$cookieStore', 'CategoryService', 'DateTimeService',
                        '$uibModal', '$uibModalInstance', 'ModalTemplateService', 'host_name', 'items',
-        function ($scope, $http, $cookieStore, CategoryService, DateTimeService, $uibModal, $uibModalInstance,
+        function ($scope, $q, $cookieStore, CategoryService, DateTimeService, $uibModal, $uibModalInstance,
                   ModalTemplateService, host_name, items) {
 
    $scope.loading = false;
+   $scope.defaultCurrency = items.defaultCurrency;
    $scope.category = items.category;
+
+   $scope.isEditMode = true;
+   if (!$scope.category) {
+    $scope.isEditMode = false;
+    $scope.newCategory = {
+        name: null,
+        colour:'stable',
+        threshold: 0
+    };
+   }
 
    // submit button - save the category
    $scope.submit = function() {
        var submitted_category = $scope.category;
 
-       // prepare post request
-       var req = {
-          method: 'POST',
-          url: host_name + '/category/update/' + submitted_category.id,
-          headers: {
-            'Content-Type': "application/json",
-            'Authorization': $cookieStore.get('mmtlt')
-          },
-          data: JSON.stringify(submitted_category)
-       }
+        var serverRequestArray = [];
+        if ($scope.isEditMode) {
+          serverRequestArray.push(CategoryService.updateCategory(submitted_category));
+        } else {
+          serverRequestArray.push(CategoryService.addNewCategory(submitted_category));
+        }
 
        $scope.loading = true;
        // make server request
-       $http(req).then(
+       $q.all(serverRequestArray).then(
          // SUCCESS callback
-         function(response){
+         function(responseArray){
            items.afterEditCallback();
-           $uibModalInstance.dismiss('cancel');
+           $uibModalInstance.close(serverRequestArray[0]);
            $scope.loading = false;
          },
          // ERROR callback
@@ -50,7 +57,7 @@ angular.module('mmtUiApp')
                items: function() {
                  return {
                    title: 'Information!',
-                   message: 'Category not saved!\n' + JSON.stringify(response.data),
+                   message: 'Error saving category!\n' + JSON.stringify(response.data),
                    onYesCallback: null
                  };
                },

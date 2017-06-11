@@ -7,39 +7,41 @@
  * Controller of the mmtUiApp
  */
 angular.module('mmtUiApp')
-  .controller('ExpenseCategoriesCtrl', function ($scope, $rootScope, $http, $location, $cookieStore, CategoryService, DateTimeService,
-       $route, $uibModal, ModalTemplateService, host_name) {
+  .controller('ExpenseCategoriesCtrl', function ($scope, $rootScope, $q, $location, $cookieStore, CategoryService, DateTimeService,
+       $route, $uibModal, ModalTemplateService, host_name, CurrencyUtilFactory) {
 
   if (!$rootScope.authenticated) {
     $location.path('/login');
   }
 
-  $scope.newCategory = {
-      name: undefined,
-      colour:'stable'
-  };
-  $scope.loading = true;
-  $scope.categories = [];
+  /**
+   * Initialize data for Controller
+   */
+  $scope.initData = function() {
+    var serverRequestArray = [];
+    serverRequestArray.push(CurrencyUtilFactory.getDefaultCurrency());
+    serverRequestArray.push(CategoryService.getCategories());
 
-  $scope.categories = CategoryService.getCategories().then(
-    function successCallback(response) {
-        $scope.categories = response.data;
-        $scope.loading = false;
-     }, function errorCallback(response) {
-       openInfoPopup('WARNING', 'Cannot access categories!');
-       $scope.loading = false;
-     });
+    $scope.loading = true;
+    $scope.categories = [];
 
-  $scope.addCategory = function() {
-    CategoryService.addCategory($scope.newCategory, $scope.categories);
-    $scope.newCategory = {
-        name: undefined,
-        colour:'stable'
-    };
+    $q.all(serverRequestArray).then(
+      function successCallback(responseArray) {
+          $scope.defaultCurrency = responseArray[0].data.value;
+          $scope.categories = responseArray[1].data;
+          $scope.loading = false;
+       }, function errorCallback(response) {
+         openInfoPopup('WARNING', 'Cannot access categories!');
+         $scope.loading = false;
+       });
   }
 
-  $scope.deleteCategory = function(category) {
+  $scope.initData();
 
+  /**
+   * Delete a category
+   */
+  $scope.deleteCategory = function(category) {
     function _onDeleteCallback() {
         CategoryService.deleteCategory(category, $scope.categories);
     }
@@ -60,10 +62,12 @@ angular.module('mmtUiApp')
           },
         }
       });
-
   }
 
-  $scope.editCategory = function(category) {
+  /**
+   * Add / Update a category
+   */
+  $scope.saveCategory = function(category) {
     var refreshValues = function() {
        $route.reload();
     }
@@ -77,7 +81,8 @@ angular.module('mmtUiApp')
       resolve: {
         items: function() {
           return {
-            category: JSON.parse(JSON.stringify(category)),
+            defaultCurrency: $scope.defaultCurrency,
+            category: category ? JSON.parse(JSON.stringify(category)) : null,
             afterEditCallback: refreshValues
           };
         },

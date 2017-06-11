@@ -1,4 +1,63 @@
-<div class="source-list-modal" style="height:100%;background-color:#eaeae1;">
+<div class="source-list-modal">
+  <div class="modal-header">
+    <h3 class="modal-title">
+      <span class="glyphicon glyphicon-flag"></span> SAVE EXPENSE CATEGORY
+    </h3>
+    <hr>
+
+    <form ng-show="loading == false" class="form-horizontal" role="form" ng-submit="submit()">
+      <div class="form-group">
+        <label class="control-label col-sm-3" for="categoryName">
+          Category name:
+        </label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="categoryName" placeholder="Category name ..."
+                 ng-model="category.name" required >
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-3" for="categoryColor">Color:</label>
+        <div class="col-sm-9">
+          <select class="form-control" ng-model="category.colour" ng-style="{'background-color': colours_map[category.colour]}" id="categoryColor">
+            <option selected style="background-color: white" class="light" value="light">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+            <option style="background-color: cornsilk" class="stable" value="stable">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+            <option style="background-color: DodgerBlue " class="positive" value="positive">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+            <option style="background-color: aqua" class="calm" value="calm">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+            <option style="background-color: YellowGreen" class="balanced" value="balanced">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+            <option style="background-color: Gold" class="energized" value="energized">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+            <option style="background-color: Crimson " class="assertive" value="assertive">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+            <option style="background-color: BlueViolet " class="royal" value="royal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+            <option style="background-color: black" class="dark" value="dark">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-3" for="categoryThreshold">
+          Monthly limit:
+        </label>
+        <div class="col-sm-6">
+          <input type="number" step="any" class="form-control" id="categoryThreshold" placeholder="Category monthly limit ..."
+                 ng-model="category.threshold" required >
+        </div>
+        <div class="col-sm-3">
+          <label class="control-label">{{ defaultCurrency }}</label>
+        </div>
+      </div>
+
+      <hr>
+      <div class="controls">
+        <button style="left-margin:3px;" class="btn btn-primary" type="submit">
+          <span class="glyphicon glyphicon-floppy-disk"></span> SAVE
+        </button>
+        <button class="btn btn-default" type="button" ng-click="cancel()">
+          <span class="glyphicon glyphicon-ban-circle"></span> CANCEL
+        </button>
+      </div>
+    </form>
+    <loading-page width="150px" message="Processing ..." ng-show="loading == true"></loading-page>
+  </div>
+</div>
+<!--<div class="source-list-modal" style="height:100%;background-color:#eaeae1;">
   <div class="container sign-up-container">
     <h2 style="text-align:center;"><img src="images/expense_categories.svg"> EDIT CATEGORY</h2>
     <form class="form-horizontal" role="form" ng-submit="submit()" ng-show="loading == false">
@@ -7,7 +66,7 @@
 
       <div class="form-group">
         <label class="control-label col-sm-1">Colour:</label>
-        <div class="col-sm-3">
+        <div class="col-sm-2">
           <select class="form-control" ng-model="category.colour" ng-style="{'background-color': colours_map[category.colour]}">
             <option selected style="background-color: white" class="light" value="light">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
             <option style="background-color: cornsilk" class="stable" value="stable">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
@@ -23,15 +82,25 @@
         <div class="col-sm-3">
           <input type="text" class="form-control" placeholder="New category name" ng-model="category.name">
         </div>
-        <div class="col-sm-2">
+        <div class="col-sm-3">
+          <input type="number" step="any" class="form-control" placeholder="Monthly category limit ..." ng-model="category.threshold">
+        </div>
+        <div class="col-sm-1">
+          EUR
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-3">
           <button type="button" class="btn btn-success submit-btn" ng-click="submit()">
             <span class="glyphicon glyphicon-pencil"></span> Save
           </button>
         </div>
-        <div class="col-sm-2">
+        <div class="col-sm-3">
           <button type="button" class="btn btn-danger submit-btn" ng-click="cancel()">
             <span class="glyphicon glyphicon-remove"></span> Cancel
           </button>
+        </div>
+        <div class="col-sm-6">
         </div>
       </div>
       </label>
@@ -39,4 +108,4 @@
     </form>
     <loading-page width="150px" message="Processing ..." ng-show="loading == true"></loading-page>
   </div>
-</div>
+</div>-->

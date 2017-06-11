@@ -129,6 +129,58 @@ app.factory('CategoryService', function($http, $q, $cookieStore, $route, $uibMod
       });
   }
 
+    /**
+    * Function used for adding a new category
+    */
+    service.addNewCategory = function(categoryEntity) {
+      var deferred = $q.defer();
+
+      $http({
+          method: 'POST',
+          url: host_name + '/category/add',
+          headers: {
+            'Content-Type': "application/json",
+            'Authorization': $cookieStore.get('mmtlt')
+          },
+          data: JSON.stringify(categoryEntity)
+      }).then(
+        function success(response) {
+          deferred.resolve(response.data);
+        },
+        function error(response) {
+          console.error(' --- POST ERROR: ' + host_name + '/category/add WITH ERROR: +++' + JSON.stringify(response.data) + '+++');
+          deferred.reject(response);
+        }
+      );
+      return deferred.promise;
+    };
+
+    /**
+    * Function used for updating a Category
+    */
+    service.updateCategory = function(categoryEntity) {
+      var deferred = $q.defer();
+
+      $http({
+          method: 'POST',
+          url: host_name + '/category/update/' + categoryEntity.id,
+          headers: {
+            'Content-Type': "application/json",
+            'Authorization': $cookieStore.get('mmtlt')
+          },
+          data: JSON.stringify(categoryEntity)
+      }).then(
+        function success(response) {
+          deferred.resolve(response.data);
+        },
+        function error(response) {
+          console.error(' --- PUT ERROR: ' + host_name + '/category/update/' + categoryEntity.id + ' WITH ERROR: +++' + JSON.stringify(response.data) + '+++');
+          deferred.reject(response);
+        }
+      );
+      return deferred.promise;
+    };
+
   // Extracts an array of strings that contains the category names from the received category array
   var extractNames = function(categoriesArray, categoryNames) {
     var i;
