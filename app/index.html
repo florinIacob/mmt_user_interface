@@ -83,7 +83,7 @@
                   <span class="glyphicon glyphicon-tags">
                     Loans
                     <span class="caret"></span>
-                    <span class="badge" style="font-size: 8px; background-color: green; position: absolute; top: 0px; left: 105px;">
+                    <span class="badge" style="font-size: 9px; padding-top: 1px; background-color: green; position: absolute; top: -10px; right: -25px;">
                       NEW
                     </span>
                   </span>
@@ -100,11 +100,22 @@
               <li ng-if="authenticated === false"><a href="#/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
               <li class="dropdown" ng-if="authenticated === true">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="">
-                  <span class="glyphicon glyphicon-user"> {{username}}<span class="caret"></span></span>
+                  <span class="glyphicon glyphicon-user">
+                    {{username}}
+                    <span class="caret"></span>
+                    <span ng-if="totalNotifications && totalNotifications != 0" class="badge" style="font-size: 12px; background-color: #e33c3c; padding-top: 1px; position: absolute; top: -10px; right: -15px;">
+                      {{totalNotifications}}
+                    </span>
+                  </span>
                 </a>
                 <ul class="dropdown-menu">
                   <li><a href="#/profile">My profile</a></li>
-                  <li><a href="#/notifications">My notifications</a></li>
+                  <li><a href="#/notifications">
+                    My notifications
+                    <span ng-if="totalNotifications && totalNotifications != 0" class="badge" style="font-size: 12px; background-color: #e33c3c;">
+                      {{totalNotifications}}
+                    </span>
+                  </a></li>
                 </ul>
               </li>
               <li ng-if="authenticated === true"><a href="#/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>

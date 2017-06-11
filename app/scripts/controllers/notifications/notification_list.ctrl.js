@@ -67,6 +67,7 @@ angular.module('mmtUiApp')
       function success(response) {
         $scope.notificationList[index].seen = true;
         $scope.notificationList.splice(index, 1);
+        $rootScope.totalNotifications--;
       }
     );
   };

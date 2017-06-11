@@ -19,7 +19,7 @@ var app = angular.module('mmtUiApp', [
 		'chart.js',
 		'angularjs-dropdown-multiselect'
 	])
-	.run(function($rootScope, $http, $cookieStore, $window, host_name) {
+	.run(function($rootScope, $http, $cookieStore, $window, host_name, NotificationsFactory) {
       $rootScope.authenticated = $cookieStore.get('mmtlt') !== undefined;
       $rootScope.username = $cookieStore.get('username');
       $rootScope.LANGUAGE = 'ENG';
@@ -57,6 +57,18 @@ var app = angular.module('mmtUiApp', [
               $window.open(host_name, "_self");
               console.error(" - Server contact attempt ERROR: " + JSON.stringify(response));
           });
+
+      // notifications for user
+      NotificationsFactory.findAll().then(
+        function success(notificationArray) {
+          $rootScope.totalNotifications = 0;
+          angular.forEach(notificationArray, function(notificationItem, index) {
+            if (!notificationItem.seen) {
+              $rootScope.totalNotifications++;
+            }
+          });
+        }
+      );
 
   })
 	.config(function ($routeProvider, $httpProvider, ChartJsProvider) {

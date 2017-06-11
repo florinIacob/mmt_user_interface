@@ -110,7 +110,10 @@ angular.module('mmtUiApp')
         function success(response){
           // SUCCESS: change the path
           $scope.loading = false;
-          $location.path('/expenses_history')
+          if (response.data && response.data.notification) {
+            $rootScope.totalNotifications++;
+          }
+          $location.path('/expenses_history');
         },
         function error(response){
           $uibModal.open({
