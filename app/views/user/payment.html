@@ -1,0 +1,32 @@
+<div class="container sign-up-container">
+  <h3 style="text-align:center;"><img src="images/sign-up.png" width="90px"> PAYMENT</h3>
+  <br/>
+  <form class="form-horizontal" role="form" ng-show="loading == false">
+
+    <div ng-if="messageForPurchase" class="form-group">
+      <div class="col-md-12">
+        <label>Thank you for supporting The Accountant!</label>
+      </div>
+      <div class="col-md-12">
+        <label>We hope you enjoy using our application!</label>
+      </div>
+      <div class="col-md-12 text-right">
+        <label>Kind regards, The Accountant Team</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-offset-3 col-sm-3">
+        <button id="customButton" type="submit" class="btn accountant-btn">
+          <span class="glyphicon glyphicon-credit-card"></span> Pay with card
+        </button>
+      </div>
+      <div class="col-sm-6"></div>
+    </div>
+  </form>
+
+  <!--<button id="customButton">Purchase</button>-->
+
+
+  <loading-page width="150px" message="Processing ..." ng-show="loading == true"></loading-page>
+</div>

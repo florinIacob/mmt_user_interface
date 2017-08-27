@@ -116,6 +116,7 @@
                       {{totalNotifications}}
                     </span>
                   </a></li>
+                  <li><a href="#/payment">Payment</a></li>
                 </ul>
               </li>
               <li ng-if="authenticated === true"><a href="#/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
@@ -162,6 +163,7 @@
        ga('send', 'pageview');
     </script>
 
+    <script src="https://checkout.stripe.com/checkout.js"></script>
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
@@ -178,6 +180,7 @@
     <script src="bower_components/angular-chart.js/dist/angular-chart.js"></script>
     <script src="bower_components/lodash/dist/lodash.compat.js"></script>
     <script src="bower_components/angularjs-dropdown-multiselect/src/angularjs-dropdown-multiselect.js"></script>
+    <script src="bower_components/angular-stripe/release/angular-stripe.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -196,6 +199,7 @@
         <script src="scripts/services/date_time_service.js"></script>
         <script src="scripts/services/host_name.js"></script>
         <script src="scripts/services/modal_template_service.js"></script>
+        <script src="scripts/services/payment/payment.service.js"></script>
 
         <script src="scripts/directives/bs_tooltip.js"></script>
         <script src="scripts/directives/loading_page.js"></script>
@@ -209,6 +213,7 @@
         <script src="scripts/controllers/user/profile.js"></script>
         <script src="scripts/controllers/user/renew_forgot_password.js"></script>
         <script src="scripts/controllers/user/activation.js"></script>
+        <script src="scripts/controllers/user/payment.js"></script>
         <script src="scripts/controllers/expense/add_expenses.ctrl.js"></script>
         <script src="scripts/controllers/expense/expenses_history.js"></script>
         <script src="scripts/controllers/expense/expenses_chart.js"></script>

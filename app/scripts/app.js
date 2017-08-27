@@ -17,7 +17,8 @@ var app = angular.module('mmtUiApp', [
 		'ngTouch',
 		'ui.bootstrap',
 		'chart.js',
-		'angularjs-dropdown-multiselect'
+		'angularjs-dropdown-multiselect',
+		'angular-stripe'
 	])
 	.run(function($rootScope, $http, $cookieStore, $window, host_name, NotificationsFactory) {
       $rootScope.authenticated = $cookieStore.get('mmtlt') !== undefined;
@@ -71,7 +72,7 @@ var app = angular.module('mmtUiApp', [
       );
 
   })
-	.config(function ($routeProvider, $httpProvider, ChartJsProvider) {
+	.config(function ($routeProvider, $httpProvider, ChartJsProvider, stripeProvider) {
 		$routeProvider
 			.when('/', {
 				templateUrl: 'views/main.html',
@@ -170,6 +171,11 @@ var app = angular.module('mmtUiApp', [
         controller: 'ActivationCtrl',
         controllerAs: 'activation'
       })
+      .when('/payment', {
+        templateUrl: 'views/user/payment.html',
+        controller: 'PaymentCtrl',
+        controllerAs: 'payment'
+      })
       .when('/notifications', {
         templateUrl: 'views/notifications/notification_list.html',
         controller: 'NotificationListCtrl',
@@ -182,4 +188,6 @@ var app = angular.module('mmtUiApp', [
 			$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
       ChartJsProvider.setOptions({ colors : [ '#46BFBD', '#803690', '#4D5360', '#00ADF9', '#DCDCDC', '#FDB45C', '#949FB1'] });
+
+      stripeProvider.setPublishableKey('pk_test_dXg1ag4chbeaGcGtpHyt1BkD');
 	});
