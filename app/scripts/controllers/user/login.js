@@ -2,7 +2,7 @@
 
 angular.module('mmtUiApp')
   .controller('LoginCtrl', function($rootScope, $http, $location, $route, $cookieStore, $cookies,
-      $uibModal, ModalTemplateService, host_name) {
+      $uibModal, ModalTemplateService, host_name, InitService) {
 
 			var self = this;
       self.loading = false;
@@ -53,6 +53,7 @@ angular.module('mmtUiApp')
 						$location.path("/expenses_history");
 						$rootScope.authenticated = true;
 						$rootScope.username = $cookieStore.get('username');
+						InitService.init();
 					} else {
 
             $uibModal.open({

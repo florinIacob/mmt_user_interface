@@ -116,7 +116,11 @@
                       {{totalNotifications}}
                     </span>
                   </a></li>
-                  <li><a href="#/payment">Payment</a></li>
+                  <li><a href="#/payment">
+                    Payment&nbsp;&nbsp;
+                    <span class="glyphicon glyphicon-ok-circle text-success" ng-if="licencePaymentApproved === true"></span>
+                    <span class="glyphicon glyphicon-info-sign text-danger" ng-if="licencePaymentApproved === false"></span>
+                  </a></li>
                 </ul>
               </li>
               <li ng-if="authenticated === true"><a href="#/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
@@ -176,17 +180,18 @@
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/angular-stripe/release/angular-stripe.js"></script>
     <script src="bower_components/Chart.js/Chart.js"></script>
     <script src="bower_components/angular-chart.js/dist/angular-chart.js"></script>
     <script src="bower_components/lodash/dist/lodash.compat.js"></script>
     <script src="bower_components/angularjs-dropdown-multiselect/src/angularjs-dropdown-multiselect.js"></script>
-    <script src="bower_components/angular-stripe/release/angular-stripe.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
 
+        <script src="scripts/services/_common/init/InitService.js"></script>
         <script src="scripts/services/_common/alert/AlertService.js"></script>
         <script src="scripts/services/expense/ExpenseUtilFactory.js"></script>
         <script src="scripts/services/income/IncomeUtilFactory.js"></script>

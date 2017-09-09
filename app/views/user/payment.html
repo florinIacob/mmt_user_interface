@@ -1,27 +1,80 @@
 <div class="container sign-up-container">
-  <h3 style="text-align:center;"><img src="images/sign-up.png" width="90px"> PAYMENT</h3>
+  <h3 style="text-align:center;"><img src="images/payment_card2.svg" width="90px"> PAYMENT</h3>
   <br/>
   <form class="form-horizontal" role="form" ng-show="loading == false">
 
-    <div ng-if="messageForPurchase" class="form-group">
-      <div class="col-md-12">
-        <label>Thank you for supporting The Accountant!</label>
-      </div>
-      <div class="col-md-12">
-        <label>We hope you enjoy using our application!</label>
-      </div>
-      <div class="col-md-12 text-right">
-        <label>Kind regards, The Accountant Team</label>
+    <div class="form-group">
+      <div class="col-sm-offset-11 col-sm-1">&nbsp;</div>
+      <div class="col-sm-offset-11 col-sm-1">&nbsp;</div>
+    </div>
+
+    <div ng-if="paymentApproved === false && rejectMessage" class="panel panel-danger">
+      <div class="panel-heading form-horizontal">
+        <div class="form-group" style="margin-bottom: 0px;">
+          <div class="col-md-12">
+            <label style="float: none;">{{rejectMessage}}</label>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="form-group">
-      <div class="col-sm-offset-3 col-sm-3">
+    <div ng-if="paymentApproved === false" class="form-group">
+      <div class="col-md-12">
+        <label>Hi {{username}},</label>
+      </div>
+      <div class="col-sm-offset-11 col-sm-1">&nbsp;</div>
+      <div class="col-md-12">
+        <label>
+          As you may know our application is free, but in order to cover the costs of the application infrastructure, and for constant improvement
+          of the application, The Accountant needs your support.
+        </label>
+      </div>
+      <div class="col-md-12">
+        <label>
+          You can contribute for application development buying the $ 4.99 licence. Thank you!
+        </label>
+      </div>
+      <div class="col-sm-offset-11 col-sm-1">&nbsp;</div>
+      <div class="col-md-12">
+        <label>Kind regards,</label>
+      </div>
+      <div class="col-md-12">
+        <label><img src="images/logo.svg" height="18" width="18"> The Accountant Team</label>
+      </div>
+    </div>
+
+    <div ng-if="paymentApproved === true" class="form-group">
+      <div class="col-md-12">
+        <label>Hi {{username}},</label>
+      </div>
+      <div class="col-sm-offset-11 col-sm-1">&nbsp;</div>
+      <div class="col-md-12">
+        <label>
+          You have payed the $ 4.99 application license. Thank you for supporting The Accountant!
+        </label>
+      </div>
+      <div class="col-md-12">
+        <label>
+          We hope you enjoy using our application. For any inconvenience you can contact us at <i><a href="mailto:feedback.theacctnt@gmail.com">feedback.theacctnt@gmail.com</a>.</i>
+        </label>
+      </div>
+      <div class="col-sm-offset-11 col-sm-1">&nbsp;</div>
+      <div class="col-md-12">
+        <label>Kind regards,</label>
+      </div>
+      <div class="col-md-12">
+        <label><img src="images/logo.svg" height="18" width="18"> The Accountant Team</label>
+      </div>
+    </div>
+
+    <div class="col-sm-offset-11 col-sm-1">&nbsp;</div>
+
+    <div class="form-group" ng-hide="paymentApproved === true">
+      <div class="col-sm-offset-8 col-sm-3 col-sm-pull-1">
         <button id="customButton" type="submit" class="btn accountant-btn">
           <span class="glyphicon glyphicon-credit-card"></span> Pay with card
         </button>
       </div>
-      <div class="col-sm-6"></div>
     </div>
   </form>
 

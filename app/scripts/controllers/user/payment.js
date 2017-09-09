@@ -9,10 +9,37 @@
  */
 angular.module('mmtUiApp')
   .controller('PaymentCtrl', function ($scope, $http, $location, $cookieStore, $uibModal, PaymentService, CurrencyUtilFactory,
-          DateTimeService, host_name, stripe, AlertService) {
+          DateTimeService, host_name, stripe, AlertService, $rootScope) {
 
   $scope.loading = false;
+  $scope.paymentApproved = false;
+  $scope.rejectMessage = null;
 
+  /**
+   * Initialize controller data
+   */
+  $scope.initData = function() {
+    $scope.loading = true;
+    PaymentService.getPaymentStatusForUser("user_license").then(
+      function success(response) {
+        $scope.paymentApproved = response.paymentApproved;
+        $rootScope.licencePaymentApproved = response.paymentApproved;
+        $scope.rejectMessage = response.description;
+        $scope.loading = false;
+
+      }, function error(errMsg) {
+        AlertService.displaySimpleAlert('Error', "Error getting payment status!");
+        console.error(" ERROR getting payment status! Response: " + JSON.stringify(response));
+        $scope.loading = false;
+      }
+    );
+  };
+
+  $scope.initData();
+
+  /**
+   * Configure Stripe handler
+   */
   var handler = StripeCheckout.configure({
     key: 'pk_test_dXg1ag4chbeaGcGtpHyt1BkD',
     image: 'images/logo.svg',
@@ -31,7 +58,9 @@ angular.module('mmtUiApp')
       };
       PaymentService.chargeUserLicense(chargeDTO).then(
         function success(response) {
-          $scope.messageForPurchase = true;
+          $scope.paymentApproved = response.paymentApproved;
+          $rootScope.licencePaymentApproved = response.paymentApproved;
+          $scope.rejectMessage = response.description;
           $scope.loading = false;
         }, function error(response) {
           var errMsg = 'Error on charging your credit card!';
@@ -46,6 +75,9 @@ angular.module('mmtUiApp')
     }
   });
 
+  /**
+   * Configure button to open Stripe payment modal
+   */
   document.getElementById('customButton').addEventListener('click', function(e) {
     // Open Checkout with further options:
     handler.open({
