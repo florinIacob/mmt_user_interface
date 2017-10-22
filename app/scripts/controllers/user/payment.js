@@ -20,7 +20,7 @@ angular.module('mmtUiApp')
    */
   $scope.initData = function() {
     $scope.loading = true;
-    PaymentService.getPaymentStatusForUser("user_license").then(
+    PaymentService.getPaymentStatus("user_license").then(
       function success(response) {
         $scope.paymentApproved = response.paymentApproved;
         $rootScope.licencePaymentApproved = response.paymentApproved;

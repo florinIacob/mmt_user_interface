@@ -23,7 +23,7 @@ app.factory('InitService',
       );
 
       // Check license payment
-      PaymentService.getPaymentStatusForUser("user_license").then(
+      PaymentService.getPaymentStatus("user_license").then(
         function success(response) {
           $rootScope.licencePaymentApproved = response.paymentApproved;
         }

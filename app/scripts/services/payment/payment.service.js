@@ -11,7 +11,7 @@ app.factory('PaymentService', function($q, $http, $cookieStore, host_name) {
 
       $http({
           method: 'POST',
-          url: host_name + '/payment/user_license',
+          url: host_name + '/payments',
           headers: {
             'Content-Type': "application/json",
             'Authorization': $cookieStore.get('mmtlt')
@@ -22,7 +22,7 @@ app.factory('PaymentService', function($q, $http, $cookieStore, host_name) {
           deferred.resolve(response.data);
         },
         function error(response) {
-          console.error(' --- POST ERROR: ' + host_name + '/payment/charge WITH ERROR: +++' + JSON.stringify(response.data) + '+++');
+          console.error(' --- POST ERROR: ' + host_name + '/payments/charge WITH ERROR: +++' + JSON.stringify(response.data) + '+++');
           deferred.reject(response);
         }
       );
@@ -32,12 +32,12 @@ app.factory('PaymentService', function($q, $http, $cookieStore, host_name) {
   /**
       * Request to charge the user
       */
-    service.getPaymentStatusForUser = function(paymentType) {
+    service.getPaymentStatus = function() {
         var deferred = $q.defer();
 
         $http({
             method: 'GET',
-            url: host_name + '/payment/getPaymentStatusForUser/' + paymentType,
+            url: host_name + '/payments/status',
             headers: {
               'Content-Type': "application/json",
               'Authorization': $cookieStore.get('mmtlt')
@@ -47,7 +47,7 @@ app.factory('PaymentService', function($q, $http, $cookieStore, host_name) {
             deferred.resolve(response.data);
           },
           function error(response) {
-            console.error(' --- GET ERROR: ' + host_name + '/payment/getPaymentStatusForUser/' + paymentType + ' WITH ERROR: +++' + JSON.stringify(response.data) + '+++');
+            console.error(' --- GET ERROR: ' + host_name + '/payments/status ' + ' WITH ERROR: +++' + JSON.stringify(response.data) + '+++');
             deferred.reject(response);
           }
         );
