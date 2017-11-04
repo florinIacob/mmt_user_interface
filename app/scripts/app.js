@@ -32,7 +32,7 @@ var app = angular.module('mmtUiApp', [
         } else {
           return false;
         }
-      }
+      };
 
       $rootScope.changeLanguage = function(language) {
         $rootScope.LANGUAGE = language;
@@ -41,14 +41,14 @@ var app = angular.module('mmtUiApp', [
         } else {
           $rootScope.FLAG = 'romania-flag.gif';
         }
-      }
+      };
 
       Date.prototype.formatDate = function(separator) {
         if (!separator) {
           separator = "-";
         }
         return this.getDate() + " " + extractMonthAsString(this.getMonth(), false) + " " + this.getFullYear();
-      }
+      };
 
       // TODO: line to be removed when the HTTPS certificate is ready
       $http.get(host_name).then(

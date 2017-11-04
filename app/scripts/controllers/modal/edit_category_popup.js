@@ -57,7 +57,7 @@ angular.module('mmtUiApp')
                items: function() {
                  return {
                    title: 'Information!',
-                   message: 'Error saving category!\n' + JSON.stringify(response.data),
+                   message: 'Error saving category!\n' + JSON.stringify(response.data.message),
                    onYesCallback: null
                  };
                },

@@ -9,7 +9,7 @@
  */
 angular.module('mmtUiApp')
   .controller('AddLoanCtrl', function ($scope, $q, $rootScope, $http, $location, $cookieStore, DateTimeService, CurrencyUtilFactory,
-      LoansFactory, CounterpartyFactory, AlertService, $routeParams) {
+      LoansFactory, CounterpartyFactory, AlertService, $routeParams, $uibModal, $timeout) {
 
   if (!$rootScope.authenticated) {
     $location.path('/login');
@@ -49,34 +49,58 @@ angular.module('mmtUiApp')
    *
    */
   $scope.initData = function() {
-    var serverRequestArray = [];
-    serverRequestArray.push(CurrencyUtilFactory.getDefaultCurrency());
-    serverRequestArray.push(CounterpartyFactory.getCounterpartyList());
-    if ($scope.isEditMode) {
-      serverRequestArray.push(LoansFactory.findOneById($scope.loanId));
-    }
 
-    $scope.data = {};
-    $scope.data.counterpartyList = [];
+    if ($rootScope.licencePaymentApproved == null) {
+      $timeout($scope.initData, 500);
+    } else {
+      if ($rootScope.licencePaymentApproved === false) {
+        $uibModal.open({
+          animation: true,
+          templateUrl: 'views/modal/function-locked-modal.html',
+          controller: 'FunctionLockedPopupController',
+          backdrop: 'static',
+          keyboard: false,
+          resolve: {
+            items: function () {
+              return {
+                message: 'Loans, Notifications and Category limit are only available for contributors. In order to be able to use this functions you can contribute to the application accessing PAYMENT page. Thank you!',
+                unlockButton: 'Unlock LOANS'
+              };
+            }
+          }
+        });
 
-    $scope.loading = true;
-    $q.all(serverRequestArray).then(
-      function(responseArray){
-        var currency = angular.fromJson(responseArray[0].data);
-        $scope.loan.currency = currency.value;
-        $scope.data.counterpartyList = responseArray[1];
-
+      } else {
+        var serverRequestArray = [];
+        serverRequestArray.push(CurrencyUtilFactory.getDefaultCurrency());
+        serverRequestArray.push(CounterpartyFactory.getCounterpartyList());
         if ($scope.isEditMode) {
-          $scope.loan = responseArray[2];
-          $scope.loan.counterparty.id = "" + $scope.loan.counterparty.id;
+          serverRequestArray.push(LoansFactory.findOneById($scope.loanId));
         }
-        $scope.loading = false;
-      },
-      function(response){
-        $scope.loading = false;
-        console.error("[add_income] Cannot retrieve default Currency for Reason: " + JSON.stringify(response));
-     });
-  }
+
+        $scope.data = {};
+        $scope.data.counterpartyList = [];
+
+        $scope.loading = true;
+        $q.all(serverRequestArray).then(
+          function (responseArray) {
+            var currency = angular.fromJson(responseArray[0].data);
+            $scope.loan.currency = currency.value;
+            $scope.data.counterpartyList = responseArray[1];
+
+            if ($scope.isEditMode) {
+              $scope.loan = responseArray[2];
+              $scope.loan.counterparty.id = "" + $scope.loan.counterparty.id;
+            }
+            $scope.loading = false;
+          },
+          function (response) {
+            $scope.loading = false;
+            console.error("[add_income] Cannot retrieve default Currency for Reason: " + JSON.stringify(response));
+          });
+      }
+    }
+  };
 
   $scope.initData();
 

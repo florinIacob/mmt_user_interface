@@ -34,7 +34,7 @@ angular.module('mmtUiApp')
          openInfoPopup('WARNING', 'Cannot access categories!');
          $scope.loading = false;
        });
-  }
+  };
 
   $scope.initData();
 
@@ -62,7 +62,7 @@ angular.module('mmtUiApp')
           },
         }
       });
-  }
+  };
 
   /**
    * Add / Update a category
@@ -70,7 +70,7 @@ angular.module('mmtUiApp')
   $scope.saveCategory = function(category) {
     var refreshValues = function() {
        $route.reload();
-    }
+    };
 
     $uibModal.open({
       animation: true,
@@ -85,10 +85,10 @@ angular.module('mmtUiApp')
             category: category ? JSON.parse(JSON.stringify(category)) : null,
             afterEditCallback: refreshValues
           };
-        },
+        }
       }
     });
-  }
+  };
 
   // COLOURS
   $scope.colours_map = {

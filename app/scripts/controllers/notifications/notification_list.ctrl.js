@@ -9,7 +9,7 @@
  */
 angular.module('mmtUiApp')
   .controller('NotificationListCtrl', function ($scope, $q, $rootScope, $routeParams, $location, $cookieStore,
-      NotificationsFactory, AlertService, $uibModal) {
+      NotificationsFactory, AlertService, $uibModal, $timeout) {
 
   if (!$rootScope.authenticated) {
     $location.path('/login');
@@ -22,27 +22,51 @@ angular.module('mmtUiApp')
    *
    */
   $scope.initData = function() {
-    var serverRequestArray = [];
-    serverRequestArray.push(NotificationsFactory.findAll());
-
-    $scope.loading = true;
-
-    $q.all(serverRequestArray).then(
-      function(responseArray){
-        $scope.notificationList = []
-        angular.forEach(responseArray[0], function(notificationItem, index) {
-          if (!notificationItem.seen) {
-            $scope.notificationList.push(notificationItem);
+    if ($rootScope.licencePaymentApproved == null) {
+      $timeout($scope.initData, 500);
+    } else {
+      if ($rootScope.licencePaymentApproved === false) {
+        $uibModal.open({
+          animation: true,
+          templateUrl: 'views/modal/function-locked-modal.html',
+          controller: 'FunctionLockedPopupController',
+          backdrop: 'static',
+          keyboard: false,
+          resolve: {
+            items: function () {
+              return {
+                message: 'Loans, Notifications and Category limit are only available for contributors. In order to be able to use this functions you can contribute to the application accessing PAYMENT page. Thank you!',
+                unlockButton: 'Unlock NOTIFICATIONS'
+              };
+            }
           }
         });
-        $scope.loading = false;
-      },
-      function(response){
-        // ERROR: inform the user
-        $scope.loading = false;
-        console.error("[notification_list] Cannot retrieve data for Reason: " + JSON.stringify(response));
-     });
-  }
+
+      } else {
+
+        var serverRequestArray = [];
+        serverRequestArray.push(NotificationsFactory.findAll());
+
+        $scope.loading = true;
+
+        $q.all(serverRequestArray).then(
+          function (responseArray) {
+            $scope.notificationList = [];
+            angular.forEach(responseArray[0], function (notificationItem, index) {
+              if (!notificationItem.seen) {
+                $scope.notificationList.push(notificationItem);
+              }
+            });
+            $scope.loading = false;
+          },
+          function (response) {
+            // ERROR: inform the user
+            $scope.loading = false;
+            console.error("[notification_list] Cannot retrieve data for Reason: " + JSON.stringify(response));
+          });
+      }
+    }
+  };
 
   $scope.initData();
 

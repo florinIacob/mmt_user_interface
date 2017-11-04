@@ -37,9 +37,13 @@
         </label>
         <div class="col-sm-6">
           <input type="number" step="any" class="form-control" id="categoryThreshold" placeholder="Category monthly limit ..."
-                 ng-model="category.threshold" required >
+                 ng-model="category.threshold" ng-disabled="!licencePaymentApproved" required >
         </div>
         <div class="col-sm-3">
+          <span ng-if="!licencePaymentApproved">
+            <span class="glyphicon glyphicon-info-sign" title="Category limit is allowed only for contributors"></span>
+            &nbsp;&nbsp;
+          </span>
           <label class="control-label">{{ defaultCurrency }}</label>
         </div>
       </div>

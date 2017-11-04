@@ -9,7 +9,7 @@
  */
 angular.module('mmtUiApp')
   .controller('LoanListCtrl', function ($scope, $q, $rootScope, $routeParams, $location, $cookieStore, CurrencyUtilFactory,
-      LoansFactory, AlertService, $uibModal) {
+      LoansFactory, AlertService, $uibModal, $timeout) {
 
   if (!$rootScope.authenticated) {
     $location.path('/login');
@@ -26,26 +26,50 @@ angular.module('mmtUiApp')
    *
    */
   $scope.initData = function() {
-    var serverRequestArray = [];
-    if ($scope.counterpartyId) {
-      serverRequestArray.push(LoansFactory.findAllByCounterparty($scope.counterpartyId));
+
+    if ($rootScope.licencePaymentApproved == null) {
+      $timeout($scope.initData, 500);
     } else {
-      serverRequestArray.push(LoansFactory.findAll());
+      if ($rootScope.licencePaymentApproved === false) {
+        $uibModal.open({
+          animation: true,
+          templateUrl: 'views/modal/function-locked-modal.html',
+          controller: 'FunctionLockedPopupController',
+          backdrop: 'static',
+          keyboard: false,
+          resolve: {
+            items: function () {
+              return {
+                message: 'Loans, Notifications and Category limit are only available for contributors. In order to be able to use this functions you can contribute to the application accessing PAYMENT page. Thank you!',
+                unlockButton: 'Unlock LOANS'
+              };
+            }
+          }
+        });
+
+      } else {
+        var serverRequestArray = [];
+        if ($scope.counterpartyId) {
+          serverRequestArray.push(LoansFactory.findAllByCounterparty($scope.counterpartyId));
+        } else {
+          serverRequestArray.push(LoansFactory.findAll());
+        }
+
+        $scope.loading = true;
+
+        $q.all(serverRequestArray).then(
+          function (responseArray) {
+            $scope.loanList = responseArray[0];
+            $scope.loading = false;
+          },
+          function (response) {
+            // ERROR: inform the user
+            $scope.loading = false;
+            console.error("[loan_list] Cannot retrieve data for Reason: " + JSON.stringify(response));
+          });
+      }
     }
-
-    $scope.loading = true;
-
-    $q.all(serverRequestArray).then(
-      function(responseArray){
-        $scope.loanList = responseArray[0];
-        $scope.loading = false;
-      },
-      function(response){
-        // ERROR: inform the user
-        $scope.loading = false;
-        console.error("[loan_list] Cannot retrieve data for Reason: " + JSON.stringify(response));
-     });
-  }
+  };
 
   $scope.initData();
 

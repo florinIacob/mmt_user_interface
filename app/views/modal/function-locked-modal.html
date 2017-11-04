@@ -1,0 +1,24 @@
+<div class="source-list-modal" style="height:100%;background-color:#eaeae1;">
+  <br/>
+  <h3 style="text-align:center;"><img src="images/locked.svg" width="90px"> LOCKED</h3>
+  <br/>
+  <div style="padding: 30px;">
+    <div class="form-group">
+      <label>{{items.message}}</label>
+    </div>
+    <br/>
+    <div class="form-group">
+      <div class="col-md-2">
+      </div>
+      <div class="col-md-10 text-right">
+        <button class="btn btn-primary" ng-click="goToPayment()">
+          <span class="glyphicon glyphicon-lock"></span>
+          <span>{{items.unlockButton}}</span>
+        </button>
+        <button type="button" ng-click="goToHomePage()" class="btn btn-primary">
+          <span class="glyphicon glyphicon-home"></span> Home Page
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
