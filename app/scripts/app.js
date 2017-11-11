@@ -101,6 +101,11 @@ var app = angular.module('mmtUiApp', [
         }],
         controllerAs: 'controller'
       })
+      .when('/add_expense', {
+        templateUrl: 'views/expense/add_expense.html',
+        controller: 'AddExpenseCtrl',
+        controllerAs: 'add_expense'
+      })
 			.when('/add_expenses', {
 				templateUrl: 'views/expense/add_expenses.html',
 				controller: 'AddExpensesCtrl',
@@ -121,7 +126,12 @@ var app = angular.module('mmtUiApp', [
         controller: 'ExpenseCategoriesCtrl',
         controllerAs: 'expense_categories'
       })
-			.when('/add_incomes', {
+			.when('/add_income', {
+        templateUrl: 'views/income/add_income.html',
+        controller: 'AddIncomeCtrl',
+        controllerAs: 'add_income'
+      })
+      .when('/add_incomes', {
         templateUrl: 'views/income/add_incomes.html',
         controller: 'AddIncomesCtrl',
         controllerAs: 'add_incomes'

@@ -172,12 +172,12 @@ angular.module('mmtUiApp')
    $scope.changeSortingCriteria = function(columnName) {
       $scope.sortColumn = columnName;
       $scope.sortReverse = !$scope.sortReverse;
-   }
+   };
 
    // REDIRECT TO ADD INCOME PAGE
    $scope.addIncomeAttempt = function() {
-      $location.path('/add_incomes');
-   }
+      $location.path('/add_income');
+   };
 
    /*---- Start DATE PICKER ----*/
     $scope.format = 'dd-MMMM-yyyy';

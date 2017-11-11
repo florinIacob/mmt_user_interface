@@ -107,7 +107,7 @@ angular.module('mmtUiApp')
              'Content-Type': "application/json",
              'Authorization': $cookieStore.get('mmtlt')
            }
-         }
+         };
         // make server request
         $http(req).then(
           function(response){
@@ -124,7 +124,7 @@ angular.module('mmtUiApp')
                     message: 'Expense successfully deleted!',
                     onYesCallback: null
                   };
-                },
+                }
               }
             });
           },
@@ -141,11 +141,11 @@ angular.module('mmtUiApp')
                     message: 'Expense was NOT deleted!',
                     onYesCallback: null
                   };
-                },
+                }
               }
             });
          });
-       }
+       };
 
       $uibModal.open({
         animation: true,
@@ -160,15 +160,15 @@ angular.module('mmtUiApp')
               message: 'Are you sure do you want to delete expense [' + expense.name + '] ?',
               onYesCallback: deleteHTTPRequest
             };
-          },
+          }
         }
       });
-   }
+   };
 
    // REDIRECT TO ADD EXPENSE PAGE
    $scope.addExpenseAttempt = function() {
-      $location.path('/add_expenses');
-   }
+      $location.path('/add_expense');
+   };
 
    // ------------------- CATEGORIES AREA ----------------------
    $scope.filter_category;
@@ -181,7 +181,7 @@ angular.module('mmtUiApp')
             return;
         }
         $scope.filter_category = selected_category;
-      }
+      };
 
       $uibModal.open({
         animation: true,
@@ -195,15 +195,15 @@ angular.module('mmtUiApp')
               onFilterCallback: filterCallback,
               expenses: $scope.expenses
             };
-          },
+          }
         }
       });
-   }
+   };
 
    $scope.showCategoriesColors = false;
    $scope.useColoursForCategories = function() {
       $scope.showCategoriesColors = !$scope.showCategoriesColors;
-   }
+   };
 
    // -------------- SORTING AREA ------------------
    $scope.sortColumn = 'creationDate';
@@ -212,7 +212,7 @@ angular.module('mmtUiApp')
    $scope.changeSortingCriteria = function(columnName) {
       $scope.sortColumn = columnName;
       $scope.sortReverse = !$scope.sortReverse;
-   }
+   };
 
    // COLOURS
    $scope.colours_map = {
@@ -225,7 +225,7 @@ angular.module('mmtUiApp')
        assertive: 'Crimson',
        royal: 'BlueViolet',
        dark: 'black'
-   }
+   };
 
   /*---- Start DATE PICKER ----*/
    $scope.format = 'dd-MMMM-yyyy';

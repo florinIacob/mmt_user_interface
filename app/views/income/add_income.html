@@ -1,0 +1,57 @@
+<div class="container sign-up-container">
+  <h3 style="text-align:center;"><img src="images/add_income.png" width="90px"> ADD INCOME</h3>
+  <br/>
+
+  <form class="form-horizontal" role="form" ng-submit="submit()" ng-show="loading == false">
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="name">Name:</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="name" placeholder="Income name" ng-model="commonIncome.name" required >
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="description">Description:</label>
+      <div class="col-sm-10">
+        <textarea type="text" rows="3"  class="form-control" id="description" placeholder="Description ..." ng-model="commonIncome.description"></textarea>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="amount">Amount:</label>
+      <div class="col-sm-4">
+        <input type="number" step="any" class="form-control" id="amount" placeholder="Income amount" ng-model="commonIncome.amount" required >
+      </div>
+      <label class="control-label col-sm-2" for="amount">Currency:</label>
+      <div class="col-sm-4">
+        <select type="string" class="form-control" id="currency" placeholder="Currency" ng-model="commonIncome.currency" required>
+          <option ng-repeat="currency in availableCurrencies" value="{{currency}}" required>{{currency}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="date1">Creation date:</label>
+      <div class="col-md-4">
+        <p class="input-group">
+          <input type="text" id="date1" class="form-control" uib-datepicker-popup="{{format}}"
+                 ng-model="commonIncome.creationDate" is-open="datePopup[$index].opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="openDatePicker($index)"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+        </p>
+      </div>
+      <label class="control-label col-sm-2" for="amount">Frequency:</label>
+      <div class="col-sm-4">
+        <select type="number" class="form-control" id="frequency" placeholder="Frequency" ng-model="commonIncome.frequency"
+                ng-options="frequency.value as frequency.text for frequency in availableFrequencies" required>
+        </select>
+      </div>
+    </div>
+    <div class="form-group" style="margin-top: 20px;">
+      <div class="col-sm-offset-2 col-sm-3">
+        <button type="submit" class="btn accountant-btn"><span class="glyphicon glyphicon-plus"></span> Add income</button>
+      </div>
+      <div class="col-sm-7"></div>
+    </div>
+  </form>
+
+  <loading-page width="150px" message="Processing ..." ng-show="loading == true"></loading-page>
+</div>
