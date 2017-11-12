@@ -8,9 +8,9 @@
  * Controller of the mmtUiApp
  */
 angular.module('mmtUiApp')
-  .controller('EditExpensePopupController', ['$scope', '$http','$cookieStore', 'CategoryService', 'DateTimeService',
+  .controller('EditExpensePopupController', ['$scope', '$http','$cookieStore', '$rootScope', 'CategoryService', 'DateTimeService',
                        '$uibModal', '$uibModalInstance', 'ModalTemplateService', 'CurrencyUtilFactory', 'host_name', 'items',
-        function ($scope, $http, $cookieStore, CategoryService, DateTimeService, $uibModal, $uibModalInstance,
+        function ($scope, $http, $cookieStore, $rootScope, CategoryService, DateTimeService, $uibModal, $uibModalInstance,
                   ModalTemplateService, CurrencyUtilFactory, host_name, items) {
 
    $scope.loading = false;
@@ -58,6 +58,10 @@ angular.module('mmtUiApp')
          // SUCCESS callback
          function(response){
            items.afterEditCallback();
+
+           if (response.data && response.data.notification) {
+             $rootScope.totalNotifications++;
+           }
            $uibModalInstance.dismiss('cancel');
            $scope.loading = false;
          },

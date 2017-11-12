@@ -10,6 +10,7 @@ app.factory('InitService',
      * Method to be executed in order to initialize current user global variables
      */
     service.init = function() {
+
       // notifications for user
       NotificationsFactory.findAll().then(
         function success(notificationArray) {
@@ -19,6 +20,10 @@ app.factory('InitService',
               $rootScope.totalNotifications++;
             }
           });
+        },
+        function error(response) {
+          $rootScope.totalNotifications = 0;
+          console.log(" - NotificationsFactory.findAll(): " + JSON.stringify(response));
         }
       );
 
@@ -26,6 +31,10 @@ app.factory('InitService',
       PaymentService.getPaymentStatus("user_license").then(
         function success(response) {
           $rootScope.licencePaymentApproved = response.paymentApproved;
+        },
+        function error(response) {
+          $rootScope.licencePaymentApproved = false;
+          console.log(" - PaymentService.getPaymentStatus(): " + JSON.stringify(response));
         }
       );
     };

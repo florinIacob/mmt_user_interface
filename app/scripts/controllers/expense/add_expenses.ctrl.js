@@ -63,7 +63,11 @@ angular.module('mmtUiApp')
   $scope.addAnotherExpense = function() {
     $scope.expensesArray.push({amount: null, creationDate: null});
     $scope.datePopup.push({opened: false});
-  }
+  };
+
+  $scope.removeExpenseFromArray = function(index) {
+    $scope.expensesArray.splice(index, 1);
+  };
   /**----------------- End: Multiple expenses features ---------------*/
 
   CurrencyUtilFactory.getDefaultCurrency().then(
@@ -104,7 +108,7 @@ angular.module('mmtUiApp')
            'Authorization': $cookieStore.get('mmtlt')
          },
          data: JSON.stringify(expensesToSubmit)
-      }
+      };
       // make server request
       $http(req).then(
         function success(response){
@@ -132,7 +136,7 @@ angular.module('mmtUiApp')
           });
           $scope.loading = false;
        });
-  }
+  };
 
   $scope.addCategory = function() {
     CategoryService.addCategoryName($scope.newCategory, $scope.categories);

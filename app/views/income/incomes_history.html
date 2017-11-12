@@ -63,9 +63,12 @@
     <tbody>
     <tr ng-repeat="income in incomes | orderBy:sortColumn:sortReverse" bs-tooltip title="{{income.description}}" >
       <td>{{ income.name }}</td>
-      <td>{{ income.amount }}</td>
-      <td>{{ income.currency }}</td>
-      <td>{{ income.defaultCurrencyAmount ? income.defaultCurrencyAmount.toFixed(2) : null }}</td>
+      <td class="text-right">{{ income.amount.toFixed(2) }}</td>
+      <td class="text-primary">{{ income.currency }}</td>
+      <td class="text-right">
+        {{ income.defaultCurrencyAmount ? income.defaultCurrencyAmount.toFixed(2) : null }}
+        <span class="text-primary">{{ income.defaultCurrencyAmount ? income.defaultCurrency : null }}</span>
+      </td>
       <td>{{ income.creationDate | date:'mediumDate' }}</td>
       <td>
         <span class="glyphicon glyphicon-pencil control-icon-green" bs-tooltip title="Edit income!" ng-click="editIncome(income)"></span>

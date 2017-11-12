@@ -22,7 +22,7 @@ angular.module('mmtUiApp')
      description: "",
      frequency: 0,
      currency: null
-  }
+  };
 
   $scope.availableCurrencies = CurrencyUtilFactory.getAvailableCurrencies();
   $scope.availableFrequencies = [
@@ -65,7 +65,11 @@ angular.module('mmtUiApp')
   $scope.addAnotherIncome = function() {
     $scope.incomesArray.push({amount: null, creationDate: null});
     $scope.datePopup.push({opened: false});
-  }
+  };
+
+  $scope.removeIncomeFromArray = function(index) {
+    $scope.incomesArray.splice(index, 1);
+  };
   /** --------------------- End: Incomes Array ------------------------------- */
 
   // submit button - save the expense

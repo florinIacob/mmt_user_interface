@@ -70,9 +70,12 @@
     <tbody>
     <tr ng-repeat="expense in expenses | orderBy:sortColumn:sortReverse | filter:filter_category:strict" bs-tooltip title="{{expense.description}}" >
       <td>{{ expense.name }}</td>
-      <td>{{ expense.amount }}</td>
-      <td>{{ expense.currency }}</td>
-      <td>{{ expense.defaultCurrencyAmount ? expense.defaultCurrencyAmount.toFixed(2) : null }}</td>
+      <td class="text-right">{{ expense.amount.toFixed(2) }}</td>
+      <td class="text-primary">{{ expense.currency }}</td>
+      <td class="text-right">
+        {{ expense.defaultCurrencyAmount ? expense.defaultCurrencyAmount.toFixed(2) : null }}
+        <span class="text-primary">{{ expense.defaultCurrencyAmount ? expense.defaultCurrency : null }}</span>
+      </td>
       <td style=" background-color:{{(showCategoriesColors == true) ? colours_map[expense.category.colour] : white}};">
         {{ expense.category.name }}
       </td>

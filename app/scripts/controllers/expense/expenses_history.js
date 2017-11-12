@@ -60,12 +60,12 @@ angular.module('mmtUiApp')
                 message: 'Expenses could NOT be loaded!',
                 onYesCallback: null
               };
-            },
+            }
           }
         });
         $scope.loading = false;
      });
-   }
+   };
 
    $scope.retrieveExpenseList();
 
@@ -74,7 +74,7 @@ angular.module('mmtUiApp')
 
     var refreshValues = function() {
        $scope.retrieveExpenseList();
-    }
+    };
 
     $uibModal.open({
       animation: true,
@@ -88,10 +88,10 @@ angular.module('mmtUiApp')
             expense: JSON.parse(JSON.stringify(expense)),
             afterEditCallback: refreshValues
           };
-        },
+        }
       }
     });
-  }
+  };
 
   // DELETE EXPENSE FUNCTIONALITY
   $scope.deleteExpense = function(expense) {
