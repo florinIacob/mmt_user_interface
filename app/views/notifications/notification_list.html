@@ -3,7 +3,7 @@
   <br/>
   <form class="form-horizontal" role="form" ng-submit="submit()" ng-show="loading == false">
 
-    <div ng-repeat="notification in notificationList" ng-if="!notification.seen"
+    <div ng-repeat="notification in notificationList"
          class="panel panel-{{getPanelClass(notification.priority)}}">
       <div class="panel-heading form-horizontal">
         <div class="form-group" style="margin-bottom: 0px;">
@@ -14,7 +14,7 @@
             <label style="float: none;">{{notification.creationDate | date:'MMM dd, yyyy hh:mm'}}</label>
           </div>
           <div class="col-md-1 text-right">
-            <span class="glyphicon glyphicon-remove-sign" ng-click="markAsSeen($index)"
+            <span class="glyphicon glyphicon-remove-sign" ng-click="deleteNotification($index)"
                   style="float: none; cursor: pointer; cursor: hand;"></span>
           </div>
         </div>
@@ -28,6 +28,16 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="form-group">
+      <div class="col-md-4"></div>
+      <div class="col-md-4 text-center">
+        <button type="button" class="btn btn-primary" style="width: 50%;" ng-if="showMoreButton"
+                ng-click="showMoreNotifications()" title="Show more notifications">
+          <span class="glyphicon glyphicon-eye-open"></span> SHOW MORE
+        </button>
+      </div>
+      <div class="col-md-4"></div>
     </div>
 
   </form>

@@ -47,9 +47,9 @@
       <div class="col-md-4">
         <p class="input-group">
           <input type="text" id="date1" class="form-control" uib-datepicker-popup="{{format}}"
-                 ng-model="commonExpense.creationDate" is-open="datePopup[$index].opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                 ng-model="commonExpense.creationDate" is-open="datePopup[0].opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
           <span class="input-group-btn">
-            <button type="button" class="btn btn-default" ng-click="openDatePicker($index)"><i class="glyphicon glyphicon-calendar"></i></button>
+            <button type="button" class="btn btn-default" ng-click="openDatePicker(0)"><i class="glyphicon glyphicon-calendar"></i></button>
           </span>
         </p>
       </div>

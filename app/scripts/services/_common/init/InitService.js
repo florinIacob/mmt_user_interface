@@ -12,14 +12,12 @@ app.factory('InitService',
     service.init = function() {
 
       // notifications for user
-      NotificationsFactory.findAll().then(
-        function success(notificationArray) {
+      NotificationsFactory.getTotal().then(
+        function success(data) {
           $rootScope.totalNotifications = 0;
-          angular.forEach(notificationArray, function(notificationItem, index) {
-            if (!notificationItem.seen) {
-              $rootScope.totalNotifications++;
-            }
-          });
+          if (data && data.total) {
+            $rootScope.totalNotifications = data.total;
+          }
         },
         function error(response) {
           $rootScope.totalNotifications = 0;

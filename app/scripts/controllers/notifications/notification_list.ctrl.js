@@ -17,6 +17,36 @@ angular.module('mmtUiApp')
 
   $scope.loading = false;
 
+  $scope.limit = 30;
+  $scope.offset = 0;
+  $scope.showMoreButton = true;
+  $scope.notificationList = [];
+
+  $scope.getAllNotifications = function(limit, offset) {
+
+    var serverRequestArray = [];
+    serverRequestArray.push(NotificationsFactory.findAll(limit, offset));
+
+    $q.all(serverRequestArray).then(
+      function (responseArray) {
+        var notificationsResponse = responseArray[0];
+        if (notificationsResponse && notificationsResponse.length) {
+          $scope.notificationList = $scope.notificationList.concat(notificationsResponse);
+        }
+
+        if (!notificationsResponse.length || notificationsResponse.length < limit){
+          $scope.showMoreButton = false;
+        }
+
+        $scope.loading = false;
+      },
+      function (response) {
+        // ERROR: inform the user
+        $scope.loading = false;
+        console.error("[notification_list] Cannot retrieve data for Reason: " + JSON.stringify(response));
+      });
+  };
+  
   /**
    * Intitialize Controller data
    *
@@ -44,26 +74,8 @@ angular.module('mmtUiApp')
 
       } else {
 
-        var serverRequestArray = [];
-        serverRequestArray.push(NotificationsFactory.findAll());
-
         $scope.loading = true;
-
-        $q.all(serverRequestArray).then(
-          function (responseArray) {
-            $scope.notificationList = [];
-            angular.forEach(responseArray[0], function (notificationItem, index) {
-              if (!notificationItem.seen) {
-                $scope.notificationList.push(notificationItem);
-              }
-            });
-            $scope.loading = false;
-          },
-          function (response) {
-            // ERROR: inform the user
-            $scope.loading = false;
-            console.error("[notification_list] Cannot retrieve data for Reason: " + JSON.stringify(response));
-          });
+        $scope.getAllNotifications($scope.limit, $scope.offset);
       }
     }
   };
@@ -86,14 +98,20 @@ angular.module('mmtUiApp')
   /**
    * Mark notification as seen
    */
-  $scope.markAsSeen = function(index) {
-    NotificationsFactory.markAsSeen($scope.notificationList[index]).then(
+  $scope.deleteNotification = function(index) {
+    NotificationsFactory.deleteNotification($scope.notificationList[index]).then(
       function success(response) {
         $scope.notificationList[index].seen = true;
         $scope.notificationList.splice(index, 1);
+        $scope.offset--;
         $rootScope.totalNotifications--;
       }
     );
   };
+
+  $scope.showMoreNotifications = function() {
+    $scope.offset = $scope.offset + $scope.limit;
+    $scope.getAllNotifications($scope.limit, $scope.offset);
+  }
 
 });
