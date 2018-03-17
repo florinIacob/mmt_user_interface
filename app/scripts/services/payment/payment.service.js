@@ -27,11 +27,11 @@ app.factory('PaymentService', function($q, $http, $cookieStore, host_name) {
         }
       );
       return deferred.promise;
-  }
+  };
 
-  /**
-      * Request to charge the user
-      */
+    /**
+     * Check payment status for current user
+     */
     service.getPaymentStatus = function() {
         var deferred = $q.defer();
 
@@ -52,7 +52,7 @@ app.factory('PaymentService', function($q, $http, $cookieStore, host_name) {
           }
         );
         return deferred.promise;
-    }
+    };
 
   return service;
 });

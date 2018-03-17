@@ -46,7 +46,7 @@ angular.module('mmtUiApp')
         console.error("[notification_list] Cannot retrieve data for Reason: " + JSON.stringify(response));
       });
   };
-  
+
   /**
    * Intitialize Controller data
    *
@@ -101,7 +101,6 @@ angular.module('mmtUiApp')
   $scope.deleteNotification = function(index) {
     NotificationsFactory.deleteNotification($scope.notificationList[index]).then(
       function success(response) {
-        $scope.notificationList[index].seen = true;
         $scope.notificationList.splice(index, 1);
         $scope.offset--;
         $rootScope.totalNotifications--;
