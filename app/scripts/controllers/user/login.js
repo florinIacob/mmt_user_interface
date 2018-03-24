@@ -46,11 +46,19 @@ angular.module('mmtUiApp')
 			}
 
 			self.credentials = {};
+			if ($rootScope.username) {
+			  self.credentials.username = $rootScope.username;
+      }
 			self.login = function() {
 				authenticate(self.credentials, function(authenticated) {
 					if (authenticated) {
-						console.log("Login succeeded 2.0")
-						$location.path("/expenses_history");
+						console.log("Login succeeded 2.0");
+
+						if ($rootScope.lastAttemptPath) {
+              $location.path($rootScope.lastAttemptPath);
+            } else {
+              $location.path("/expenses_history");
+            }
 						$rootScope.authenticated = true;
 						$rootScope.username = $cookieStore.get('username');
 						InitService.init();

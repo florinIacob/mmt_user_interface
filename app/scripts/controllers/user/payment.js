@@ -9,11 +9,15 @@
  */
 angular.module('mmtUiApp')
   .controller('PaymentCtrl', function ($scope, $http, $location, $cookieStore, $uibModal, PaymentService, CurrencyUtilFactory,
-          DateTimeService, host_name, stripe, AlertService, $rootScope) {
+          DateTimeService, host_name, stripe, AlertService, $rootScope, $routeParams) {
 
   $scope.loading = false;
   $scope.paymentApproved = false;
   $scope.rejectMessage = null;
+
+  if ($routeParams.username) {
+    $rootScope.username = $routeParams.username;
+  }
 
   /**
    * Initialize controller data
@@ -28,8 +32,8 @@ angular.module('mmtUiApp')
         $scope.loading = false;
 
       }, function error(errMsg) {
-        AlertService.displaySimpleAlert('Error', "Error getting payment status!");
-        console.error(" ERROR getting payment status! Response: " + JSON.stringify(response));
+        AlertService.displaySimpleAlert('Info', "Please login for payment information!");
+        console.error(" ERROR getting payment status! Response: " + JSON.stringify(errMsg));
         $scope.loading = false;
       }
     );

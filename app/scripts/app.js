@@ -171,7 +171,7 @@ var app = angular.module('mmtUiApp', [
         controller: 'ActivationCtrl',
         controllerAs: 'activation'
       })
-      .when('/payment', {
+      .when('/payment/:username?', {
         templateUrl: 'views/user/payment.html',
         controller: 'PaymentCtrl',
         controllerAs: 'payment'
@@ -186,6 +186,7 @@ var app = angular.module('mmtUiApp', [
 			});
 
 			$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+      $httpProvider.interceptors.push('unauthorizedInterceptor');
 
       ChartJsProvider.setOptions({ colors : [ '#46BFBD', '#803690', '#4D5360', '#00ADF9', '#DCDCDC', '#FDB45C', '#949FB1'] });
 
